@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-06-29T14:12:43.846Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="EZpR5WqeoA_M-gMgq_qJ" version="20.0.4" type="github">
+<mxfile host="app.diagrams.net" modified="2022-06-29T14:13:41.274Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36" etag="y-8tW3mJYMUTCckuYSgO" version="20.0.4" type="github">
   <diagram id="Co-2WPKWJgHfXNtiyIEY" name="Page-1">
     <mxGraphModel dx="782" dy="436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -15,6 +15,9 @@
         </mxCell>
         <mxCell id="ZYXcEdyXvduLh-ddOtvL-3" value="&lt;b&gt;RemoteAuthentication&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#CC6600;strokeWidth=2;fillColor=default;" vertex="1" parent="1">
           <mxGeometry x="280" y="160" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ZYXcEdyXvduLh-ddOtvL-8" value="&lt;b&gt;Data&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="5" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
