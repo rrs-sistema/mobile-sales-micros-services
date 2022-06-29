@@ -4,4 +4,6 @@ class AccountEntity {
   
   AccountEntity(this.accessToken);
 
+  factory AccountEntity.fromJson(Map json) => AccountEntity(json['accessToken']);
+
 }
