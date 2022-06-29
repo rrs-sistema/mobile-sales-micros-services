@@ -39,7 +39,7 @@ void main() {
       ));
   });
 
-  test('Shoul throw UnexpectedError if HttpClinete returns 400', () async {
+  test('Should throw UnexpectedError if HttpClinete returns 400', () async {
     when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
       .thenThrow(HttpError.badRequest);
 
@@ -57,7 +57,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoul throw UnexpectedError if HttpClinete returns 500', () async {
+  test('Should throw UnexpectedError if HttpClinete returns 500', () async {
     when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
       .thenThrow(HttpError.serverError);
 
@@ -66,7 +66,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoul throw InvalidCredentialsError if HttpClinete returns 401', () async {
+  test('Should throw InvalidCredentialsError if HttpClinete returns 401', () async {
     when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
       .thenThrow(HttpError.unauthorized);
 
@@ -75,7 +75,7 @@ void main() {
     expect(future, throwsA(DomainError.invalidCredential));
   });
 
-  test('Shoul return an Account if HttpClient returns 200', () async {
+  test('Should return an Account if HttpClient returns 200', () async {
     final accessToken = faker.guid.guid();
     when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
       .thenAnswer((_) async => {
@@ -87,4 +87,16 @@ void main() {
     expect(account.accessToken, accessToken);
   });
 
+
+  test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {
+    when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
+      .thenAnswer((_) async => {
+        'invalid_key': 'invalid_value'
+      });
+
+    final future = sut.auth(params);
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
+  
 }
