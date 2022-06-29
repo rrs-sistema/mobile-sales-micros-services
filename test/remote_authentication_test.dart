@@ -34,7 +34,7 @@ void main() {
       ));
   });
 
-  test('Shoul throw Unexpected if HttpClinete returns 400', () async {
+  test('Shoul throw UnexpectedError if HttpClinete returns 400', () async {
     when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
       .thenThrow(HttpError.badRequest);
 
@@ -43,7 +43,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoul throw Unexpected if HttpClinete returns 404', () async {
+  test('Shoul throw UnexpectedError if HttpClinete returns 404', () async {
     when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
       .thenThrow(HttpError.notFound);
 
@@ -52,13 +52,22 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoul throw Unexpected if HttpClinete returns 500', () async {
+  test('Shoul throw UnexpectedError if HttpClinete returns 500', () async {
     when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
       .thenThrow(HttpError.serverError);
 
     final future = sut.auth(params);
 
     expect(future, throwsA(DomainError.unexpected));
+  });
+
+  test('Shoul throw InvalidCredentialsError if HttpClinete returns 401', () async {
+    when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')))
+      .thenThrow(HttpError.unauthorized);
+
+    final future = sut.auth(params);
+
+    expect(future, throwsA(DomainError.invalidCredential));
   });
 
 }
