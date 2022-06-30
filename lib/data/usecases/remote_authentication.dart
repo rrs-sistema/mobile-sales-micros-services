@@ -8,14 +8,14 @@ import '../http/http.dart';
 
 class RemoteAuthentication implements Authentication {
   final HttpClient httpClient;
-  final String url;
+  final Uri uri;
 
-  RemoteAuthentication({@required this.httpClient, @required this.url});
+  RemoteAuthentication({@required this.httpClient, @required this.uri});
 
   Future<AccountEntity> auth(AuthenticationParams params) async {
     final body = RemoteAuthenticationParams.fromDomain(params).toJson();
     try {
-      final httpResponse = await httpClient.request(url: url, method: 'post', body: body);
+      final httpResponse = await httpClient.request(uri: uri, method: 'post', body: body);
       return RemoteAccountModel.fromJson(httpResponse).toEntity();
 
     } on HttpError catch(error) {
