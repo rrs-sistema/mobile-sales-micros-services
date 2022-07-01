@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.sales_micros_services">
+    package="com.rrs.sistema.delivery">
    <application
-        android:label="sales_micros_services"
+        android:label="Delivery Micros Services"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -2,10 +2,10 @@ import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:test/test.dart';
 
-import 'package:sales_micros_services/domain/usecases/usecases.dart';
-import 'package:sales_micros_services/domain/helpers/helpers.dart';
-import 'package:sales_micros_services/data/usecases/usecases.dart';
-import 'package:sales_micros_services/data/http/http.dart';
+import 'package:delivery_micros_services/domain/usecases/usecases.dart';
+import 'package:delivery_micros_services/domain/helpers/helpers.dart';
+import 'package:delivery_micros_services/data/usecases/usecases.dart';
+import 'package:delivery_micros_services/data/http/http.dart';
 
 
 class HttpClientSpy extends Mock implements HttpClient {}

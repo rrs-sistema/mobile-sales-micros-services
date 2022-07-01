@@ -3,8 +3,8 @@ import 'package:faker/faker.dart';
 import 'package:http/http.dart';
 import 'package:test/test.dart';
 
-import 'package:sales_micros_services/infra/http/http.dart';
-import 'package:sales_micros_services/data/http/http.dart';
+import 'package:delivery_micros_services/infra/http/http.dart';
+import 'package:delivery_micros_services/data/http/http.dart';
 
 class ClientSpy extends Mock implements Client {}
 

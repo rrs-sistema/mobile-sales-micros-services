@@ -1,6 +1,6 @@
 {
-    "name": "sales_micros_services",
-    "short_name": "sales_micros_services",
+    "name": "delivery_micros_services",
+    "short_name": "delivery_micros_services",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

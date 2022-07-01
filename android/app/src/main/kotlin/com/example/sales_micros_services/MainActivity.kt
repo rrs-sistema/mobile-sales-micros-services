@@ -1,4 +1,4 @@
-package com.example.sales_micros_services
+package com.rrs.sistema.delivery
 
 import io.flutter.embedding.android.FlutterActivity
 
