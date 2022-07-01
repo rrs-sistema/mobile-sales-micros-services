@@ -13,6 +13,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
+  hexcolor: ^2.0.4
+  font_awesome_flutter: ^9.1.0
+  otp_text_field: ^1.1.1  
   http:
 
 dev_dependencies:
@@ -24,6 +27,7 @@ dev_dependencies:
 
 
 flutter:
-
   uses-material-design: true
+  assets:
+    - lib/ui/assets/
 
