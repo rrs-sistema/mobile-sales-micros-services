@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 
-import '../widgets/widgets.dart';
-import '../common/common.dart';
+import '../../widgets/widgets.dart';
+import '../../common/common.dart';
+import 'login_presenter.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+
+  final LoginPresenter presenter;
+  const LoginPage({Key key, this.presenter}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
 
@@ -57,6 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                                   decoration: ThemeHelper().textInputDecoration(
                                       'Email de usuário',
                                       'Digite seu e-mail de usuário'),
+                                      onChanged: widget.presenter.validateEmail,
                                 ),
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
@@ -67,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                                   obscureText: true,
                                   decoration: ThemeHelper().textInputDecoration(
                                       'Senha de acesso', 'Digite sua senha'),
+                                  onChanged: widget.presenter.validatePassword,
                                 ),
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
