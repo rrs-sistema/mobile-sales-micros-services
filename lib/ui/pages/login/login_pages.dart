@@ -57,11 +57,24 @@ class _LoginPageState extends State<LoginPage> {
                           child: Column(
                             children: [
                               Container(
-                                child: TextFormField(
-                                  decoration: ThemeHelper().textInputDecoration(
-                                      'Email de usuário',
-                                      'Digite seu e-mail de usuário'),
+                                child: StreamBuilder<String>(
+                                  stream: widget.presenter.emailErroStream,
+                                  builder: (context, snapshot) {
+                                    return TextFormField(
+                                      /*
+                                      decoration: ThemeHelper().textInputDecoration(
+                                        'Email de usuário',
+                                        'Digite seu e-mail de usuário',
+                                        snapshot.data?.isEmpty == true ? null : snapshot.data
+                                        ),
+                                        */
+                                      decoration: InputDecoration(
+                                        labelText: 'Email de usuário',
+                                        errorText: snapshot.data?.isEmpty == true ? null : snapshot.data
+                                      ),
                                       onChanged: widget.presenter.validateEmail,
+                                );
+                                  }
                                 ),
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
@@ -69,10 +82,16 @@ class _LoginPageState extends State<LoginPage> {
                               SizedBox(height: 30.0),
                               Container(
                                 child: TextFormField(
+                                  decoration: InputDecoration(
+                                    labelText: 'Senha de acesso',
+                                  ),
+                                  onChanged: widget.presenter.validatePassword,                                  
+                                  /*
                                   obscureText: true,
                                   decoration: ThemeHelper().textInputDecoration(
                                       'Senha de acesso', 'Digite sua senha'),
                                   onChanged: widget.presenter.validatePassword,
+                                  */
                                 ),
                                 decoration:
                                     ThemeHelper().inputBoxDecorationShaddow(),
