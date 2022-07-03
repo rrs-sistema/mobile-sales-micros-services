@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                                               color: Colors.white),
                                         ),
                                       ),
-                                      onPressed: snapshot.data == true ? () {} : null
+                                      onPressed: snapshot.data == true ? widget.presenter.auth : null
                                       /*
                                       onPressed: () {
                                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));
