@@ -49,7 +49,6 @@ void main(){
 
     final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
     expect(button.onPressed, null);
-
   });
 
   testWidgets('Should call validade with correct values', (WidgetTester tester) async{
@@ -80,7 +79,6 @@ void main(){
     await tester.pump();
 
     expect(find.bySemanticsLabel('Email de usuário'), findsOneWidget);
-
   });    
 
   testWidgets('Should presente no error if email is valid', (WidgetTester tester) async{
@@ -108,7 +106,6 @@ void main(){
     await tester.pump();
 
     expect(find.bySemanticsLabel('Senha de acesso'), findsOneWidget);
-
   });    
 
   testWidgets('Should presente no error if password is valid', (WidgetTester tester) async{
@@ -128,7 +125,16 @@ void main(){
 
     final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
     expect(button.onPressed, isNotNull);
+  }); 
 
+  testWidgets('Should enable button if form is valid', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    isFormValidController.add(false);
+    await tester.pump();
+
+    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(button.onPressed, null);
   }); 
 
 }
