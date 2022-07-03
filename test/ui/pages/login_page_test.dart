@@ -97,4 +97,23 @@ void main(){
     expect(find.text('any erro'), findsOneWidget);
   });
 
+  testWidgets('Should presente no error if password is valid', (WidgetTester tester) async{
+    await loadPage(tester);
+
+   passwordErrorController.add(null);
+    await tester.pump();
+
+    expect(find.bySemanticsLabel('Senha de acesso'), findsOneWidget);
+
+  });    
+
+  testWidgets('Should presente no error if password is valid', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    passwordErrorController.add('');
+    await tester.pump();
+
+    expect(find.descendant(of: find.bySemanticsLabel('Senha de acesso'), matching: find.byType(Text)), findsOneWidget);
+  }); 
+
 }
