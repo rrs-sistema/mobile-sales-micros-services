@@ -121,25 +121,30 @@ class _LoginPageState extends State<LoginPage> {
                               Container(
                                 decoration:
                                     ThemeHelper().buttonBoxDecoration(context),
-                                child: ElevatedButton(
-                                  style: ThemeHelper().buttonStyle(),
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                    child: Text(
-                                      'Entrar'.toUpperCase(),
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
-                                    ),
-                                  ),
-                                  onPressed: null
-                                  /*
-                                  onPressed: () {
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));
-                                  },
-                                  */
+                                child: StreamBuilder<bool>(
+                                  stream: widget.presenter.isFormValidStream,
+                                  builder: (context, snapshot) {
+                                    return ElevatedButton(
+                                      style: ThemeHelper().buttonStyle(),
+                                      child: Padding(
+                                        padding:
+                                            EdgeInsets.fromLTRB(40, 10, 40, 10),
+                                        child: Text(
+                                          'Entrar'.toUpperCase(),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ),
+                                      ),
+                                      onPressed: snapshot.data == true ? () {} : null
+                                      /*
+                                      onPressed: () {
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                                      },
+                                      */
+                                    );
+                                  }
                                 ),
                               ),
                               Container(
