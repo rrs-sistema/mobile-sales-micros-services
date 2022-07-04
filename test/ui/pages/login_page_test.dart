@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
+import 'dart:async';
 
 import 'package:delivery_micros_services/ui/pages/pages.dart';
 
@@ -184,10 +183,10 @@ void main(){
   testWidgets('Should presente error message if authentication fails', (WidgetTester tester) async{
     await loadPage(tester);
 
-    mainErrorController.add('main error');
-    await tester.pump();
+    addTearDown(() {
+      verify(presenter.dispose()).called(1);
+    });
 
-    expect(find.text('main error'), findsOneWidget);
   });
 
 }
