@@ -5,6 +5,7 @@ import 'package:test/test.dart';
 import 'package:delivery_micros_services/presentation/presenters/presenters.dart';
 import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
 import 'package:delivery_micros_services/domain/usecases/authentication.dart';
+import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 import 'package:delivery_micros_services/domain/entity/entity.dart';
 
 class ValidationSpy extends Mock implements Validation {}
@@ -29,6 +30,10 @@ void main() {
 
   void mockcAuthentication() {
     mockAuthenticationCall().thenAnswer((_) async => AccountEntity(faker.guid.guid()));
+  }
+
+  void mockcAuthenticationError(DomainError error) {
+    mockAuthenticationCall().thenThrow(error);
   }
 
   setUp(() {
@@ -129,4 +134,14 @@ void main() {
     await sut.auth();
   }); 
 
+  test('Shuld emit correct events on InvalidCredentialsError', () async {
+    mockcAuthenticationError(DomainError.invalidCredential);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    expectLater(sut.isLoadingStream, emits(false));
+    sut.mainErrorStream.listen(expectAsync1((error) => expect(error, 'Credenciais inválidas')));
+
+    await sut.auth();
+  }); 
 }
