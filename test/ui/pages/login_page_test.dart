@@ -15,37 +15,42 @@ void main(){
   StreamController<String> mainErrorController;
   StreamController<bool> isFormValidController;
   StreamController<bool> isLoadingController;
+
+  void initStreams() {
+    passwordErrorController = StreamController<String>();
+    emailErrorController = StreamController<String>();
+    mainErrorController = StreamController<String>();
+    isFormValidController = StreamController<bool>();
+    isLoadingController = StreamController<bool>();    
+  }
   
+  void mockStreams() {
+    when(presenter.emailErroStream).thenAnswer((_) => emailErrorController.stream);
+    when(presenter.passwordErroStream).thenAnswer((_) => passwordErrorController.stream);
+    when(presenter.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
+    when(presenter.isFormValidStream).thenAnswer((_) => isFormValidController.stream);
+    when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);  
+  }  
+
+  void closeStreams(){
+    emailErrorController.close();
+    passwordErrorController.close();
+    isFormValidController.close();
+    isLoadingController.close();
+    mainErrorController.close();    
+  }
   
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
-
-    emailErrorController = StreamController<String>();
-    when(presenter.emailErroStream).thenAnswer((_) => emailErrorController.stream);
-
-    passwordErrorController = StreamController<String>();
-    when(presenter.passwordErroStream).thenAnswer((_) => passwordErrorController.stream);
-
-    mainErrorController = StreamController<String>();
-    when(presenter.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
-
-    isFormValidController = StreamController<bool>();
-    when(presenter.isFormValidStream).thenAnswer((_) => isFormValidController.stream);
-
-    isLoadingController = StreamController<bool>();
-    when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
-
+    initStreams();
+    mockStreams();
     final loginPager = MaterialApp(home: LoginPage(presenter: presenter,),);
     await tester.pumpWidget(loginPager);
   }
 
   // Roda sempre no final dos testes
   tearDown(() {
-    emailErrorController.close();
-    passwordErrorController.close();
-    isFormValidController.close();
-    isLoadingController.close();
-    mainErrorController.close();
+    closeStreams();
   });
 
   testWidgets('Should load with correct initial state', (WidgetTester tester) async{
