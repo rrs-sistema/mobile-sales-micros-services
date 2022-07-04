@@ -90,24 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   SizedBox(height: 30.0),
                                   Container(
-                                    child: StreamBuilder<String>(
-                                      stream: widget.presenter.passwordErroStream,
-                                      builder: (context, snapshot) {
-                                        return TextFormField(
-                                          decoration: InputDecoration(
-                                            labelText: 'Senha de acesso',
-                                            errorText: snapshot.data?.isEmpty == true ? null : snapshot.data
-                                          ),
-                                          onChanged: widget.presenter.validatePassword,                                  
-                                          /*
-                                          obscureText: true,
-                                          decoration: ThemeHelper().textInputDecoration(
-                                              'Senha de acesso', 'Digite sua senha'),
-                                          onChanged: widget.presenter.validatePassword,
-                                          */
-                                        );
-                                      }
-                                    ),
+                                    child: PasswordInput(),
                                     decoration:
                                         ThemeHelper().inputBoxDecorationShaddow(),
                                   ),
