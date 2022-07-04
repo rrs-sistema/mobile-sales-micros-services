@@ -1,7 +1,7 @@
-import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
 import 'package:meta/meta.dart';
 import 'dart:async';
 
+import '../../domain/helpers/domain_error.dart';
 import '../../domain/usecases/usecases.dart';
 import '../protocols/protocols.dart';
 
