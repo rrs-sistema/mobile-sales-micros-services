@@ -1,13 +1,10 @@
-import 'dart:async';
-
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:meta/meta.dart';
 import 'package:test/test.dart';
+import 'dart:async';
 
- abstract class Validation {
-  String validate({@required String field, @required String value});
- }
+import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
 
 class LoginState {
   String emailError;
