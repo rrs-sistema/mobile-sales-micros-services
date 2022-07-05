@@ -1,25 +1,8 @@
-import 'package:delivery_micros_services/validators/protocols/protocols.dart';
-import 'package:meta/meta.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
-
-class ValidationComposite implements Validation {
-  final List<FieldValidation> validations;
-
-  ValidationComposite(this.validations);
-
-  String validate({@required String field, @required String value}) {
-    String error;
-    for (var validation in validations.where((v) => v.field == field)) {
-      error = validation.validate(value);
-      if(error?.isNotEmpty == true)
-        return error;
-    }
-    return error;
-  }
-}
+import 'package:delivery_micros_services/validators/validators/validators.dart';
+import 'package:delivery_micros_services/validators/protocols/protocols.dart';
 
 class FieldValidationSpy extends Mock implements FieldValidation {}
 
