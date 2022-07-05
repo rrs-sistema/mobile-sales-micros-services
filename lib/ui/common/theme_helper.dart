@@ -3,6 +3,17 @@ import 'package:hexcolor/hexcolor.dart';
 
 class ThemeHelper{
 
+  ThemeData makeAppTheme() {
+    Color _primaryColor = HexColor('#DC54FE');
+    Color _accentColor = HexColor('#8A02AE');
+    return ThemeData(
+        primaryColor: _primaryColor,
+        accentColor: _accentColor,
+        scaffoldBackgroundColor: Colors.grey.shade100,
+        primarySwatch: Colors.grey,
+      );
+  }
+
   InputDecoration textInputDecoration([String lableText= '', String hintText = '', String errorText]){
     return InputDecoration(
       labelText: lableText,

@@ -9,7 +9,7 @@ class PasswordInput extends StatelessWidget {
     final presenter = Provider.of<LoginPresenter>(context);
 
     return StreamBuilder<String>(
-        stream: presenter.passwordErroStream,
+        stream: presenter.passwordErrorStream,
         builder: (context, snapshot) {
           return TextFormField(
             /*

@@ -4,6 +4,7 @@ import 'dart:async';
 import '../../domain/helpers/domain_error.dart';
 import '../../domain/usecases/usecases.dart';
 import '../protocols/protocols.dart';
+import '../../ui/pages/pages.dart';
 
 class LoginState {
   String email;
@@ -16,7 +17,7 @@ class LoginState {
   bool get isFormValid => email != null && password != null && emailError == null && passwordError == null;
 }
 
-class StreamLoginPresenter {
+class StreamLoginPresenter implements LoginPresenter {
 
   final Validation validation;
   final Authentication authentication;

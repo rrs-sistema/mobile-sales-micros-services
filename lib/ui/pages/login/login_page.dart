@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                     _headerHeight,
                     true,
                     Icons
-                        .login_rounded), //vamos criar um widget de cabeçalho comum
+                        .shopping_cart_outlined), //vamos criar um widget de cabeçalho comum
               ),
               SafeArea(
                 child: Container(
