@@ -52,7 +52,8 @@ void main() {
 
       verify(client.post(uri, headers: {
           'content-type': 'application/json',
-          'accept': 'application/json'
+          'accept': 'application/json',
+          'transactionid': '0e3e4acf-5f0f-468d-afe6-3f59ee97992c'
         }, body: '{"any_key":"any_value"}'
       ));
     });
