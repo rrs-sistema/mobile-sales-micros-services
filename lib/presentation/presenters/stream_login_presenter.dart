@@ -48,6 +48,7 @@ class StreamLoginPresenter implements LoginPresenter {
 
   Future<void> auth() async {
     _state.isLoading = true;
+    _state.mainError = null; 
     _update();
     try {
       await authentication.auth(AuthenticationParams(email: _state.email, secret: _state.password));
@@ -55,7 +56,7 @@ class StreamLoginPresenter implements LoginPresenter {
       _state.mainError = error.description;
     }
     _state.isLoading = false;
-    _update();    
+    _update();   
   }
 
   void dispose() {

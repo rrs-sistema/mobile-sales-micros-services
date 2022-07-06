@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
         });
 
         return GestureDetector(
-          //onTap: _hideKayboard,
+          onTap: _hideKayboard,
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Column(
                       children: [
                         Text(
-                          'Delivery Micros Services',
+                          'RRS Sales Micros Services',
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
