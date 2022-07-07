@@ -5,8 +5,8 @@ import 'package:test/test.dart';
 import 'package:delivery_micros_services/presentation/presenters/presenters.dart';
 import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
 import 'package:delivery_micros_services/domain/usecases/authentication.dart';
+import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
-import 'package:delivery_micros_services/domain/entity/entity.dart';
 
 class ValidationSpy extends Mock implements Validation {}
 

@@ -2,7 +2,7 @@ import 'package:meta/meta.dart';
 
 import '../../../domain/helpers/domain_error.dart';
 import '../../../domain/usecases/usecases.dart';
-import '../../../domain/entity/entity.dart';
+import '../../../domain/entities/entities.dart';
 import '../../model/model.dart';
 import '../../http/http.dart';
 
