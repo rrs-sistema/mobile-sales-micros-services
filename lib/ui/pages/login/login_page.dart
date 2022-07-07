@@ -47,6 +47,7 @@ class _LoginPageState extends State<LoginPage> {
         });
 
         widget.presenter.mainErrorStream.listen((error) {
+          print('Erro mainErrorStream $error');
           if (error != null) {
             showErrorMessage(context, error);
           }
