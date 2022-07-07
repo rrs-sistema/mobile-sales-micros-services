@@ -1,9 +1,9 @@
-
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
+import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 
@@ -13,7 +13,11 @@ class LocalSaveCurrentAccount implements SaveCurrentAccount {
   LocalSaveCurrentAccount({@required this.saveSecureCacheStorage});
 
   Future<void> save(AccountEntity account) async {
-    await saveSecureCacheStorage.saveSecure(key: 'token', value: account.accessToken);
+    try {
+      await saveSecureCacheStorage.saveSecure(key: 'token', value: account.accessToken);
+    } catch (error) {
+      throw DomainError.unexpected;
+    }
   }
 }
 
@@ -24,7 +28,7 @@ abstract class SaveSecureCacheStorage {
 class SaveSecureCacheStorageSpy extends Mock implements SaveSecureCacheStorage {}
 
 void main() {
-  test('Should call SaveCacheStorage with correct values', () async {
+  test('Should call SaveSecureCacheStorage with correct values', () async {
     final saveSecureCacheStorage = SaveSecureCacheStorageSpy();
     final sut = LocalSaveCurrentAccount(saveSecureCacheStorage: saveSecureCacheStorage);
     final account = AccountEntity(faker.guid.guid());
@@ -33,4 +37,18 @@ void main() {
 
     verify(saveSecureCacheStorage.saveSecure(key: 'token', value: account.accessToken));
   });
+
+  test('Should throw UnexpectedError if SaveSecureCacheStorage throws', () async {
+    final saveSecureCacheStorage = SaveSecureCacheStorageSpy();
+    final sut = LocalSaveCurrentAccount(saveSecureCacheStorage: saveSecureCacheStorage);
+    final account = AccountEntity(faker.guid.guid());
+
+    when(saveSecureCacheStorage.saveSecure(key: anyNamed('key'), value: anyNamed('value')))
+      .thenThrow(Exception());
+
+    final future = sut.save(account);
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
 }
