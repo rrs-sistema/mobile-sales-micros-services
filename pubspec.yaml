@@ -17,6 +17,7 @@ dependencies:
   font_awesome_flutter: ^9.1.0
   otp_text_field: ^1.1.1  
   flutter_launcher_icons: ^0.9.0
+  flutter_secure_storage: ^3.3.3
   http:
   provider:
   equatable:
@@ -28,7 +29,6 @@ dev_dependencies:
   test:
   mockito:
   faker:
-
 
 flutter:
   uses-material-design: true
