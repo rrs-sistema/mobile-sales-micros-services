@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +8,10 @@ import '../../widgets/widgets.dart';
 import '../../common/common.dart';
 import 'login_presenter.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   final LoginPresenter presenter;
-  const LoginPage({Key key, this.presenter}) : super(key: key);
+  const LoginPage(this.presenter);
+  /*
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -17,28 +19,32 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  void _hideKayboard() {
-    final currectFocus = FocusScope.of(context);
-    if(!currectFocus.hasPrimaryFocus){
-      currectFocus.unfocus();
-    }
-  }
+
 
   @override
   void dispose() {
     super.dispose();
-    widget.presenter.dispose();
+    presenter.dispose();
   }
 
-  double _headerHeight = 250;
-  Key _formKey = GlobalKey<FormState>();
 
+  */
   @override
   Widget build(BuildContext context) {
+    void _hideKayboard() {
+      final currectFocus = FocusScope.of(context);
+      if (!currectFocus.hasPrimaryFocus) {
+        currectFocus.unfocus();
+      }
+    }
+
+    double _headerHeight = 250;
+    Key _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Builder(builder: (context) {
-        widget.presenter.isLoadingStream.listen((isLoading) {
+        presenter.isLoadingStream.listen((isLoading) {
           if (isLoading) {
             showLoading(context);
           } else {
@@ -46,10 +52,16 @@ class _LoginPageState extends State<LoginPage> {
           }
         });
 
-        widget.presenter.mainErrorStream.listen((error) {
+        presenter.mainErrorStream.listen((error) {
           print('Erro mainErrorStream $error');
           if (error != null) {
             showErrorMessage(context, error);
+          }
+        });
+        
+        presenter.navigateToStream.listen((page) {
+          if (page?.isNotEmpty == true) {
+            Get.offAllNamed(page);
           }
         });
 
@@ -84,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 30.0),
                         Provider(
-                          create: (_) => widget.presenter,
+                          create: (_) => presenter,
                           child: Form(
                             key: _formKey,
                             child: Column(
@@ -117,8 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                                 Container(
-                                  decoration:
-                                      ThemeHelper().buttonBoxDecoration(context),
+                                  decoration: ThemeHelper()
+                                      .buttonBoxDecoration(context),
                                   child: LoginButton(),
                                 ),
                                 Container(

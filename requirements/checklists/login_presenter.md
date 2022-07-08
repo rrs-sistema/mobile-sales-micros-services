@@ -20,4 +20,4 @@
 17.  ✅ Fechar todos os Strems no dispose
 18.  ✅ Gravar o Account no cache em caso de sucesso
 19.  ✅ Notificar o mainErrorStream caso o SaveCurrentAccount retorne erro
-20.  ⛔ Levar o usuário pra tela principal em caso de sucesso
+20.  ✅ Levar o usuário pra tela principal em caso de sucesso

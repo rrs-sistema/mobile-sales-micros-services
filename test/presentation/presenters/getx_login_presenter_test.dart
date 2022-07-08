@@ -175,6 +175,16 @@ void main() {
     await sut.auth();
   }); 
 
+  test('Should change page on success', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/products')));
+
+    await sut.auth();
+  }); 
+
+
   test('Should emit correct events on InvalidCredentialsError', () async {
     mockcAuthenticationError(DomainError.invalidCredential);
     sut.validateEmail(email);

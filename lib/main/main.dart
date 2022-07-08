@@ -22,7 +22,8 @@ class App extends StatelessWidget {
       theme: ThemeHelper().makeAppTheme(),
       initialRoute: '/login',
       getPages: [
-        GetPage(name: '/login', page: makeLoginPage)
+        GetPage(name: '/login', page: makeLoginPage),
+        GetPage(name: '/products', page: () => Scaffold(body: Text('Produtos'),))
       ],
     );
   }
