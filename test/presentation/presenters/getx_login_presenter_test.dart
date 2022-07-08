@@ -5,19 +5,23 @@ import 'package:test/test.dart';
 import 'package:delivery_micros_services/presentation/presenters/presenters.dart';
 import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
 import 'package:delivery_micros_services/domain/usecases/authentication.dart';
+import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 
 class ValidationSpy extends Mock implements Validation {}
-
 class AuthenticationSpy extends Mock implements Authentication {}
+class SaveCurrentAccountSpy extends Mock implements SaveCurrentAccount {}
+
 
 void main() {
   AuthenticationSpy authentication;
   GetxLoginPresenter sut;
   ValidationSpy validation;
+  SaveCurrentAccountSpy saveCurrentAccount;
   String email;
   String password;
+  String token;
 
   PostExpectation mockValidationCall(String field) => 
     when(validation.validate(field: field == null ? anyNamed('field') : field, value: anyNamed('value')));
@@ -29,7 +33,7 @@ void main() {
   PostExpectation mockAuthenticationCall() => when(authentication.auth(any));
 
   void mockcAuthentication() {
-    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(faker.guid.guid()));
+    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(token));
   }
 
   void mockcAuthenticationError(DomainError error) {
@@ -39,20 +43,26 @@ void main() {
   setUp(() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
-    sut = GetxLoginPresenter(validation: validation, authentication: authentication);
+    saveCurrentAccount = SaveCurrentAccountSpy();
+    sut = GetxLoginPresenter(
+      validation: validation, 
+      authentication: authentication,
+      saveCurrentAccount: saveCurrentAccount
+    );
     email = faker.internet.email();
     password = faker.internet.password();
+    token = faker.guid.guid();
     mockValidation();
     mockcAuthentication();
   });
 
-  test('Shuld call Validation with correct email', () {
+  test('Should call Validation with correct email', () {
     sut.validateEmail(email);
 
     verify(validation.validate(field: 'email', value: email)).called(1);
   });
 
-  test('Shuld emit email error if validation fails', () {
+  test('Should emit email error if validation fails', () {
     mockValidation(value: 'error');
 
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, 'error')));
@@ -62,7 +72,7 @@ void main() {
     sut.validateEmail(email);
   });
 
-  test('Shuld emit email null if validation succeeds', () {
+  test('Should emit email null if validation succeeds', () {
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
 
@@ -70,13 +80,13 @@ void main() {
     sut.validateEmail(email);
   });  
 
-  test('Shuld call Validation with correct password', () {
+  test('Should call Validation with correct password', () {
     sut.validatePassword(password);
 
     verify(validation.validate(field: 'password', value: password)).called(1);
   });
 
-  test('Shuld emit password error if validation fails', () {
+  test('Should emit password error if validation fails', () {
     mockValidation(value: 'error');
 
     sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, 'error')));
@@ -86,7 +96,7 @@ void main() {
     sut.validatePassword(password);
   });  
 
-  test('Shuld emit password null if validation succeeds', () {
+  test('Should emit password null if validation succeeds', () {
     sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.isFormValidStream.listen(expectAsync1((isValid) => expect(isValid, false)));
 
@@ -95,7 +105,7 @@ void main() {
   });   
 
 
-  test('Shuld emit password error if validation fails', () {
+  test('Should emit password error if validation fails', () {
     mockValidation(field: 'email', value: 'error');
 
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, 'error')));
@@ -107,7 +117,7 @@ void main() {
   });
 
 
-  test('Shuld emit password error if validation fails', () async {
+  test('Should emit password error if validation fails', () async {
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, null)));
     sut.passwordErrorStream.listen(expectAsync1((error) => expect(error, null)));
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
@@ -117,7 +127,7 @@ void main() {
     sut.validatePassword(password);
   });
 
-  test('Shuld call Authentication with correct values', () async {
+  test('Should call Authentication with correct values', () async {
     sut.validateEmail(email);
     sut.validatePassword(password);
     await sut.auth();
@@ -125,7 +135,16 @@ void main() {
     verify(authentication.auth(AuthenticationParams(email: email, secret: password))).called(1);
   });  
 
-  test('Shuld emit correct events on Authetication success', () async {
+  test('Should call SaveCurrentAccount with correct values', () async {
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+
+    await sut.auth();
+
+    verify(saveCurrentAccount.save(AccountEntity(token))).called(1);
+  });  
+
+  test('Should emit correct events on Authetication success', () async {
     sut.validateEmail(email);
     sut.validatePassword(password);
 
@@ -134,7 +153,7 @@ void main() {
     await sut.auth();
   }); 
 
-  test('Shuld emit correct events on InvalidCredentialsError', () async {
+  test('Should emit correct events on InvalidCredentialsError', () async {
     mockcAuthenticationError(DomainError.invalidCredential);
     sut.validateEmail(email);
     sut.validatePassword(password);
@@ -150,7 +169,7 @@ void main() {
     await sut.auth();
   }); 
 
-  test('Shuld emit correct events on UnexpectedError', () async {
+  test('Should emit correct events on UnexpectedError', () async {
     mockcAuthenticationError(DomainError.unexpected);
     sut.validateEmail(email);
     sut.validatePassword(password);
