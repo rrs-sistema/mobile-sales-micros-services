@@ -1,6 +1,6 @@
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../components/components.dart';
 import 'components/components.dart';
@@ -11,24 +11,7 @@ import 'login_presenter.dart';
 class LoginPage extends StatelessWidget {
   final LoginPresenter presenter;
   const LoginPage(this.presenter);
-  /*
 
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-
-
-
-  @override
-  void dispose() {
-    super.dispose();
-    presenter.dispose();
-  }
-
-
-  */
   @override
   Widget build(BuildContext context) {
     void _hideKayboard() {
