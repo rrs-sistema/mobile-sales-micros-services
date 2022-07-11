@@ -1,45 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:mockito/mockito.dart';
-import 'package:meta/meta.dart';
 import 'package:get/get.dart';
+import 'dart:async';
 
-class SplashPage extends StatelessWidget {
-  final SplashPresenter presenter;
-
-  SplashPage({@required this.presenter});
-
-  @override
-  Widget build(BuildContext context) {
-    presenter.loadCurrentAccount();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('RRS Sales Micros Services'),
-      ),
-      body: Builder(
-        builder: (context) {
-          presenter.navigateToController.listen((page) {
-            if(page?.isNotEmpty == true) {
-              Get.offAllNamed(page);
-            }
-          });
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
-    );
-  }
-}
-
-abstract class SplashPresenter {
-  Stream<String> get navigateToController;
-
-  Future<void> loadCurrentAccount();
-}
+import 'package:delivery_micros_services/ui/pages/pages.dart';
 
 class SplashPresenterSpy extends Mock implements SplashPresenter {}
 
