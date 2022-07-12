@@ -10,13 +10,13 @@ class SplashPresenterSpy extends Mock implements SplashPresenter {}
 
 void main() {
   SplashPresenterSpy presenter;
-  StreamController<String> navigateToController;
+  StreamController<String> navigateToStream;
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = SplashPresenterSpy();
-    navigateToController = StreamController<String>();
-    when(presenter.navigateToController)
-        .thenAnswer((_) => navigateToController.stream);
+    navigateToStream = StreamController<String>();
+    when(presenter.navigateToStream)
+        .thenAnswer((_) => navigateToStream.stream);
 
     await tester.pumpWidget(GetMaterialApp(
       initialRoute: '/',
@@ -32,7 +32,7 @@ void main() {
   }
 
   tearDown(() {
-    navigateToController.close();
+    navigateToStream.close();
   });
 
   testWidgets('Should present spinner on page load',
@@ -46,13 +46,13 @@ void main() {
       (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(presenter.loadCurrentAccount()).called(1);
+    verify(presenter.checkAccount()).called(1);
   });
 
   testWidgets('Should change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    navigateToController.add('/any_router');
+    navigateToStream.add('/any_router');
     await tester.pumpAndSettle();
 
     expect(Get.currentRoute, '/any_router');
@@ -62,11 +62,11 @@ void main() {
   testWidgets('Should not change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    navigateToController.add('');
+    navigateToStream.add('');
     await tester.pump();
     expect(Get.currentRoute, '/');
 
-    navigateToController.add(null);
+    navigateToStream.add(null);
     await tester.pump();
     expect(Get.currentRoute, '/');
 
