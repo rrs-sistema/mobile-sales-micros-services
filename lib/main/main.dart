@@ -20,10 +20,11 @@ class App extends StatelessWidget {
       title: 'Vendas',
       debugShowCheckedModeBanner: false,
       theme: ThemeHelper().makeAppTheme(),
-      initialRoute: '/login',
+      initialRoute: '/',
       getPages: [
-        GetPage(name: '/login', page: makeLoginPage),
-        GetPage(name: '/products', page: () => Scaffold(body: Text('Produtos'),))
+        GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
+        GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(name: '/products', page: () => Scaffold(body: Text('Produtos')), transition: Transition.fade)
       ],
     );
   }
