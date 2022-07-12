@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../components/components.dart';
-import 'components/components.dart';
+import './components/components.dart';
 import '../../widgets/widgets.dart';
 import '../../common/common.dart';
-import 'login_presenter.dart';
+import './login_presenter.dart';
 
 class LoginPage extends StatelessWidget {
   final LoginPresenter presenter;
@@ -14,12 +14,14 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*
     void _hideKayboard() {
       final currectFocus = FocusScope.of(context);
       if (!currectFocus.hasPrimaryFocus) {
         currectFocus.unfocus();
       }
     }
+    */
 
     double _headerHeight = 250;
     Key _formKey = GlobalKey<FormState>();
@@ -49,7 +51,7 @@ class LoginPage extends StatelessWidget {
         });
 
         return GestureDetector(
-          onTap: _hideKayboard,
+          onTap: () {},//_hideKayboard,
           child: SingleChildScrollView(
             child: Column(
               children: [
