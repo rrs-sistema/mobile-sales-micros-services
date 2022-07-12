@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 import '../../components/components.dart';
 import './components/components.dart';
-import '../../widgets/widgets.dart';
 import '../../common/common.dart';
 import './login_presenter.dart';
 
