@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-import './../../../../utils/i18n/i18n.dart';
+import './../../../helpers/helpers.dart';
 
 class CreateLoginButton extends StatelessWidget {
   @override

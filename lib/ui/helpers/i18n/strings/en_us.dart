@@ -1,6 +1,11 @@
 import './strings.dart';
 
 class EnUs implements Translations {
+  String get msgRequiredFiel => 'Required field ';
+  String get msgInvalidField => 'Invalid field ';
+  String get msgInvalidCredentials => 'Invalid credentials. ';
+  String get msgErrorDefault => 'Something went wrong. Please try again soon. ';
+
   String get addAccount => 'Add account ';
   String get accessPassword => 'Access password ';
   String get dontHaveAnAccount => "Don't have an account ";

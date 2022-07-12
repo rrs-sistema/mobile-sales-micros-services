@@ -2,7 +2,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import './../../../../utils/i18n/i18n.dart';
+import './../../../helpers/helpers.dart';
 import './../../../common/common.dart';
 import './../login_presenter.dart';
 
