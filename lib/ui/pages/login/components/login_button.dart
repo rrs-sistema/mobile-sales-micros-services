@@ -1,8 +1,10 @@
+
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/common.dart';
-import '../login_presenter.dart';
+import './../../../../utils/i18n/i18n.dart';
+import './../../../common/common.dart';
+import './../login_presenter.dart';
 
 class LoginButton extends StatelessWidget {
 
@@ -20,7 +22,7 @@ class LoginButton extends StatelessWidget {
             padding:
                 EdgeInsets.fromLTRB(40, 10, 40, 10),
             child: Text(
-              'Entrar'.toUpperCase(),
+              R.strings.logIn.toUpperCase(),
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

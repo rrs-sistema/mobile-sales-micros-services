@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
 
+import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
 import 'package:delivery_micros_services/validators/validators/validators.dart';
 
 void main() {
@@ -22,7 +23,7 @@ void main() {
   });  
 
   test('Should return error if email is invalid', () {
-    expect(sut.validate('rrs.sistema'), 'Campo inválido');
+    expect(sut.validate('rrs.sistema'), ValidationError.invalidField);
   });  
 
 }

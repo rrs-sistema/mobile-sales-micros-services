@@ -1,14 +1,15 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
 
 import 'factories/factories.dart';
 import '../ui/common/common.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
+  //R.load(Locale('en', 'US'));
   runApp(App());
 }
 

@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
 
+import 'package:delivery_micros_services/presentation/protocols/validation.dart';
 import 'package:delivery_micros_services/validators/validators/validators.dart';
 
 void main() {
@@ -13,11 +14,11 @@ void main() {
   });
 
   test('Should return error if is empty', () {
-    expect(sut.validate(''), 'Campo obrigatório');
+    expect(sut.validate(''), ValidationError.requiredField);
   });
 
   test('Should return error if is null', () {
-    expect(sut.validate(null), 'Campo obrigatório');
+    expect(sut.validate(null), ValidationError.requiredField);
   });  
 
 }
