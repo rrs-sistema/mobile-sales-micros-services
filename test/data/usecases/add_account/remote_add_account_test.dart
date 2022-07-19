@@ -59,4 +59,12 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
+  test('Should throw UnexpectedError if HttpClinete returns 404', () async {
+    mockHttpErro(HttpError.notFound);
+
+    final future = sut.add(params);
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
 }
