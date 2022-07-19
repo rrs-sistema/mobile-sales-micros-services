@@ -38,7 +38,6 @@ void main() {
   });
 
   test('Shoul call HttpClient with correct values', () async {
-
     await sut.auth(params);
 
     verify(httpClient.request(
