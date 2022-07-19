@@ -14,12 +14,17 @@ void main() {
   RemoteAddAccount sut;
   AddAccountParams params;
   Uri uri;
+  Map mockValidData() => {'accessToken': faker.guid.guid()};
 
   PostExpectation mockRequest() =>
   when(httpClient.request(uri: anyNamed('uri'), method: anyNamed('method'), body: anyNamed('body')));
 
   void mockHttpErro(HttpError error) {
     mockRequest().thenThrow(error);
+  }
+
+  void mockHttpData(Map data) {
+    mockRequest().thenAnswer((_) async => data);
   }
 
   setUp(() {
@@ -33,6 +38,7 @@ void main() {
       password: faker.internet.password(), 
       passwordConfirmation: faker.internet.password(), 
       admin: false);
+    mockHttpData(mockValidData());
   });
 
   test('Shoul call HttpClient with correct values', () async {
@@ -81,6 +87,15 @@ void main() {
     final future = sut.add(params);
 
     expect(future, throwsA(DomainError.emailInUse));
+  });
+
+  test('Should return an Account if HttpClient returns 200', () async {
+    final validData = mockValidData();
+    mockHttpData(validData);
+
+    final account = await sut.add(params);
+
+    expect(account.accessToken, validData['accessToken']);
   });
 
 }
