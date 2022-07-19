@@ -71,7 +71,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
     } on DomainError catch (error) {
       _mainError.value = null;
       switch (error) {
-        case DomainError.invalidCredential : _mainError.value = UIError.invalidCredentials;
+        case DomainError.invalidCredentials : _mainError.value = UIError.invalidCredentials;
           break;
         default: _mainError.value = UIError.unexpected;
       }

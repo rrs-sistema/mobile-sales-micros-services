@@ -75,4 +75,12 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
+  test('Should throw InvalidCredentialsError if HttpClinete returns 403', () async {
+    mockHttpErro(HttpError.forbidden);
+
+    final future = sut.add(params);
+
+    expect(future, throwsA(DomainError.emailInUse));
+  });
+
 }

@@ -75,7 +75,7 @@ void main() {
 
     final future = sut.auth(params);
 
-    expect(future, throwsA(DomainError.invalidCredential));
+    expect(future, throwsA(DomainError.invalidCredentials));
   });
 
   test('Should return an Account if HttpClient returns 200', () async {

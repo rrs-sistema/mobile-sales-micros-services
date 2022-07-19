@@ -202,7 +202,7 @@ void main() {
 
 
   test('Should emit correct events on InvalidCredentialsError', () async {
-    mockcAuthenticationError(DomainError.invalidCredential);
+    mockcAuthenticationError(DomainError.invalidCredentials);
     sut.validateEmail(email);
     sut.validatePassword(password);
 
