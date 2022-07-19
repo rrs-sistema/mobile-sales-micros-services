@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 
-import '../../../domain/helpers/domain_error.dart';
 import '../../../domain/usecases/usecases.dart';
 import '../../../domain/entities/entities.dart';
+import '../../../domain/helpers/helpers.dart';
 import '../../model/model.dart';
 import '../../http/http.dart';
 

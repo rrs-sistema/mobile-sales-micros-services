@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 
 import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 import 'package:delivery_micros_services/data/usecases/usecases.dart';
+import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
 class HttpClientSpy extends Mock implements HttpClient {}
@@ -13,6 +14,13 @@ void main() {
   RemoteAddAccount sut;
   AddAccountParams params;
   Uri uri;
+
+  PostExpectation mockRequest() =>
+  when(httpClient.request(uri: anyNamed('uri'), method: anyNamed('method'), body: anyNamed('body')));
+
+  void mockHttpErro(HttpError error) {
+    mockRequest().thenThrow(error);
+  }
 
   setUp(() {
     httpClient = HttpClientSpy();
@@ -41,6 +49,14 @@ void main() {
           'passwordConfirmation': params.passwordConfirmation
         }
       ));
+  });
+
+  test('Should throw UnexpectedError if HttpClinete returns 400', () async {
+    mockHttpErro(HttpError.badRequest);
+
+    final future = sut.add(params);
+
+    expect(future, throwsA(DomainError.unexpected));
   });
 
 }
