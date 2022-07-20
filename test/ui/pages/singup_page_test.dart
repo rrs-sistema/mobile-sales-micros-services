@@ -12,7 +12,7 @@ class SignUpPresenterSpy extends Mock implements SignUpPresenter {}
 
 void main() {
   SignUpPresenter presenter;
-  
+
   StreamController<UIError> passwordConfirmationErrorController;
   StreamController<UIError> passwordErrorController;
   StreamController<UIError> emailErrorController;
@@ -27,13 +27,13 @@ void main() {
 
   void mockStreams() {
     when(presenter.passwordConfirmationErrorStream)
-        .thenAnswer((_) => passwordConfirmationErrorController.stream);    
+        .thenAnswer((_) => passwordConfirmationErrorController.stream);
     when(presenter.emailErrorStream)
         .thenAnswer((_) => emailErrorController.stream);
     when(presenter.passwordErrorStream)
         .thenAnswer((_) => passwordErrorController.stream);
     when(presenter.nameErrorStream)
-        .thenAnswer((_) => nameErrorController.stream);        
+        .thenAnswer((_) => nameErrorController.stream);
   }
 
   void closeStreams() {
@@ -115,6 +115,22 @@ void main() {
     //final passwordConfirmation = faker.internet.password();
     await tester.enterText(find.bySemanticsLabel('Confirmar senha '), password);
     verify(presenter.validatePasswordConfirmation(password));
-
   });
+
+  testWidgets('Should presente email error', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    emailErrorController.add(UIError.invalidField);
+    await tester.pump();
+    expect(find.text('Campo inválido'), findsOneWidget);
+
+    emailErrorController.add(UIError.requiredField);
+    await tester.pump();
+    expect(find.text('Campo obrigatório'), findsOneWidget);
+
+    emailErrorController.add(null);
+    await tester.pump();
+    expect(find.bySemanticsLabel('Email de usuário '), findsOneWidget);
+  });  
+
 }

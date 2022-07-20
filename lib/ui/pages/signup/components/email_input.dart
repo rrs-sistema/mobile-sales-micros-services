@@ -14,7 +14,7 @@ class EmailInput extends StatelessWidget {
           return TextFormField(
             decoration: InputDecoration(
               labelText: R.strings.userEmail,
-              //errorText: snapshot.hasData ? snapshot.data.description : null,
+              errorText: snapshot.hasData ? snapshot.data.description : null,
             ),
             onChanged: presenter.validateEmail,
           );
