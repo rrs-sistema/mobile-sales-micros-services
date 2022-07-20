@@ -1,13 +1,17 @@
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 
 import './../../../ui/helpers/helpers.dart';
 import './components/components.dart';
 import './../../common/common.dart';
+import './signup_presenter.dart';
 
 class SignUpPage extends StatelessWidget {
-  const SignUpPage();
+
+  final SignUpPresenter presenter;
+  const SignUpPage(this.presenter);
 
   @override
   Widget build(BuildContext context) {
@@ -45,162 +49,165 @@ class SignUpPage extends StatelessWidget {
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(height: 30.0),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            Container(
-                              child: NameInput(),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
-                            ),
-                            SizedBox(height: 30.0),
-                            Container(
-                              child: EmailInput(),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
-                            ),
-                            SizedBox(height: 30.0),
-                            Container(
-                              child: PasswordInput(),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
-                            ),
-                            SizedBox(height: 30.0),
-                            Container(
-                              child: ConfirmPasswordInput(),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
-                            ),
-                            SizedBox(height: 30.0),
-                            Text("Usuário é administrador",
-                                style: TextStyle(fontSize: 16)),
-                            SizedBox(height: 10.0),
-                            Container(
-                              child: RadioUserAdmin(),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
-                            ),
-                            SizedBox(height: 10.0),
-                            Container(
-                              child: CheckAcceptTermAndCondition(),
-                              decoration:
-                                  ThemeHelper().inputBoxDecorationShaddow(),
-                            ),
-                            SizedBox(height: 30.0),
-                            Container(
-                              decoration:
-                                  ThemeHelper().buttonBoxDecoration(context),
-                              child: SignUpButton(),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // Voltar para a tela de login
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 30.0),
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
-                                  alignment: Alignment.topRight,
-                                  child: GestureDetector(
-                                    onTap: () {},
-                                    child: Text(
-                                      R.strings.alreadyHaveAnAccount,
-                                      style: TextStyle(
-                                        color: Colors.deepPurple.shade300,
-                                        fontWeight: FontWeight.bold,
+                      Provider(
+                        create: (_) => presenter,
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              Container(
+                                child: NameInput(),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 30.0),
+                              Container(
+                                child: EmailInput(),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 30.0),
+                              Container(
+                                child: PasswordInput(),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 30.0),
+                              Container(
+                                child: ConfirmPasswordInput(),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 30.0),
+                              Text("Usuário é administrador",
+                                  style: TextStyle(fontSize: 16)),
+                              SizedBox(height: 10.0),
+                              Container(
+                                child: RadioUserAdmin(),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 10.0),
+                              Container(
+                                child: CheckAcceptTermAndCondition(),
+                                decoration:
+                                    ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              SizedBox(height: 30.0),
+                              Container(
+                                decoration:
+                                    ThemeHelper().buttonBoxDecoration(context),
+                                child: SignUpButton(),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  // Voltar para a tela de login
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 30.0),
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                                    alignment: Alignment.topRight,
+                                    child: GestureDetector(
+                                      onTap: () {},
+                                      child: Text(
+                                        R.strings.alreadyHaveAnAccount,
+                                        style: TextStyle(
+                                          color: Colors.deepPurple.shade300,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
+                              ),                            
+                              Text(
+                                R.strings.createAccountWithSocial,
+                                style: TextStyle(color: Colors.grey),
                               ),
-                            ),                            
-                            Text(
-                              R.strings.createAccountWithSocial,
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            SizedBox(height: 25.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  child: FaIcon(
-                                    FontAwesomeIcons.googlePlus,
-                                    size: 35,
-                                    color: HexColor("#EC2D2F"),
-                                  ),
-                                  onTap: () {
-                                    // setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Google Plus",
-                                            "You tap on GooglePlus social icon.",
-                                            context);
-                                      },
-                                    );
-                                    //});
-                                  },
-                                ),
-                                SizedBox(
-                                  width: 30.0,
-                                ),
-                                GestureDetector(
-                                  child: Container(
-                                    padding: EdgeInsets.all(0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      border: Border.all(
-                                          width: 5, color: HexColor("#40ABF0")),
-                                      color: HexColor("#40ABF0"),
-                                    ),
+                              SizedBox(height: 25.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
                                     child: FaIcon(
-                                      FontAwesomeIcons.twitter,
-                                      size: 23,
-                                      color: HexColor("#FFFFFF"),
+                                      FontAwesomeIcons.googlePlus,
+                                      size: 35,
+                                      color: HexColor("#EC2D2F"),
                                     ),
+                                    onTap: () {
+                                      // setState(() {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ThemeHelper().alartDialog(
+                                              "Google Plus",
+                                              "You tap on GooglePlus social icon.",
+                                              context);
+                                        },
+                                      );
+                                      //});
+                                    },
                                   ),
-                                  onTap: () {
-                                    //setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Twitter",
-                                            "You tap on Twitter social icon.",
-                                            context);
-                                      },
-                                    );
-                                    //});
-                                  },
-                                ),
-                                SizedBox(
-                                  width: 30.0,
-                                ),
-                                GestureDetector(
-                                  child: FaIcon(
-                                    FontAwesomeIcons.facebook,
-                                    size: 35,
-                                    color: HexColor("#3E529C"),
+                                  SizedBox(
+                                    width: 30.0,
                                   ),
-                                  onTap: () {
-                                    //setState(() {
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return ThemeHelper().alartDialog(
-                                            "Facebook",
-                                            "You tap on Facebook social icon.",
-                                            context);
-                                      },
-                                    );
-                                    //});
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
+                                  GestureDetector(
+                                    child: Container(
+                                      padding: EdgeInsets.all(0),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(100),
+                                        border: Border.all(
+                                            width: 5, color: HexColor("#40ABF0")),
+                                        color: HexColor("#40ABF0"),
+                                      ),
+                                      child: FaIcon(
+                                        FontAwesomeIcons.twitter,
+                                        size: 23,
+                                        color: HexColor("#FFFFFF"),
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      //setState(() {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ThemeHelper().alartDialog(
+                                              "Twitter",
+                                              "You tap on Twitter social icon.",
+                                              context);
+                                        },
+                                      );
+                                      //});
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: 30.0,
+                                  ),
+                                  GestureDetector(
+                                    child: FaIcon(
+                                      FontAwesomeIcons.facebook,
+                                      size: 35,
+                                      color: HexColor("#3E529C"),
+                                    ),
+                                    onTap: () {
+                                      //setState(() {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ThemeHelper().alartDialog(
+                                              "Facebook",
+                                              "You tap on Facebook social icon.",
+                                              context);
+                                        },
+                                      );
+                                      //});
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

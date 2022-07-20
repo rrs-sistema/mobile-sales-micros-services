@@ -10,7 +10,7 @@ import 'package:delivery_micros_services/ui/pages/pages.dart';
 
 class LoginPresenterSpy extends Mock implements LoginPresenter {}
 
-void main(){
+void main() {
   LoginPresenter presenter;
   StreamController<UIError> emailErrorController;
   StreamController<UIError> passwordErrorController;
