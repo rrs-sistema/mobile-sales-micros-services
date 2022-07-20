@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
+import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';

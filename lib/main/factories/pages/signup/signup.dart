@@ -1,0 +1,1 @@
+export './signup_page_factory.dart';
