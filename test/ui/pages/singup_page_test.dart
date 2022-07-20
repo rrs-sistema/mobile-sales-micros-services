@@ -117,6 +117,22 @@ void main() {
     verify(presenter.validatePasswordConfirmation(password));
   });
 
+  testWidgets('Should presente name error', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    nameErrorController.add(UIError.invalidField);
+    await tester.pump();
+    expect(find.text('Campo inválido'), findsOneWidget);
+
+    nameErrorController.add(UIError.requiredField);
+    await tester.pump();
+    expect(find.text('Campo obrigatório'), findsOneWidget);
+
+    nameErrorController.add(null);
+    await tester.pump();
+    expect(find.bySemanticsLabel('Nome de usuário '), findsOneWidget);
+  });  
+
   testWidgets('Should presente email error', (WidgetTester tester) async{
     await loadPage(tester);
 
@@ -131,6 +147,6 @@ void main() {
     emailErrorController.add(null);
     await tester.pump();
     expect(find.bySemanticsLabel('Email de usuário '), findsOneWidget);
-  });  
+  });
 
 }

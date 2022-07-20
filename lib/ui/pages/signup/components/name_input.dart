@@ -14,7 +14,7 @@ class NameInput extends StatelessWidget {
           return TextFormField(
             decoration: InputDecoration(
               labelText: R.strings.userName,
-              //errorText: snapshot.hasData ? snapshot.data.description : null,
+              errorText: snapshot.hasData ? snapshot.data.description : null,
             ),
             onChanged: presenter.validateName,
           );
