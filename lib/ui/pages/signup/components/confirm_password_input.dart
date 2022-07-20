@@ -15,7 +15,7 @@ class ConfirmPasswordInput extends StatelessWidget {
           return TextFormField(
             decoration: InputDecoration(
               labelText: R.strings.confirmPassword,
-              //errorText: snapshot.hasData ? snapshot.data.description : null,
+              errorText: snapshot.hasData ? snapshot.data.description : null,
             ),
             obscureText: true,
             onChanged: presenter.validatePasswordConfirmation
