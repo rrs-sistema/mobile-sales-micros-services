@@ -8,11 +8,11 @@
 5.  ✅ Mostrar mensagem de erro se o email for inválido
 6.  ✅ Remover mensagem de erro se o email dor válido
 7.  ✅ Validar senha quando o usuário for digitar no campo
-8.  ⛔ Mostrar mensagem de erro se a senha for inválida
-9.  ⛔ Remover mensagem de erro se a senha for válida
+8.  ✅ Mostrar mensagem de erro se a senha for inválida
+9.  ✅ Remover mensagem de erro se a senha for válida
 10.  ✅ Validar nome quando o usuário for digitar no campo
-11.  ⛔ Mostrar mensagem de erro se o nome for inválido
-12.  ⛔ Remover mensagem de erro se o nome for válido
+11.  ✅ Mostrar mensagem de erro se o nome for inválido
+12.  ✅ Remover mensagem de erro se o nome for válido
 13.  ✅ Validar confirmação da senha quando o usuário digitar no campo
 14.  ⛔ Mostrar mensagem de erro se a confirmação de senha for inválida
 15.  ⛔ Remover mensagem de erro se a confirmação de senha for válido

@@ -149,4 +149,19 @@ void main() {
     expect(find.bySemanticsLabel('Email de usuário '), findsOneWidget);
   });
 
+  testWidgets('Should presente password error', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    passwordErrorController.add(UIError.invalidField);
+    await tester.pump();
+    expect(find.text('Campo inválido'), findsOneWidget);
+
+    passwordErrorController.add(UIError.requiredField);
+    await tester.pump();
+    expect(find.text('Campo obrigatório'), findsOneWidget);
+
+    passwordErrorController.add(null);
+    await tester.pump();
+    expect(find.bySemanticsLabel('Senha de acesso '), findsOneWidget);
+  });
 }
