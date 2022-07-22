@@ -20,6 +20,7 @@ void main() {
   StreamController<UIError> mainErrorController;
   StreamController<bool> isFormValidController;
   StreamController<bool> isLoadingController;
+  StreamController<String> navigateToController;
 
   void initStreams() {
     passwordConfirmationErrorController = StreamController<UIError>();
@@ -27,6 +28,7 @@ void main() {
     emailErrorController = StreamController<UIError>();
     nameErrorController = StreamController<UIError>();
     mainErrorController = StreamController<UIError>();
+    navigateToController = StreamController<String>();
     isFormValidController = StreamController<bool>();
     isLoadingController = StreamController<bool>();
   }
@@ -42,6 +44,7 @@ void main() {
         .thenAnswer((_) => nameErrorController.stream);
     when(presenter.mainErrorStream)
         .thenAnswer((_) => mainErrorController.stream);
+    when(presenter.navigateToStream).thenAnswer((_) => navigateToController.stream);
     when(presenter.isFormValidStream)
         .thenAnswer((_) => isFormValidController.stream);
     when(presenter.isLoadingStream)
@@ -54,6 +57,7 @@ void main() {
     emailErrorController.close();
     nameErrorController.close();
     mainErrorController.close();
+    navigateToController.close();
     isFormValidController.close();
     isLoadingController.close();
   }
@@ -66,6 +70,7 @@ void main() {
       initialRoute: '/signup',
       getPages: [
         GetPage(name: '/signup', page: () => SignUpPage(presenter)),
+        GetPage(name: '/any_route', page: () => Scaffold(body: Text('fake page'),)),
       ],
     );
     await tester.pumpWidget(signPager);
@@ -76,8 +81,7 @@ void main() {
     closeStreams();
   });
 
-  testWidgets('Should load with correct initial state',
-      (WidgetTester tester) async {
+  testWidgets('Should load with correct initial state', (WidgetTester tester) async {
     await loadPage(tester);
 
     final nameTextChildren = find.descendant(
@@ -111,8 +115,7 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
-  testWidgets('Should call validade with correct values',
-      (WidgetTester tester) async {
+  testWidgets('Should call validade with correct values', (WidgetTester tester) async {
     await loadPage(tester);
 
     final name = faker.person.name();
@@ -180,8 +183,7 @@ void main() {
     expect(find.bySemanticsLabel('Senha de acesso '), findsOneWidget);
   });
 
-  testWidgets('Should presente passwordConfirmation error',
-      (WidgetTester tester) async {
+  testWidgets('Should presente passwordConfirmation error', (WidgetTester tester) async {
     await loadPage(tester);
 
     passwordConfirmationErrorController.add(UIError.invalidField);
@@ -197,8 +199,7 @@ void main() {
     expect(find.bySemanticsLabel('Confirmar senha '), findsOneWidget);
   });
 
-  testWidgets('Should enable button if form is valid',
-      (WidgetTester tester) async {
+  testWidgets('Should enable button if form is valid', (WidgetTester tester) async {
     await loadPage(tester);
 
     isFormValidController.add(true);
@@ -208,8 +209,7 @@ void main() {
     expect(button.onPressed, isNotNull);
   });
 
-  testWidgets('Should disable button if form is invalid',
-      (WidgetTester tester) async {
+  testWidgets('Should disable button if form is invalid', (WidgetTester tester) async {
     await loadPage(tester);
 
     isFormValidController.add(false);
@@ -271,4 +271,27 @@ void main() {
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'),
         findsOneWidget);
   });
+  testWidgets('Should change page', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    navigateToController.add('/any_route');
+    await tester.pumpAndSettle();// Espera a animação acontecer
+
+    expect(Get.currentRoute, '/any_route');
+    expect(find.text('fake page'), findsOneWidget);
+  }); 
+
+  testWidgets('Should not change page', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    navigateToController.add('');
+    await tester.pump();
+    expect(Get.currentRoute, '/signup');
+
+    navigateToController.add(null);
+    await tester.pump();
+    expect(Get.currentRoute, '/signup');
+
+  });  
+
 }

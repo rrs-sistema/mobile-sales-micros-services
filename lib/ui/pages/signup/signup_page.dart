@@ -2,6 +2,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import './../../../ui/helpers/helpers.dart';
 import './../../components/components.dart';
@@ -34,7 +35,12 @@ class SignUpPage extends StatelessWidget {
           if (error != null) {
             showErrorMessage(context, error.description);
           }
-        });         
+        });   
+        presenter.navigateToStream.listen((page) {
+          if (page?.isNotEmpty == true) {
+            Get.offAllNamed(page);
+          }
+        });              
         return SingleChildScrollView(
           child: Column(
             children: [
