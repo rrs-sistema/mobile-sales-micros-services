@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/material.dart';
 
 import './../../../ui/helpers/helpers.dart';
+import './../../components/components.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 import './signup_presenter.dart';
@@ -21,6 +22,13 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Builder(builder: (context) {
+        presenter.isLoadingStream.listen((isLoading) {
+          if (isLoading) {
+            showLoading(context);
+          } else {
+            hideLoading(context);
+          }
+        });        
         return SingleChildScrollView(
           child: Column(
             children: [
