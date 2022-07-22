@@ -140,7 +140,6 @@ void main() {
     sut.validatePassword(password);
   });
 
-
   test('Should enable form button if all field is valid', () async {
     expectLater(sut.isFormValidStream, emitsInOrder([false, true]));
 
@@ -199,7 +198,6 @@ void main() {
 
     await sut.auth();
   }); 
-
 
   test('Should emit correct events on InvalidCredentialsError', () async {
     mockcAuthenticationError(DomainError.invalidCredentials);
