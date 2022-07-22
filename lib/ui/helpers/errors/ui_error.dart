@@ -1,10 +1,11 @@
-import 'package:delivery_micros_services/ui/helpers/helpers.dart';
+import './../helpers.dart';
 
 enum UIError {
   requiredField,
   invalidField,
   unexpected,
-  invalidCredentials
+  invalidCredentials,
+  emailInUse
 }
 
 extension UIErrorExtension on UIError {
@@ -13,7 +14,8 @@ extension UIErrorExtension on UIError {
       case UIError.requiredField: return R.strings.msgRequiredFiel;
       case UIError.invalidField: return R.strings.msgInvalidField;
       case UIError.invalidCredentials: return R.strings.msgInvalidCredentials;
-      default: return R.strings.msgErrorDefault;
+      case UIError.emailInUse: return R.strings.msgEmailInUse;
+      default: return R.strings.msgUnexpectedError;
     }
   }
 }

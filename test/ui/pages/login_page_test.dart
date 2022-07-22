@@ -193,7 +193,7 @@ void main() {
   testWidgets('Should presente error message if authentication fails', (WidgetTester tester) async{
     await loadPage(tester);
 
-    passwordErrorController.add(UIError.invalidCredentials);
+    mainErrorController.add(UIError.invalidCredentials);
     await tester.pump();
 
     expect(find.text('Credenciais inválidas.'), findsOneWidget);
@@ -202,7 +202,7 @@ void main() {
   testWidgets('Should presente error message if authentication throws', (WidgetTester tester) async{
     await loadPage(tester);
 
-    passwordErrorController.add(UIError.unexpected);
+    mainErrorController.add(UIError.unexpected);
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);

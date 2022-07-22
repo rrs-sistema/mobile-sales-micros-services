@@ -28,7 +28,13 @@ class SignUpPage extends StatelessWidget {
           } else {
             hideLoading(context);
           }
-        });        
+        });       
+        presenter.mainErrorStream.listen((error) {
+          print('Erro mainErrorStream $error');
+          if (error != null) {
+            showErrorMessage(context, error.description);
+          }
+        });         
         return SingleChildScrollView(
           child: Column(
             children: [
