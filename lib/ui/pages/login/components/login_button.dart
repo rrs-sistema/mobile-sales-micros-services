@@ -1,4 +1,3 @@
-
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +9,7 @@ class LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-     final presenter = Provider.of<LoginPresenter>(context);
-
+    final presenter = Provider.of<LoginPresenter>(context);
     return StreamBuilder<bool>(
       stream: presenter.isFormValidStream,
       builder: (context, snapshot) {
@@ -30,11 +27,6 @@ class LoginButton extends StatelessWidget {
             ),
           ),
           onPressed: snapshot.data == true ? presenter.auth : null
-          /*
-          onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));
-          },
-          */
         );
       }
     );

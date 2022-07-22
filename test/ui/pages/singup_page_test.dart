@@ -17,12 +17,14 @@ void main() {
   StreamController<UIError> passwordErrorController;
   StreamController<UIError> emailErrorController;
   StreamController<UIError> nameErrorController;
+  StreamController<bool> isFormValidController;
 
   void initStreams() {
     passwordConfirmationErrorController = StreamController<UIError>();
     passwordErrorController = StreamController<UIError>();
     emailErrorController = StreamController<UIError>();
     nameErrorController = StreamController<UIError>();
+    isFormValidController = StreamController<bool>();
   }
 
   void mockStreams() {
@@ -34,6 +36,7 @@ void main() {
         .thenAnswer((_) => passwordErrorController.stream);
     when(presenter.nameErrorStream)
         .thenAnswer((_) => nameErrorController.stream);
+    when(presenter.isFormValidStream).thenAnswer((_) => isFormValidController.stream);
   }
 
   void closeStreams() {
@@ -41,6 +44,7 @@ void main() {
     passwordErrorController.close();
     emailErrorController.close();
     nameErrorController.close();
+    isFormValidController.close();
   }
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -61,8 +65,7 @@ void main() {
     closeStreams();
   });
 
-  testWidgets('Should load with correct initial state',
-      (WidgetTester tester) async {
+  testWidgets('Should load with correct initial state', (WidgetTester tester) async {
     await loadPage(tester);
 
     final nameTextChildren = find.descendant(
@@ -96,8 +99,8 @@ void main() {
     expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
-  testWidgets('Should call validade with correct values',
-      (WidgetTester tester) async {
+  
+  testWidgets('Should call validade with correct values', (WidgetTester tester) async {
     await loadPage(tester);
 
     final name = faker.person.name();
@@ -181,4 +184,24 @@ void main() {
     expect(find.bySemanticsLabel('Confirmar senha '), findsOneWidget);
   });
 
+  testWidgets('Should enable button if form is valid', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    isFormValidController.add(true);
+    await tester.pump();
+
+    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(button.onPressed, isNotNull);
+  }); 
+
+  testWidgets('Should disable button if form is invalid', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    isFormValidController.add(false);
+    await tester.pump();
+
+    final button = tester.widget<ElevatedButton>(find.byType(ElevatedButton));
+    expect(button.onPressed, null);
+  }); 
+  
 }
