@@ -34,7 +34,7 @@ void main() {
   PostExpectation mockAuthenticationCall() => when(authentication.auth(any));
 
   void mockcAuthentication() {
-    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(token));
+    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(accessToken: token));
   }
 
   void mockcAuthenticationError(DomainError error) {
@@ -162,7 +162,7 @@ void main() {
 
     await sut.auth();
 
-    verify(saveCurrentAccount.save(AccountEntity(token))).called(1);
+    verify(saveCurrentAccount.save(AccountEntity(accessToken: token))).called(1);
   });  
 
   test('Should emit UnexpectedError if SaveCurrentAccount fails', () async {

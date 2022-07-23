@@ -10,6 +10,7 @@ class GetxSignUpPresenter extends GetxController {
 
   final Validation validation;
   final AddAccount addAccount;
+  final SaveCurrentAccount saveCurrentAccount;
 
   String _name;
   bool _admin;
@@ -29,7 +30,7 @@ class GetxSignUpPresenter extends GetxController {
   Stream<UIError> get passwordConfirmationErrorStream => _passwordConfirmationError.stream;
   Stream<bool> get isFormValidStream => _isFormValid.stream;
 
-  GetxSignUpPresenter({@required this.validation, this.addAccount});
+  GetxSignUpPresenter({@required this.validation, this.addAccount, this.saveCurrentAccount});
 
   void validateEmail(String email) {
     _email = email;
@@ -82,12 +83,13 @@ class GetxSignUpPresenter extends GetxController {
   }
   
   Future<void> signUp() async {
-    await addAccount.add(AddAccountParams(
+    final account = await addAccount.add(AddAccountParams(
       name: _name, 
       email: _email, 
       password: _password, 
       passwordConfirmation: _passwordConfirmation, 
       admin: _admin));
+      await saveCurrentAccount.save(account);
   }
 
 }

@@ -4,7 +4,7 @@ class AccountEntity extends Equatable {
 
   final String accessToken;
   
-  AccountEntity(this.accessToken);
+  AccountEntity({this.accessToken});
 
   List get props => [accessToken];
 

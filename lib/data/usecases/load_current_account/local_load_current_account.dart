@@ -13,7 +13,7 @@ class LocalLoadCurrentAccount implements LoadCurrentAccount {
   Future<AccountEntity> load() async {
     try {
       final accessToken = await fetchSecureCacheStorage.fetchSecure('accessToken');
-      return AccountEntity(accessToken);      
+      return AccountEntity(accessToken: accessToken);      
     } catch (error) {
       throw DomainError.unexpected;
     }
