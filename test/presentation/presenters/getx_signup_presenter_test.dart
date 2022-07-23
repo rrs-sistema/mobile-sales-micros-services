@@ -7,6 +7,7 @@ import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
 import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
+import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 
 class AddAccountSpy extends Mock implements AddAccount {}
 
@@ -41,6 +42,12 @@ void main() {
     mockAddAccountCall().thenAnswer((_) async => AccountEntity(accessToken: token));
   }
 
+  PostExpectation mockSaveCurrentAccountCall() => when(saveCurrentAccount.save(any));
+
+  void mockcSaveCurrentAccountError() {
+    mockSaveCurrentAccountCall().thenThrow(DomainError.unexpected);
+  }
+
   setUp(() {
     validation = ValidationSpy();
     addAccount = AddAccountSpy();
@@ -58,6 +65,7 @@ void main() {
     token = faker.guid.guid();
     mockValidation();
     mockAddAccount();
+    mockcSaveCurrentAccountError();
   });
 
   test('Should call Validation with correct email', () {
@@ -264,6 +272,25 @@ void main() {
 
     verify(saveCurrentAccount.save(AccountEntity(accessToken: token))).called(1);
   });  
+
+  test('Should emit UnexpectedError if SaveCurrentAccount fails', () async {
+    mockcSaveCurrentAccountError();
+    sut.validateName(name);
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    sut.validatePasswordConfirmation(passwordConfirmation);
+    sut.validateAdmin(admin);
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    sut.mainErrorStream.listen((error) {
+      if(error != null)
+        expect(error, UIError.unexpected);
+      else 
+        expect(error, null);
+     });
+
+    await sut.signUp();
+  });
 
 
 }

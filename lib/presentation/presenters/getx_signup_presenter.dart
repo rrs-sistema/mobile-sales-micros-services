@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 
+import './../../domain/helpers/domain_error.dart';
 import './../../ui/helpers/errors/errors.dart';
 import './../../domain/usecases/usecases.dart';
 import './../protocols/protocols.dart';
@@ -22,13 +23,17 @@ class GetxSignUpPresenter extends GetxController {
   var _nameError = Rx<UIError>();
   var _passwordError = Rx<UIError>();
   var _passwordConfirmationError = Rx<UIError>();
+  var _mainError = Rx<UIError>();
   var _isFormValid = false.obs;
+  var _isLoading = false.obs;
 
   Stream<UIError> get emailErrorStream => _emailError.stream;
   Stream<UIError> get nameErrorStream => _nameError.stream;
   Stream<UIError> get passwordErrorStream => _passwordError.stream;
   Stream<UIError> get passwordConfirmationErrorStream => _passwordConfirmationError.stream;
+  Stream<UIError> get mainErrorStream => _mainError.stream;
   Stream<bool> get isFormValidStream => _isFormValid.stream;
+  Stream<bool> get isLoadingStream => _isLoading.stream;
 
   GetxSignUpPresenter({@required this.validation, this.addAccount, this.saveCurrentAccount});
 
@@ -83,13 +88,24 @@ class GetxSignUpPresenter extends GetxController {
   }
   
   Future<void> signUp() async {
-    final account = await addAccount.add(AddAccountParams(
-      name: _name, 
-      email: _email, 
-      password: _password, 
-      passwordConfirmation: _passwordConfirmation, 
-      admin: _admin));
-      await saveCurrentAccount.save(account);
+    try {
+      _isLoading.value = true;
+      final account = await addAccount.add(AddAccountParams(
+        name: _name, 
+        email: _email, 
+        password: _password, 
+        passwordConfirmation: _passwordConfirmation, 
+        admin: _admin));
+        await saveCurrentAccount.save(account);      
+    } on DomainError catch (error) {
+      _mainError.value = null;
+      switch (error) {
+        // case DomainError.invalidCredentials : _mainError.value = UIError.invalidCredentials;
+        //   break;
+        default: _mainError.value = UIError.unexpected;
+      }
+      _isLoading.value = false;
+    }
   }
 
 }
