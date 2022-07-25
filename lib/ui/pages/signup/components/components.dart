@@ -1,5 +1,6 @@
 export './check_accept_term_and_condition.dart';
 export './confirm_password_input.dart';
+export './to_go_login_button.dart';
 export './radio_user_admin.dart';
 export './password_input.dart';
 export './header_widget.dart';

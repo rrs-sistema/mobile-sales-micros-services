@@ -23,6 +23,7 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Builder(builder: (context) {
+        if(presenter != null) {
         presenter.isLoadingStream.listen((isLoading) {
           if (isLoading) {
             showLoading(context);
@@ -39,7 +40,8 @@ class SignUpPage extends StatelessWidget {
           if (page?.isNotEmpty == true) {
             Get.offAllNamed(page);
           }
-        });              
+        }); 
+        }             
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -118,28 +120,11 @@ class SignUpPage extends StatelessWidget {
                                     ThemeHelper().buttonBoxDecoration(context),
                                 child: SignUpButton(),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  // Voltar para a tela de login
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 30.0),
-                                  child: Container(
-                                    margin: EdgeInsets.fromLTRB(10, 0, 10, 20),
-                                    alignment: Alignment.topRight,
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: Text(
-                                        R.strings.alreadyHaveAnAccount,
-                                        style: TextStyle(
-                                          color: Colors.deepPurple.shade300,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),                            
+                              Container(
+                                margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                                //child: Text('Don\'t have an account? Create'),
+                                child: ToGoLoginButton(),
+                              ),                              
                               Text(
                                 R.strings.createAccountWithSocial,
                                 style: TextStyle(color: Colors.grey),

@@ -109,7 +109,7 @@ class LoginPage extends StatelessWidget {
                               Container(
                                 margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
                                 //child: Text('Don\'t have an account? Create'),
-                                child: CreateLoginButton(),
+                                child: ToGoSignUpButton(),
                               ),
                             ],
                           ),

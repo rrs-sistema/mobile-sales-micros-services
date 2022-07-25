@@ -33,8 +33,10 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
   Stream<UIError> get nameErrorStream => _nameError.stream;
   Stream<UIError> get passwordErrorStream => _passwordError.stream;
   Stream<UIError> get passwordConfirmationErrorStream => _passwordConfirmationError.stream;
+  
   Stream<UIError> get isAdminErrorStream => _isAdminError.stream;
   Stream<UIError> get mainErrorStream => _mainError.stream;
+
   Stream<String> get navigateToStream => _navigateTo.stream;
   Stream<bool> get isFormValidStream => _isFormValid.stream;
   Stream<bool> get isLoadingStream => _isLoading.stream;
@@ -117,6 +119,10 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
       }
       _isLoading.value = false;
     }
+  }
+
+  void goToLogin() {
+    _navigateTo.value = '/login';
   }
 
 }
