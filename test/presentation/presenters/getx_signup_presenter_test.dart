@@ -336,5 +336,4 @@ void main() {
     sut.goToLogin();
   }); 
 
-
 }
