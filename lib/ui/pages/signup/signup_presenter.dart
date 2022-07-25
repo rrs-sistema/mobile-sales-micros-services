@@ -17,5 +17,4 @@ abstract class SignUpPresenter {
   void validatePasswordConfirmation(String password);  
   void validateAdmin(bool admin);  
   Future<void> signUp();  
-  void dispose();
 }

@@ -1,25 +1,23 @@
-import 'package:flutter/gestures.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import './../../../helpers/helpers.dart';
+import './../login_presenter.dart';
 
 class CreateLoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text.rich(
-      TextSpan(children: [
-        TextSpan(text: R.strings.dontHaveAnAccount),
-        TextSpan(
-          text: R.strings.addAccount,
-          recognizer: TapGestureRecognizer()
-            ..onTap = () {
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationPage()));
-            },
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).accentColor),
-        ),
-      ]),
+    final presenter = Provider.of<LoginPresenter>(context);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(R.strings.dontHaveAnAccount),
+        TextButton(
+          child: Text(R.strings.addAccount),
+            onPressed: presenter.goToSignUp,
+            ),
+      ],
     );
   }
 }

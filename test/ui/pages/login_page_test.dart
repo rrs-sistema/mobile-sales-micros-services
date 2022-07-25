@@ -45,7 +45,7 @@ void main() {
     mainErrorController.close();   
     navigateToController.close();  
   }
-  
+
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
     initStreams();
@@ -230,5 +230,16 @@ void main() {
     expect(Get.currentRoute, '/login');
 
   });  
+
+   testWidgets('Should call goToSignUp on link click', (WidgetTester tester) async{
+    await loadPage(tester);
+    
+    final button = find.byType(TextButton);
+    await tester.ensureVisible(button);
+    await tester.tap(button);
+    await tester.pump();
+
+    verify(presenter.goToSignUp()).called(1);
+  });
 
 }

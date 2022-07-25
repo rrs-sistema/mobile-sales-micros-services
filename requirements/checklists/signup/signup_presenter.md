@@ -31,4 +31,4 @@
 28.  ✅ Gravar o Account no cache em caso de sucesso
 29.  ✅ Notificar o mainErrorStream caso SaveCurrentAccount retorne erro
 30.  ✅ Lavar o usuário para tela de Produtos em caso de sucesso
-31.  ❌ Levar o usuário para a tela de Login ao clicar no link de voltar para login
+31.  ✅ Levar o usuário para a tela de Login ao clicar no link de voltar para login
