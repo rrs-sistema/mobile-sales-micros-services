@@ -1,29 +1,31 @@
-import 'package:get/get.dart';
 import 'package:meta/meta.dart';
+import 'package:get/get.dart';
 
 import './../../domain/helpers/domain_error.dart';
 import './../../ui/helpers/errors/errors.dart';
 import './../../domain/usecases/usecases.dart';
 import './../protocols/protocols.dart';
+import './../../ui/pages/pages.dart';
 
-
-class GetxSignUpPresenter extends GetxController {
+class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
 
   final Validation validation;
   final AddAccount addAccount;
   final SaveCurrentAccount saveCurrentAccount;
 
   String _name;
-  bool _admin;
   String _email;
   String _password;
   String _passwordConfirmation;
+  bool _admin;
 
   var _emailError = Rx<UIError>();
   var _nameError = Rx<UIError>();
   var _passwordError = Rx<UIError>();
   var _passwordConfirmationError = Rx<UIError>();
+  var _isAdminError = Rx<UIError>();
   var _mainError = Rx<UIError>();
+  var _navigateTo = RxString();
   var _isFormValid = false.obs;
   var _isLoading = false.obs;
 
@@ -31,11 +33,17 @@ class GetxSignUpPresenter extends GetxController {
   Stream<UIError> get nameErrorStream => _nameError.stream;
   Stream<UIError> get passwordErrorStream => _passwordError.stream;
   Stream<UIError> get passwordConfirmationErrorStream => _passwordConfirmationError.stream;
+  Stream<UIError> get isAdminErrorStream => _isAdminError.stream;
   Stream<UIError> get mainErrorStream => _mainError.stream;
+  Stream<String> get navigateToStream => _navigateTo.stream;
   Stream<bool> get isFormValidStream => _isFormValid.stream;
   Stream<bool> get isLoadingStream => _isLoading.stream;
 
-  GetxSignUpPresenter({@required this.validation, this.addAccount, this.saveCurrentAccount});
+  GetxSignUpPresenter({
+      @required this.validation, 
+      @required this.addAccount, 
+      @required this.saveCurrentAccount
+    });
 
   void validateEmail(String email) {
     _email = email;
@@ -63,6 +71,7 @@ class GetxSignUpPresenter extends GetxController {
 
   void validateAdmin(bool admin) {
     _admin = admin;
+    _validateForm();
   }
 
   UIError _validateField({String field, String value}) {
@@ -96,13 +105,15 @@ class GetxSignUpPresenter extends GetxController {
         password: _password, 
         passwordConfirmation: _passwordConfirmation, 
         admin: _admin));
-        await saveCurrentAccount.save(account);      
+      await saveCurrentAccount.save(account);
+      _navigateTo.value = '/products';
     } on DomainError catch (error) {
       _mainError.value = null;
       switch (error) {
-        // case DomainError.invalidCredentials : _mainError.value = UIError.invalidCredentials;
-        //   break;
+        case DomainError.emailInUse : _mainError.value = UIError.emailInUse;
+          break;
         default: _mainError.value = UIError.unexpected;
+          break;
       }
       _isLoading.value = false;
     }

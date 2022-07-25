@@ -29,7 +29,6 @@ class LoginPage extends StatelessWidget {
         });
 
         presenter.mainErrorStream.listen((error) {
-          print('Erro mainErrorStream $error');
           if (error != null) {
             showErrorMessage(context, error.description);
           }

@@ -22,7 +22,7 @@ void main() {
   SaveCurrentAccountSpy saveCurrentAccount;
   String email;
   String password;
-  String token;
+  String accessToken;
 
   PostExpectation mockValidationCall(String field) => 
     when(validation.validate(field: field == null ? anyNamed('field') : field, value: anyNamed('value')));
@@ -34,7 +34,7 @@ void main() {
   PostExpectation mockAuthenticationCall() => when(authentication.auth(any));
 
   void mockcAuthentication() {
-    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(accessToken: token));
+    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(accessToken: accessToken));
   }
 
   void mockcAuthenticationError(DomainError error) {
@@ -58,7 +58,7 @@ void main() {
     );
     email = faker.internet.email();
     password = faker.internet.password();
-    token = faker.guid.guid();
+    accessToken = faker.guid.guid();
     mockValidation();
     mockcAuthentication();
   });
@@ -162,7 +162,7 @@ void main() {
 
     await sut.auth();
 
-    verify(saveCurrentAccount.save(AccountEntity(accessToken: token))).called(1);
+    verify(saveCurrentAccount.save(AccountEntity(accessToken: accessToken))).called(1);
   });  
 
   test('Should emit UnexpectedError if SaveCurrentAccount fails', () async {

@@ -26,9 +26,9 @@
 23.  ✅ Chamar o AddAccount com valores corretos
 24.  ✅ Notificar o isLoadingStream como true antes de chamar o AddAccount
 25.  ✅ Notificar o isLoadingStream como false no fim do AddAccount
-26.  ❌ Notificar o mainErrorStream caso o AddAccount retorne erro
+26.  ✅ Notificar o mainErrorStream caso o AddAccount retorne erro
 27.  ✅ Fechar todos os Streams no dispose
 28.  ✅ Gravar o Account no cache em caso de sucesso
 29.  ✅ Notificar o mainErrorStream caso SaveCurrentAccount retorne erro
-30.  ❌ Lavar o usuário para tela de Produtos em caso de sucesso
+30.  ✅ Lavar o usuário para tela de Produtos em caso de sucesso
 31.  ❌ Levar o usuário para a tela de Login ao clicar no link de voltar para login
