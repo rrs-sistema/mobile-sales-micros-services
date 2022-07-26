@@ -34,7 +34,6 @@ class ValidationBuilder {
     return this;
   }
 
-
   List<FieldValidation> build() => validations;
 
 }

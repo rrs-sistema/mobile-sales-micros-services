@@ -9,12 +9,14 @@ void main() {
     sut = CompareFieldsValidation(field: 'any_field', fieldToCompare: 'other_field');
   });
 
-  test('Should return error if values is not equal', () {
-    final formData = {
-      'any_field': 'any_value',
-      'other_field': 'other_value',
-    };
+  test('Should return null on invalid casess', () {
+    expect(sut.validate({'any_field': 'any_value',}), null);
+    expect(sut.validate({'any_field': 'any_value', 'other_field': 'any_value'}), null);
+    expect(sut.validate({}), null);
+  });
 
+  test('Should return error if values is not equal', () {
+    final formData = {'any_field': 'any_value', 'other_field': 'other_value',};
     expect(sut.validate(formData), ValidationError.invalidField);
   });
 
@@ -23,7 +25,6 @@ void main() {
       'any_field': 'any_value',
       'other_field': 'any_value',
     };
-
     expect(sut.validate(formData), null);
   });
 
