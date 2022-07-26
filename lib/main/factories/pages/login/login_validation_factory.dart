@@ -10,6 +10,6 @@ Validation makeLoginValidation() {
 List<FieldValidation> makeLoginValidations() {
   return [
     ...ValidationBuilder.filed('email').required().email().build(),
-    ...ValidationBuilder.filed('password').required().build()
+    ...ValidationBuilder.filed('password').required().min(3).build()
   ];
 }
