@@ -173,14 +173,9 @@ void main() {
     mockcSaveCurrentAccountError();
     sut.validateEmail(email);
     sut.validatePassword(password);
-
+    
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream.listen((error) {
-      if(error != null)
-        expect(error, UIError.unexpected);
-      else 
-        expect(error, null);
-     });
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
     await sut.auth();
   });
@@ -190,6 +185,7 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emits(true));
+    expectLater(sut.mainErrorStream, emits(null));
     
     await sut.auth();
   }); 
@@ -209,12 +205,7 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream.listen((error) {
-      if(error != null)
-        expect(error, UIError.invalidCredentials);
-      else 
-        expect(error, null);
-     });
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.invalidCredentials]));
   
     await sut.auth();
   }); 
@@ -225,12 +216,7 @@ void main() {
     sut.validatePassword(password);
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
-    sut.mainErrorStream.listen((error) {
-      if(error != null)
-        expect(error, UIError.unexpected);
-      else 
-        expect(error, null);
-     });
+    expectLater(sut.mainErrorStream, emitsInOrder([null, UIError.unexpected]));
 
     await sut.auth();
   });   

@@ -109,7 +109,8 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
   
   Future<void> signUp() async {
     try {
-      _isLoading.value = true;
+      _mainError.value = null;
+      _isLoading.value = true;      
       final account = await addAccount.add(AddAccountParams(
         name: _name, 
         email: _email, 
@@ -119,7 +120,6 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
       await saveCurrentAccount.save(account);
       _navigateTo.value = '/products';
     } on DomainError catch (error) {
-      _mainError.value = null;
       switch (error) {
         case DomainError.emailInUse : _mainError.value = UIError.emailInUse;
           break;
