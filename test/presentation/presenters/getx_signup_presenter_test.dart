@@ -76,7 +76,8 @@ void main() {
       'name': null,
       'email': email,
       'password': null,
-      'passwordConfirmation': null
+      'passwordConfirmation': null,
+      'admin': null
     };
 
     sut.validateEmail(email);
@@ -122,7 +123,8 @@ void main() {
       'name': name,
       'email': null,
       'password': null,
-      'passwordConfirmation': null
+      'passwordConfirmation': null,
+      'admin': null
     };
 
     sut.validateName(name);
@@ -168,7 +170,8 @@ void main() {
       'name': null,
       'email': null,
       'password': password,
-      'passwordConfirmation': null
+      'passwordConfirmation': null,
+      'admin': null
     };
 
     sut.validatePassword(password);
@@ -215,7 +218,8 @@ void main() {
       'name': null,
       'email': null,
       'password': null,
-      'passwordConfirmation': passwordConfirmation
+      'passwordConfirmation': passwordConfirmation,
+      'admin': null
     };
 
     sut.validatePasswordConfirmation(passwordConfirmation);
@@ -245,6 +249,32 @@ void main() {
 
     sut.validatePasswordConfirmation(passwordConfirmation);
     sut.validatePasswordConfirmation(passwordConfirmation);
+  });
+
+  test('Should emit requiredFieldError if admin is null', () {
+    mockValidation(value: ValidationError.requiredField);
+
+    sut.isAdminErrorStream
+        .listen(expectAsync1((error) => expect(error, UIError.requiredField)));
+    sut.isFormValidStream
+        .listen(expectAsync1((isValid) => expect(isValid, false)));
+
+    sut.validateAdmin(admin);
+    sut.validateAdmin(admin);
+  });
+
+  test('Should call Validation with correct admin', () {
+    final formData = {
+      'name': null,
+      'email': null,
+      'password': null,
+      'passwordConfirmation': null,
+      'admin': false
+    };
+
+    sut.validateAdmin(admin);
+
+    verify(validation.validate(field: 'admin', input: formData)).called(1);
   });
 
   test('Should emit null if validation succeeds', () {

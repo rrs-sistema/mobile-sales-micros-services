@@ -73,6 +73,7 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
 
   void validateAdmin(bool admin) {
     _admin = admin;
+    _isAdminError.value = _validateField('admin');
     _validateForm();
   }
 
@@ -81,7 +82,8 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
       'name': _name,
       'email': _email,
       'password': _password,
-      'passwordConfirmation': _passwordConfirmation
+      'passwordConfirmation': _passwordConfirmation,
+      'admin': _admin
     };    
     final error = validation.validate(field: field, input: formData);
     switch (error) {
@@ -101,7 +103,8 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
       && _name != null 
       && _email != null 
       && _password != null
-      && _passwordConfirmation != null;     
+      && _passwordConfirmation != null
+      && _admin != null; 
   }
   
   Future<void> signUp() async {
