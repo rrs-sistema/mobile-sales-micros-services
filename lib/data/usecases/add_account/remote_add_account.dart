@@ -15,6 +15,10 @@ class RemoteAddAccount implements AddAccount {
   Future<AccountEntity> add(AddAccountParams params) async {
     final body = RemoteAddAccountParams.fromDomain(params).toJson();
     try {
+      if(params.admin != null) {
+        final adminString = params.admin.toString();
+        body.update('admin', (value) => adminString);
+      }
       final httpResponse = await httpClient.request(uri: uri, method: 'post', body: body);
       return RemoteAccountModel.fromJson(httpResponse).toEntity();
     } on HttpError catch(error) {

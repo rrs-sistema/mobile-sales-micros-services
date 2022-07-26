@@ -18,30 +18,24 @@ class HttpAdapter implements HttpClient {
     final jsonBody = body != null ? jsonEncode(body) : null;
     var response = Response('', 500);
     try {
-      if(method == 'post'){
+      if (method == 'post') {
         response = await client.post(uri, headers: headers, body: jsonBody);
       }
-    } catch (error) {
+    } catch(error) {
       throw HttpError.serverError;
     }
     return _handleResponse(response);
   }
 
   Map _handleResponse(Response response) {
-    if(response.statusCode == 200) {
-      return response.body.isEmpty ? null : jsonDecode(response.body);
-    } else if(response.statusCode == 204) {
-      return null;
-    } else if(response.statusCode == 400) {
-      throw HttpError.badRequest;
-    } else if(response.statusCode == 401) {
-      throw HttpError.unauthorized;
-    } else if(response.statusCode == 403) {
-      throw HttpError.forbidden;
-    } else if(response.statusCode == 404) {
-      throw HttpError.notFound;
-    } else {
-      throw HttpError.serverError;
+    switch (response.statusCode) {
+      case 200: return response.body.isEmpty ? null : jsonDecode(response.body);
+      case 204: return null;
+      case 400: throw HttpError.badRequest;
+      case 401: throw HttpError.unauthorized;
+      case 403: throw HttpError.forbidden;
+      case 404: throw HttpError.notFound;
+      default: throw HttpError.serverError;
     }
   }
 }

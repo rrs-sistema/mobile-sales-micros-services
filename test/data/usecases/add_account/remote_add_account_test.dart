@@ -10,23 +10,24 @@ import 'package:delivery_micros_services/data/http/http.dart';
 class HttpClientSpy extends Mock implements HttpClient {}
 
 void main() {
-  HttpClientSpy httpClient;
   RemoteAddAccount sut;
+  HttpClientSpy httpClient;
   AddAccountParams params;
   Uri uri;
-  Map mockValidData() => {'accessToken': faker.guid.guid()};
+
+  Map mockValidData() => {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
 
   PostExpectation mockRequest() =>
-  when(httpClient.request(uri: anyNamed('uri'), method: anyNamed('method'), body: anyNamed('body')));
+    when(httpClient.request(uri: anyNamed('uri'), method: anyNamed('method'), body: anyNamed('body')));
 
-  void mockHttpErro(HttpError error) {
+  void mockHttpError(HttpError error) {
     mockRequest().thenThrow(error);
   }
 
   void mockHttpData(Map data) {
     mockRequest().thenAnswer((_) async => data);
   }
-
+  
   setUp(() {
     httpClient = HttpClientSpy();
     final url = faker.internet.httpUrl();
@@ -41,24 +42,24 @@ void main() {
     mockHttpData(mockValidData());
   });
 
-  test('Shoul call HttpClient with correct values', () async {
+  test('Should call HttpClient with correct values', () async {
     await sut.add(params);
 
     verify(httpClient.request(
-        uri: uri,
-        method: 'post',
-        body: {
-          'name': params.name, 
-          'email': params.email, 
-          'admin': params.admin, 
-          'password': params.password,
-          'passwordConfirmation': params.passwordConfirmation
-        }
-      ));
+      uri: uri,
+      method: 'post',
+      body: {
+        'name': params.name,
+        'email': params.email,
+        'password': params.password,
+        'passwordConfirmation': params.passwordConfirmation,
+        'admin': params.admin.toString(),
+      }
+    ));
   });
 
   test('Should throw UnexpectedError if HttpClinete returns 400', () async {
-    mockHttpErro(HttpError.badRequest);
+    mockHttpError(HttpError.badRequest);
 
     final future = sut.add(params);
 
@@ -66,7 +67,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if HttpClinete returns 404', () async {
-    mockHttpErro(HttpError.notFound);
+    mockHttpError(HttpError.notFound);
 
     final future = sut.add(params);
 
@@ -74,7 +75,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if HttpClinete returns 500', () async {
-    mockHttpErro(HttpError.serverError);
+    mockHttpError(HttpError.serverError);
 
     final future = sut.add(params);
 
@@ -82,7 +83,7 @@ void main() {
   });
 
   test('Should throw InvalidCredentialsError if HttpClinete returns 403', () async {
-    mockHttpErro(HttpError.forbidden);
+    mockHttpError(HttpError.forbidden);
 
     final future = sut.add(params);
 
