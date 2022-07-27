@@ -19,12 +19,19 @@ class RemoteLoadProducts {
 class HttpClientSpy extends Mock implements HttpClient {}
 
 void main() {
-  test('Should call HttpClient with correct values', () async {
-    final url = faker.internet.httpUrl();
-    final uri = Uri.parse(url);
-    final httpClient = HttpClientSpy();
-    final sut = RemoteLoadProducts(uri: uri, httpClient: httpClient);
+  RemoteLoadProducts sut;
+  HttpClient httpClient;
+  Uri uri;
+  String url;
 
+  setUp(() {
+    url = faker.internet.httpUrl();
+    uri = Uri.parse(url);
+    httpClient = HttpClientSpy();
+    sut = RemoteLoadProducts(uri: uri, httpClient: httpClient);
+  });
+  
+  test('Should call HttpClient with correct values', () async {
     await sut.load();
 
     verify(httpClient.request(uri: uri, method: 'get'));
