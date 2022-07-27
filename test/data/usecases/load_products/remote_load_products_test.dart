@@ -1,28 +1,12 @@
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
-import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
+import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/data/model/model.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
-
-class RemoteLoadProducts {
-  final Uri uri;
-  final HttpClient<List<Map>> httpClient;
-
-  RemoteLoadProducts({@required this.uri, @required this.httpClient});
-
-  Future<List<ProductEntity>> load() async {
-    try {
-      final httpResponse = await httpClient.request(uri: uri, method: 'get');
-      return httpResponse.map((json) => RemoteProductModel.fromJson(json).toEntity()).toList();      
-    } on HttpError catch(error) {
-       throw error == HttpError.forbidden ? DomainError.accessDenied :DomainError.unexpected;
-    }
-  }
-}
 
 class HttpClientSpy extends Mock implements HttpClient<List<Map>> {}
 
