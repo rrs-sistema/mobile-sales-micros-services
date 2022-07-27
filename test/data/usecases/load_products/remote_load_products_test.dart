@@ -1,10 +1,11 @@
-import 'package:delivery_micros_services/data/model/model.dart';
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
 import 'package:delivery_micros_services/domain/entities/entities.dart';
+import 'package:delivery_micros_services/domain/helpers/helpers.dart';
+import 'package:delivery_micros_services/data/model/model.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
 class RemoteLoadProducts {
@@ -14,8 +15,12 @@ class RemoteLoadProducts {
   RemoteLoadProducts({@required this.uri, @required this.httpClient});
 
   Future<List<ProductEntity>> load() async {
-    final httpResponse = await httpClient.request(uri: uri, method: 'get');
-    return httpResponse.map((json) => RemoteProductModel.fromJson(json).toEntity()).toList();
+    try {
+      final httpResponse = await httpClient.request(uri: uri, method: 'get');
+      return httpResponse.map((json) => RemoteProductModel.fromJson(json).toEntity()).toList();      
+    } on HttpError {
+      throw DomainError.unexpected;
+    }
   }
 }
 
@@ -103,4 +108,15 @@ void main() {
       )      
     ]);
   });
+
+
+  test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {
+    mockHttpData([{'invalid_key': 'invalid_value'}]);
+
+    final future = sut.load();
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
+
 }

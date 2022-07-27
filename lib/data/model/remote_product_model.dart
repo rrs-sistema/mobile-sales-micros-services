@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 
-import '../../domain/entities/entities.dart';
+import './../../domain/entities/entities.dart';
+import './../../data/http/http.dart';
 
 class RemoteProductModel {
   final String id;
@@ -19,6 +20,9 @@ class RemoteProductModel {
       @required this.category});
 
   factory RemoteProductModel.fromJson(Map json) {
+    if(!json.keys.toSet().containsAll(['id', 'name', 'quantity_available', 'created_at', 'supplier', 'category'])){
+      throw HttpError.invalidData;
+    }    
     return RemoteProductModel(
         id: json['id'].toString(),
         name: json['name'],
