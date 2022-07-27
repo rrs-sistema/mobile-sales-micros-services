@@ -7,7 +7,7 @@ import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
-class HttpClientSpy extends Mock implements HttpClient {}
+class HttpClientSpy extends Mock implements HttpClient<Map> {}
 
 void main() {
   RemoteAddAccount sut;
@@ -20,12 +20,12 @@ void main() {
   PostExpectation mockRequest() =>
     when(httpClient.request(uri: anyNamed('uri'), method: anyNamed('method'), body: anyNamed('body')));
 
-  void mockHttpError(HttpError error) {
-    mockRequest().thenThrow(error);
-  }
-
   void mockHttpData(Map data) {
     mockRequest().thenAnswer((_) async => data);
+  }
+
+  void mockHttpError(HttpError error) {
+    mockRequest().thenThrow(error);
   }
   
   setUp(() {

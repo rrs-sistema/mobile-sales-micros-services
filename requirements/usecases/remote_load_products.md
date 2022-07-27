@@ -4,7 +4,7 @@
 1. ✅ Sistema faz uma requisição para a URL da API de produtos
 2. ❌ Sistema valida o token de acesso para saber se o usuário tem permissão para ver esses dados
 3. ❌ Sistema valida os dados recebidos da API
-4. ❌ Sistema entrega os dados dos produtos
+4. ✅ Sistema entrega os dados dos produtos
 
 ## Exceção - URL inválida
 1. ❌ Sistema retorna uma mensagem de erro inesperado

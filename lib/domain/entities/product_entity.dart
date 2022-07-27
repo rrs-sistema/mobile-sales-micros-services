@@ -1,25 +1,39 @@
+import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
-class ProductEntity {
-
+class ProductEntity extends Equatable {
   final int id;
   final String name;
   final int quantityAvailable;
-  final String createdAt;
+  final DateTime createdAt;
   final SupplierEntity supplier;
-  final CategoryEntity sategory;
-  
-  ProductEntity({this.id, this.name, this.quantityAvailable, this.createdAt, this.supplier, this.sategory});
+  final CategoryEntity category;
 
+  ProductEntity(
+      {@required this.id,
+      @required this.name,
+      @required this.quantityAvailable,
+      @required this.createdAt,
+      @required this.supplier,
+      @required this.category});
+
+  List get props => ['id', 'name', 'quantityAvailable', 'createdAt', 'supplier', 'category'];
 }
 
-class CategoryEntity {
+class CategoryEntity extends Equatable {
   final int id;
   final String description;
+
   CategoryEntity({this.id, this.description});
+
+  List get props => ['id', 'description'];
 }
 
-class SupplierEntity {
+class SupplierEntity extends Equatable {
   final int id;
   final String name;
+
   SupplierEntity({this.id, this.name});
+
+  List get props => ['id', 'name'];
 }

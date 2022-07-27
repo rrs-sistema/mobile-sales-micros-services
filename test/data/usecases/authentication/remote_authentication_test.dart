@@ -7,7 +7,7 @@ import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
-class HttpClientSpy extends Mock implements HttpClient {}
+class HttpClientSpy extends Mock implements HttpClient<Map> {}
 
 void main() {
   HttpClientSpy httpClient;
