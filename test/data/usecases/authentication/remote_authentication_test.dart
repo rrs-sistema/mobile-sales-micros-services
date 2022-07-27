@@ -46,7 +46,7 @@ void main() {
       ));
   });
 
-  test('Should throw UnexpectedError if HttpClinete returns 400', () async {
+  test('Should throw UnexpectedError if HttpClient returns 400', () async {
     mockHttpErro(HttpError.badRequest);
 
     final future = sut.auth(params);
@@ -54,7 +54,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Shoul throw UnexpectedError if HttpClinete returns 404', () async {
+  test('Shoul throw UnexpectedError if HttpClient returns 404', () async {
     mockHttpErro(HttpError.notFound);
 
     final future = sut.auth(params);
@@ -62,7 +62,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Should throw UnexpectedError if HttpClinete returns 500', () async {
+  test('Should throw UnexpectedError if HttpClient returns 500', () async {
     mockHttpErro(HttpError.serverError);
 
     final future = sut.auth(params);
@@ -70,7 +70,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Should throw InvalidCredentialsError if HttpClinete returns 401', () async {
+  test('Should throw InvalidCredentialsError if HttpClient returns 401', () async {
     mockHttpErro(HttpError.unauthorized);
 
     final future = sut.auth(params);
