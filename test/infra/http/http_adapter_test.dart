@@ -191,7 +191,6 @@ void main() {
       expect(response, null);
     });
 
-
     test('Should return null if get returns 204', () async {
       mockResponse(204, body: '');
 
@@ -207,7 +206,22 @@ void main() {
 
       expect(response, null);
     });
+    
+    test('Should return BadRequestError if get returns 400', () async {
+      mockResponse(400, body: '');
 
+      final future = sut.request(uri: uri, method: 'get');
+
+      expect(future, throwsA(HttpError.badRequest));
+    });
+
+    test('Should return BadRequestError if get returns 400', () async {
+      mockResponse(400);
+
+      final future = sut.request(uri: uri, method: 'get');
+
+      expect(future, throwsA(HttpError.badRequest));
+    });
 
   });
 
