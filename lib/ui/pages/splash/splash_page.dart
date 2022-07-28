@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import './../../../ui/common/common.dart';
 import './splash_presenter.dart';
 
 class SplashPage extends StatelessWidget {
@@ -11,8 +12,9 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     presenter.checkAccount();
-
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Scaffold(
+      backgroundColor: primaryColor,
       appBar: AppBar(
         title: Text('RRS Sales Micros Services'),
       ),
@@ -24,7 +26,9 @@ class SplashPage extends StatelessWidget {
             }
           });
           return Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
           );
         },
       ),
