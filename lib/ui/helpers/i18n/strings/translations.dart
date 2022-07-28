@@ -20,4 +20,10 @@ abstract class Translations {
   String get typeYourPassword;
   String get userEmail;
   String get userName;
+
+  String get titleNavBarHome; 
+  String get titleNavBarCarrinho;
+  String get titleNavBarPedido;
+  String get titleNavBarPerfil;
+
 }

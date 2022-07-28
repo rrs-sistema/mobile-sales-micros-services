@@ -22,4 +22,9 @@ class EnUs implements Translations {
   String get typeYourPassword => 'Type your password '; // Digite sua senha
   String get userEmail => 'User email '; // E-mail do usuário
   String get userName => 'User name '; // Nome do usuário
+
+  String get titleNavBarHome => 'Home';
+  String get titleNavBarCarrinho => 'Cart';
+  String get titleNavBarPedido => 'Shopping';
+  String get titleNavBarPerfil => 'Profile';
 }

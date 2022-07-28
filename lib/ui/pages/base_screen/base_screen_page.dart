@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './../../../ui/helpers/helpers.dart';
 import './../../../ui/common/common.dart';
 import './../../../ui/pages/pages.dart';
 
@@ -42,22 +43,22 @@ class _BasePageScreenState extends State<BasePageScreen> {
         backgroundColor: primaryColor,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white.withAlpha(100),
-        items: const [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            label: R.strings.titleNavBarHome,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.show_chart_outlined),
-            label: 'Carrinho'
+            label: R.strings.titleNavBarCarrinho,
           ),    
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: 'Pedidos'
+            label: R.strings.titleNavBarPedido,
           ),         
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            label: 'Perfil'
+            label: R.strings.titleNavBarPerfil,
           ),                 
         ]
       ),

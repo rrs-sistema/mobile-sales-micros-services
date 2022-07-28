@@ -22,4 +22,10 @@ class PtBr implements Translations {
   String get typeYourEmail => 'Digite seu email ';
   String get userEmail => 'Email de usuário ';
   String get userName => 'Nome de usuário ';
+
+  String get titleNavBarHome => 'Inicio';
+  String get titleNavBarCarrinho => 'Carrinho';
+  String get titleNavBarPedido => 'Pedidos';
+  String get titleNavBarPerfil => 'Perfil';
+
 }
