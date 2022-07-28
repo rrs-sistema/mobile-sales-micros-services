@@ -18,6 +18,8 @@ dependencies:
   otp_text_field: ^1.1.1  
   flutter_launcher_icons: ^0.9.0
   flutter_secure_storage: ^3.3.3
+  badges: ^1.2.0
+  intl: ^0.16.1
   http:
   provider:
   equatable:

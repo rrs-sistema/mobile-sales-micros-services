@@ -71,7 +71,7 @@ class GetxLoginPresenter extends GetxController implements LoginPresenter {
      _isLoading.value = true;      
       final account = await authentication.auth(AuthenticationParams(email: _email, secret: _password));
       await saveCurrentAccount.save(account);
-      _navigateTo.value = '/products';
+      _navigateTo.value = '/base_screen';
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.invalidCredentials : _mainError.value = UIError.invalidCredentials;

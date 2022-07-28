@@ -9,7 +9,7 @@ class ThemeHelper{
     return ThemeData(
         primaryColor: _primaryColor,
         accentColor: _accentColor,
-        scaffoldBackgroundColor: Colors.grey.shade100,
+        scaffoldBackgroundColor: Colors.white.withAlpha(190),
         primarySwatch: Colors.grey,
       );
   }

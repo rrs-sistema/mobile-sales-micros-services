@@ -21,8 +21,11 @@ void main() {
   {
     'id': faker.randomGenerator.integer(25, min: 1),
     'name': faker.randomGenerator.string(50),
+    'description': faker.randomGenerator.string(600),
     'quantity_available': faker.randomGenerator.integer(10, min: 5),
     'created_at': faker.date.dateTime().toIso8601String(),
+    "price": faker.randomGenerator.decimal(scale: 2, min: 150),
+    'img_url': faker.image.image(),
     "supplier": {
       "id": faker.randomGenerator.integer(5, min: 1),
       "name": faker.randomGenerator.string(30),
@@ -35,8 +38,11 @@ void main() {
   {
     'id': faker.randomGenerator.integer(25, min: 1),
     'name': faker.randomGenerator.string(50),
+    'description': faker.randomGenerator.string(600),
     'quantity_available': faker.randomGenerator.integer(10, min: 5),
     'created_at': faker.date.dateTime().toIso8601String(),
+    "price": faker.randomGenerator.decimal(scale: 2, min: 150),
+    'img_url': faker.image.image(),
     "supplier": {
       "id": faker.randomGenerator.integer(5, min: 1),
       "name": faker.randomGenerator.string(30),
@@ -81,16 +87,22 @@ void main() {
       ProductEntity(
         id: list[0]['id'],
         name: list[0]['name'],
+        description:  list[0]['description'],
+        imgUrl:  list[0]['img_url'],
         quantityAvailable: list[0]['quantity_available'],
         createdAt: DateTime.parse(list[0]['created_at']),
+        price: list[0]['price'],
         category: RemoteCategoryModel.fromJson(list[0]['category']).toEntity(),
         supplier: RemoteSupplierModel.fromJson(list[0]['supplier']).toEntity(),
       ),
       ProductEntity(
         id: list[1]['id'],
         name: list[1]['name'],
+        description:  list[1]['description'],
+        imgUrl:  list[1]['img_url'],
         quantityAvailable: list[1]['quantity_available'],
         createdAt: DateTime.parse(list[1]['created_at']),
+        price: list[1]['price'],
         category: RemoteCategoryModel.fromJson(list[1]['category']).toEntity(),
         supplier: RemoteSupplierModel.fromJson(list[1]['supplier']).toEntity(),
       )      

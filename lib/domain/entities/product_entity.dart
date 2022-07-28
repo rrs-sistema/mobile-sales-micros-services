@@ -4,7 +4,10 @@ import 'package:meta/meta.dart';
 class ProductEntity extends Equatable {
   final int id;
   final String name;
+  final String description;
+  final String imgUrl;
   final int quantityAvailable;
+  final double price;
   final DateTime createdAt;
   final SupplierEntity supplier;
   final CategoryEntity category;
@@ -12,12 +15,15 @@ class ProductEntity extends Equatable {
   ProductEntity(
       {@required this.id,
       @required this.name,
+      @required this.description,
+      @required this.imgUrl,
       @required this.quantityAvailable,
       @required this.createdAt,
+      @required this.price,
       @required this.supplier,
       @required this.category});
 
-  List get props => ['id', 'name', 'quantityAvailable', 'createdAt', 'supplier', 'category'];
+  List get props => ['id', 'name', 'description', 'imgUrl', 'quantityAvailable', 'createdAt', 'price', 'supplier', 'category'];
 }
 
 class CategoryEntity extends Equatable {

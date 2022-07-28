@@ -35,7 +35,7 @@ void main() {
   });
 
   test('Should go to products page on success', () async {
-    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/products')));
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/base_screen')));
 
     await sut.checkAccount(durationInSeconds: 0);
   });

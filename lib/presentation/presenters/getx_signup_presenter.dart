@@ -118,7 +118,7 @@ class GetxSignUpPresenter extends GetxController implements SignUpPresenter  {
         passwordConfirmation: _passwordConfirmation, 
         admin: _admin));
       await saveCurrentAccount.save(account);
-      _navigateTo.value = '/products';
+      _navigateTo.value = '/base_screen';
     } on DomainError catch (error) {
       switch (error) {
         case DomainError.emailInUse : _mainError.value = UIError.emailInUse;

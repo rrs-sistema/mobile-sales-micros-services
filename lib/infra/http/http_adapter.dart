@@ -4,12 +4,12 @@ import 'dart:convert';
 
 import '../../data/http/http.dart';
 
-class HttpAdapter implements HttpClient {
+class HttpAdapter<ResponseType> implements HttpClient<ResponseType> {
   final Client client;
 
   HttpAdapter(this.client);
 
-  Future<Map> request({@required Uri uri, @required String method, Map body}) async {
+  Future<ResponseType> request({@required Uri uri, @required String method, Map body}) async {
     final headers = {
       'content-type': 'application/json',
       'accept': 'application/json',
@@ -29,7 +29,7 @@ class HttpAdapter implements HttpClient {
     return _handleResponse(response);
   }
 
-  Map _handleResponse(Response response) {
+  ResponseType _handleResponse(Response response) {
     switch (response.statusCode) {
       case 200: return response.body.isEmpty ? null : jsonDecode(response.body);
       case 204: return null;

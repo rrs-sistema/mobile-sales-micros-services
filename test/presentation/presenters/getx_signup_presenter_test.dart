@@ -396,7 +396,7 @@ void main() {
     sut.validateAdmin(admin);
 
     sut.navigateToStream
-        .listen(expectAsync1((page) => expect(page, '/products')));
+        .listen(expectAsync1((page) => expect(page, '/base_screen')));
 
     await sut.signUp();
   });
