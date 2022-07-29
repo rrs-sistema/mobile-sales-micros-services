@@ -18,7 +18,7 @@ class AuthorizeHttpClientDecorator {
       Map body,
       Map headers}) async {
     final token = await fetchSecureCacheStorage.fetchSecure('accessToken');
-    final authorizadHeaders = {'x-access-token': token};
+    final authorizadHeaders = headers ?? {}..addAll({'x-access-token': token});
     await decoratee.request(uri: uri, method: method, body: body, headers: authorizadHeaders);
   }
 }
@@ -63,7 +63,9 @@ void main() {
 
   test('Should call decoratee with access token on header', () async {
     await sut.request(uri: uri, method: method, body: body);
-
     verify(httpClient.request(uri: uri, method: method, body: body, headers: {'x-access-token': token})).called(1);
+
+    await sut.request(uri: uri, method: method, body: body, headers: {'any_header': 'any_value'});
+    verify(httpClient.request(uri: uri, method: method, body: body, headers: {'x-access-token': token, 'any_header': 'any_value'})).called(1);    
   });
 }
