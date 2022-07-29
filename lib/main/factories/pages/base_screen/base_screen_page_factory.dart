@@ -2,4 +2,4 @@ import 'package:flutter/material.dart';
 
 import '../../../../ui/pages/pages.dart';
 
-Widget makeBaseScreenPage() => BasePageScreen();
+Widget makeBaseScreenPage() => BasePageScreen(null);

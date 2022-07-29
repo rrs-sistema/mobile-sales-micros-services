@@ -4,10 +4,13 @@ import 'package:badges/badges.dart';
 import './../../../domain/entities/entities.dart';
 import './../../../ui/common/common.dart';
 import './components/components.dart';
-import './data/data.dart' as appData;
 
 class ProductPage extends StatefulWidget {
-  ProductPage({Key key}) : super(key: key);
+
+  final List<ProductEntity> products;
+  final List<CategoryEntity> categories;
+
+  ProductPage({Key key, this.products, this.categories}) : super(key: key);
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -79,18 +82,18 @@ class _ProductPageState extends State<ProductPage> {
                   return CategoryTile(
                     onPressed: () {
                       setState(() {
-                        selectedCategory = appData.categories[index];
+                        selectedCategory = widget.categories[index];
                       });
                     },
-                    category: appData.categories[index],
+                    category: widget.categories[index],
                     isSelected:
-                        appData.categories[index].id == selectedCategory.id,
+                        widget.categories[index].id == selectedCategory.id,
                   );
                 },
                 separatorBuilder: (_, index) => const SizedBox(
                       width: 10,
                     ),
-                itemCount: appData.categories.length),
+                itemCount: widget.categories.length),
           ),
           Expanded(
             child: GridView.builder(
@@ -102,13 +105,13 @@ class _ProductPageState extends State<ProductPage> {
                   crossAxisSpacing: 10,
                   childAspectRatio: 9 / 11.5,
                 ),
-                itemCount: appData.items.length,
+                itemCount: widget.products.length,
                 itemBuilder: (_, index) {
                   return ItemTile(
                     key: Key(
-                      appData.items[index].id.toString(),
+                      widget.products[index].id.toString(),
                     ),
-                    item: appData.items[index],
+                    item: widget.products[index],
                   );
                 }),
           )

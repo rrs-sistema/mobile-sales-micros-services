@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import './../../../ui/helpers/helpers.dart';
 import './../../../ui/common/common.dart';
 import './../../../ui/pages/pages.dart';
+import './../products/data/data.dart' as appData;
 
 class BasePageScreen extends StatefulWidget {
 
-  BasePageScreen({ Key key }) : super(key: key);
+  final ProductsPresenter presenter;
+  BasePageScreen(this.presenter);
 
   @override
   _BasePageScreenState createState() => _BasePageScreenState();
@@ -18,6 +20,7 @@ class _BasePageScreenState extends State<BasePageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    widget.presenter.loadData();
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Scaffold(
       backgroundColor: primaryColor,
@@ -25,7 +28,7 @@ class _BasePageScreenState extends State<BasePageScreen> {
         physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         children: [
-          ProductPage(),
+          ProductPage(products: appData.items, categories: appData.categories,),
           Container(color: Colors.yellow,),
           Container(color: Colors.blue,),
           Container(color: Colors.purple,),
