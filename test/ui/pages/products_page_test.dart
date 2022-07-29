@@ -1,3 +1,4 @@
+import 'package:delivery_micros_services/ui/helpers/services/services.dart';
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,7 @@ void main() {
       description: 'Bíblia Pentecostal atualizada de Almeida e Corrigida',
       imgUrl: faker.image.image(),
       quantityAvailable: 8,
-      createdAt: DateTime.parse('2022-07-28 03:11:46'),
+      createdAt: DateTime.parse('2022-07-28 08:15:32'),
       price: 135.98,
       supplier: SupplierViewModel(id: 1000, name: 'Sociedade Bíblica do Brasil'),
       category: CategoryViewModel(id: 1000, description: 'Bíblia'))           
@@ -124,6 +125,8 @@ void main() {
     expect(find.text('Recarregar'), findsNothing);
     expect(find.text('Bíblia atualizada'), findsOneWidget);
     expect(find.text('Bíblia Pentecostal'), findsOneWidget);
+    expect(find.text(UtilsServices().priceToCurrency(92.28)), findsOneWidget);
+    expect(find.text(UtilsServices().priceToCurrency(135.98)), findsOneWidget);    
   }); 
 
 }

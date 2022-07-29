@@ -43,15 +43,20 @@ class ItemTile extends StatelessWidget {
                 ),
                 Text(
                   item.name,
-                  style: const TextStyle(
-                      fontSize: 14, fontWeight: FontWeight.bold),
+                  key: Key('itemProductName'),
+                  style: TextStyle(
+                    fontSize: 14, 
+                  fontWeight: FontWeight.bold,
+                  decoration: item.quantityAvailable < 1 ? TextDecoration.lineThrough : TextDecoration.none),
                 ),
                 Text(
                   UtilsServices().priceToCurrency(item.price),
                   style: TextStyle(
                       fontSize: 20,
                       color: primaryColor,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.bold,
+                      decoration: item.quantityAvailable < 1 ? TextDecoration.lineThrough : TextDecoration.none
+                    ),
                 )
               ],
             ),
