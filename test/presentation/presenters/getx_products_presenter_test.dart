@@ -1,53 +1,13 @@
-import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
-import 'package:delivery_micros_services/ui/helpers/helpers.dart';
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:test/test.dart';
-import 'package:meta/meta.dart';
-import 'package:get/get.dart';
 
+import 'package:delivery_micros_services/presentation/presenters/presenters.dart';
+import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
 import 'package:delivery_micros_services/ui/pages/products/products.dart';
 import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
-
-class GetxProductsPresenter {
-  final LoadProducts loadProducts;
-
-  final _isLoading = true.obs;
-  final _products = Rx<List<ProductViewModel>>();
-
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  Stream<List<ProductViewModel>> get productsStream => _products.stream;
-
-  GetxProductsPresenter({@required this.loadProducts});
-
-  Future<void> loadData() async {
-    try {
-      _isLoading.value = true;
-      final products = await loadProducts.load();
-      _products.value = products
-          .map((product) => ProductViewModel(
-                id: product.id,
-                name: product.name,
-                description: product.description,
-                imgUrl: product.imgUrl,
-                quantityAvailable: product.quantityAvailable,
-                createdAt: product.createdAt,
-                price: product.price,
-                supplier: SupplierViewModel(
-                    id: product.supplier.id, name: product.supplier.name),
-                category: CategoryViewModel(
-                    id: product.category.id,
-                    description: product.category.description),
-              ))
-          .toList();
-    } on DomainError {
-      _products.subject.addError(UIError.unexpected.description);
-    } finally {
-      _isLoading.value = false;
-    }
-  }
-}
+import 'package:delivery_micros_services/ui/helpers/helpers.dart';
 
 class LoadProductSpy extends Mock implements LoadProducts {}
 
