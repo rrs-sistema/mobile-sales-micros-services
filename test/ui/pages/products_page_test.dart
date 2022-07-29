@@ -129,4 +129,15 @@ void main() {
     expect(find.text(UtilsServices().priceToCurrency(135.98)), findsOneWidget);    
   }); 
 
+  testWidgets('Should call LoadProducts on reload button click', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    loadProductsController.addError(UIError.unexpected.description);
+    await tester.pump();
+    await tester.tap(find.text('Recarregar'));
+
+    verify(presenter.loadData()).called(2);
+  });
+
+
 }

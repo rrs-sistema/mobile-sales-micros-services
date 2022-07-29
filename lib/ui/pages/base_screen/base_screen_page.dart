@@ -40,7 +40,7 @@ class _BasePageScreenState extends State<BasePageScreen> {
                   children: [
                     Text(snapshot.error),
                     ElevatedButton(
-                      onPressed: () => null,
+                      onPressed: widget.presenter.loadData,
                       child: Text(R.strings.reload),
                     ),
                   ],
