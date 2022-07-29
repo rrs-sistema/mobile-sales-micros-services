@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Builder(builder: (context) {
         presenter.isLoadingStream.listen((isLoading) {
-          if (isLoading) {
+          if (isLoading == true) {
             showLoading(context);
           } else {
             hideLoading(context);
