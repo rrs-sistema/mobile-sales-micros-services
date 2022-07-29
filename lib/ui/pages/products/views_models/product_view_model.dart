@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import './products.dart';
+import './views_models.dart';
 
 class ProductViewModel extends Equatable {
   final int id;
