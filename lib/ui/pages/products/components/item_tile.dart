@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 import './../../../../ui/helpers/services/services.dart';
-import './../../../../domain/entities/entities.dart';
 import './../../../../ui/common/common.dart';
+import './../../products/products.dart';
 
 class ItemTile extends StatelessWidget {
-  final ProductEntity item;
+  final ProductViewModel item;
   const ItemTile({@required Key key, @required this.item}) : super(key: key);
 
   @override

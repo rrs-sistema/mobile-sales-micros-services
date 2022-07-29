@@ -33,39 +33,42 @@ class _BasePageScreenState extends State<BasePageScreen> {
           }
         });
         return StreamBuilder<List<ProductViewModel>>(
-          stream: widget.presenter.loadProductsStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasError == true) {
-              return Column(
-                children: [
-                  Text(snapshot.error),
-                  ElevatedButton(
-                    onPressed: () => null, 
-                    child: Text(R.strings.reload),),
-                ],
-              );
-            }            
-            return PageView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: pageController,
-              children: [
-                ProductPage(
-                  products: appData.items,
-                  categories: appData.categories,
-                ),
-                Container(
-                  color: Colors.yellow,
-                ),
-                Container(
-                  color: Colors.blue,
-                ),
-                Container(
-                  color: Colors.purple,
-                ),
-              ],
-            );
-          }
-        );
+            stream: widget.presenter.loadProductsStream,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Column(
+                  children: [
+                    Text(snapshot.error),
+                    ElevatedButton(
+                      onPressed: () => null,
+                      child: Text(R.strings.reload),
+                    ),
+                  ],
+                );
+              }
+              if (snapshot.hasData) {
+                return PageView(
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: pageController,
+                  children: [
+                    ProductPage(
+                      products: snapshot.data,
+                      categories: appData.categories,
+                    ),
+                    Container(
+                      color: Colors.yellow,
+                    ),
+                    Container(
+                      color: Colors.blue,
+                    ),
+                    Container(
+                      color: Colors.purple,
+                    ),
+                  ],
+                );
+              }
+              return SizedBox(height: 0,);
+            });
       }),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,

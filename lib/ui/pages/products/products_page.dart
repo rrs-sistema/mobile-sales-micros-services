@@ -1,3 +1,4 @@
+import 'package:delivery_micros_services/ui/pages/products/product_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
@@ -7,7 +8,7 @@ import './components/components.dart';
 
 class ProductPage extends StatefulWidget {
 
-  final List<ProductEntity> products;
+  final List<ProductViewModel> products;
   final List<CategoryEntity> categories;
 
   ProductPage({Key key, this.products, this.categories}) : super(key: key);
