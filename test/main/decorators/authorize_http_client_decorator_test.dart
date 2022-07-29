@@ -13,19 +13,18 @@ class AuthorizeHttpClientDecorator implements HttpClient{
   AuthorizeHttpClientDecorator(
       {@required this.fetchSecureCacheStorage, @required this.decoratee});
 
-  Future<dynamic> request(
-      {@required Uri uri,
-      @required String method,
-      Map body,
-      Map headers}) async {
-    final token = await fetchSecureCacheStorage.fetchSecure('accessToken');
-    final authorizadHeaders = headers ?? {}..addAll({'x-access-token': token});
-    return await decoratee.request(uri: uri, method: method, body: body, headers: authorizadHeaders);
+  Future<dynamic> request({@required Uri uri, @required String method, Map body, Map headers}) async {
+    try {
+      final token = await fetchSecureCacheStorage.fetchSecure('accessToken');
+      final authorizadHeaders = headers ?? {}..addAll({'x-access-token': token});
+      return await decoratee.request(uri: uri, method: method, body: body, headers: authorizadHeaders);      
+    } catch (error) {
+      throw HttpError.forbidden;
+    }
   }
 }
 
-class FetchSecureCacheStorageSpy extends Mock
-    implements FetchSecureCacheStorage {}
+class FetchSecureCacheStorageSpy extends Mock implements FetchSecureCacheStorage {}
 
 class HttpClientSpy extends Mock implements HttpClient {}
 
@@ -39,11 +38,14 @@ void main() {
   Map body;
   String token;
   String httpResponse;
-
+  PostExpectation mockTokenCall() => when(fetchSecureCacheStorage.fetchSecure(any));
   void mackToken() {
     token = faker.guid.guid();
-    when(fetchSecureCacheStorage.fetchSecure(any))
-        .thenAnswer((_) async => token);
+    mockTokenCall().thenAnswer((_) async => token);
+  }
+
+  void mackTokenError() {
+    mockTokenCall().thenThrow(Exception());
   }
 
   void mackHttpResponse() {
@@ -102,4 +104,13 @@ void main() {
 
     expect(response, httpResponse);
   });
+
+  test('Should throw ForbiddenError if FetchSecureCacheStorage throws', () async {
+    mackTokenError();
+
+    final future = sut.request(uri: uri, method: method, body: body);
+
+    expect(future, throwsA(HttpError.forbidden));
+  });
+
 }
