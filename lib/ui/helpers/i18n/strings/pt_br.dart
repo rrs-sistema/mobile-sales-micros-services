@@ -19,6 +19,7 @@ class PtBr implements Translations {
   String get typeYourPassword => 'Digite sua senha ';
   String get logIn => 'Entrar ';
   String get loginToYourAccount => 'Fazer login na sua conta ';
+  String get reload => 'Recarregar';
   String get typeYourEmail => 'Digite seu email ';
   String get userEmail => 'Email de usuário ';
   String get userName => 'Nome de usuário ';

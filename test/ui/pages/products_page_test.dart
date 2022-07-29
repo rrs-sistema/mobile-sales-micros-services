@@ -6,23 +6,28 @@ import 'dart:async';
 
 import 'package:delivery_micros_services/ui/pages/base_screen/base_screen.dart';
 import 'package:delivery_micros_services/ui/pages/products/products.dart';
+import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';
 
 class ProductsPresenterSpy extends Mock implements ProductsPresenter {}
 
 void main() {
   ProductsPresenterSpy presenter;
   StreamController<bool> isLoadingController;
+  StreamController<List<ProductViewModel>> loadProductsController;
 
   void initStreams() {
-    isLoadingController = StreamController<bool>();    
+    isLoadingController = StreamController<bool>();   
+    loadProductsController =  StreamController<List<ProductViewModel>>();
   }
   
   void mockStreams() {
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);  
+    when(presenter.loadProductsStream).thenAnswer((_) => loadProductsController.stream); 
   }  
 
   void closeStreams(){
     isLoadingController.close();
+    loadProductsController.close();
   }
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -68,10 +73,21 @@ void main() {
     isLoadingController.add(true);
     await tester.pump();
     expect(circularProgressIndicator, findsOneWidget);
-    
+
     isLoadingController.add(null);
     await tester.pump();
     expect(circularProgressIndicator, findsNothing);       
+  }); 
+  
+  testWidgets('Should present error if loadProductsStream fails', (WidgetTester tester) async{
+    await loadPage(tester);
+
+    loadProductsController.addError(UIError.unexpected.description);
+    await tester.pump();
+
+    expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
+    expect(find.text('Recarregar'), findsOneWidget);
+    expect(find.text('Bíblia'), findsNothing);
   }); 
   
 }

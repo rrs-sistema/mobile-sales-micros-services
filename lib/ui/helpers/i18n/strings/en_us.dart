@@ -18,6 +18,7 @@ class EnUs implements Translations {
   String get forgotYourPassword => 'Forgot your password? '; // já tem uma conta?
   String get logIn => 'Log in ';// Conecte-se
   String get loginToYourAccount => 'Login to your account '; // Faça login na sua conta
+  String get reload => 'Reload'; // Recarregar
   String get typeYourEmail => 'Type your e-mail '; // Digite seu email
   String get typeYourPassword => 'Type your password '; // Digite sua senha
   String get userEmail => 'User email '; // E-mail do usuário

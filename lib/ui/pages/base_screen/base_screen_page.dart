@@ -32,24 +32,39 @@ class _BasePageScreenState extends State<BasePageScreen> {
             hideLoading(context);
           }
         });
-        return PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: pageController,
-          children: [
-            ProductPage(
-              products: appData.items,
-              categories: appData.categories,
-            ),
-            Container(
-              color: Colors.yellow,
-            ),
-            Container(
-              color: Colors.blue,
-            ),
-            Container(
-              color: Colors.purple,
-            ),
-          ],
+        return StreamBuilder<List<ProductViewModel>>(
+          stream: widget.presenter.loadProductsStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasError == true) {
+              return Column(
+                children: [
+                  Text(snapshot.error),
+                  ElevatedButton(
+                    onPressed: () => null, 
+                    child: Text(R.strings.reload),),
+                ],
+              );
+            }            
+            return PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: pageController,
+              children: [
+                ProductPage(
+                  products: appData.items,
+                  categories: appData.categories,
+                ),
+                Container(
+                  color: Colors.yellow,
+                ),
+                Container(
+                  color: Colors.blue,
+                ),
+                Container(
+                  color: Colors.purple,
+                ),
+              ],
+            );
+          }
         );
       }),
       bottomNavigationBar: BottomNavigationBar(

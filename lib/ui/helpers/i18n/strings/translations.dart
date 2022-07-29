@@ -16,6 +16,7 @@ abstract class Translations {
   String get forgotYourPassword;
   String get logIn;
   String get loginToYourAccount;
+  String get reload;
   String get typeYourEmail;
   String get typeYourPassword;
   String get userEmail;

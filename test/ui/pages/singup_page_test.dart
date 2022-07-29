@@ -220,7 +220,6 @@ void main() {
     expect(circularProgressIndicator, findsNothing);       
   }); 
   
-
   testWidgets('Should presente error message if signUp fails', (WidgetTester tester) async {
     await loadPage(tester);
 
@@ -239,6 +238,7 @@ void main() {
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'),
         findsOneWidget);
   });
+  
   testWidgets('Should change page', (WidgetTester tester) async{
     await loadPage(tester);
 
@@ -262,7 +262,6 @@ void main() {
 
   });  
 
-
    testWidgets('Should call goToLogin on link click', (WidgetTester tester) async{
     await loadPage(tester);
     
@@ -273,6 +272,5 @@ void main() {
 
     verify(presenter.goToLogin()).called(1);
   });
-
 
 }
