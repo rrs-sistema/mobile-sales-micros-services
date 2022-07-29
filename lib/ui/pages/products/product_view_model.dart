@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import './products.dart';
+
 class ProductViewModel extends Equatable {
   final int id;
   final String name;
@@ -12,8 +14,8 @@ class ProductViewModel extends Equatable {
   final SupplierViewModel supplier;
   final CategoryViewModel category;
 
-  ProductViewModel({
-      @required this.id,
+  ProductViewModel(
+      {@required this.id,
       @required this.name,
       @required this.description,
       @required this.imgUrl,
@@ -23,23 +25,15 @@ class ProductViewModel extends Equatable {
       @required this.supplier,
       @required this.category});
 
-  List get props => ['id', 'name', 'description', 'imgUrl', 'quantityAvailable', 'createdAt', 'price', 'supplier', 'category'];
-}
-
-class CategoryViewModel extends Equatable {
-  final int id;
-  final String description;
-
-  CategoryViewModel({this.id, this.description});
-
-  List get props => ['id', 'description'];
-}
-
-class SupplierViewModel extends Equatable {
-  final int id;
-  final String name;
-
-  SupplierViewModel({this.id, this.name});
-
-  List get props => ['id', 'name'];
+  List get props => [
+        'id',
+        'name',
+        'description',
+        'imgUrl',
+        'quantityAvailable',
+        'createdAt',
+        'price',
+        'supplier',
+        'category'
+      ];
 }
