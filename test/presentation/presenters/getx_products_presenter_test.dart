@@ -17,10 +17,15 @@ class GetxProductsPresenter {
 class LoadProductSpy extends Mock implements LoadProducts{}
 
 void main() {
-  test('Shoul call LoadProdiucts on loadData', () async {
-    final loadProducts = LoadProductSpy();
-    final sut = GetxProductsPresenter(loadProducts: loadProducts);
+  LoadProductSpy loadProducts;
+  GetxProductsPresenter sut;
 
+  setUp(() {
+    loadProducts = LoadProductSpy();
+    sut = GetxProductsPresenter(loadProducts: loadProducts);
+  });
+  
+  test('Shoul call LoadProdiucts on loadData', () async {
     await sut.loaddata();
 
     verify(loadProducts.load()).called(1);
