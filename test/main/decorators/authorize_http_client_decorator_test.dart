@@ -79,7 +79,7 @@ void main() {
         uri: uri,
         method: method,
         body: body,
-        headers: {'x-access-token': token})).called(1);
+        headers: {'Authorization': token})).called(1);
 
     await sut.request(
         uri: uri,
@@ -90,7 +90,7 @@ void main() {
             uri: uri,
             method: method,
             body: body,
-            headers: {'x-access-token': token, 'any_header': 'any_value'}))
+            headers: {'Authorization': token, 'any_header': 'any_value'}))
         .called(1);
   });
 

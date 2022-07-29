@@ -4,7 +4,7 @@ import '../factories.dart';
 
 LoadProducts makeRemoteLoadProducts() {
   return RemoteLoadProducts(
-    httpClient: makeHttpAdapter<Map>(), 
+    httpClient: makeAuthorizeHttpClientDecorator(), 
     uri: makeApiProduct('product')
   );
 }
