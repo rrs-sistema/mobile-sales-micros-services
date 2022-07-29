@@ -4,6 +4,7 @@ abstract class HttpClient {
   Future<dynamic> request({
     @required Uri uri, 
     @required String method,
-    Map body
+    Map body,
+    Map headers
   });
 }

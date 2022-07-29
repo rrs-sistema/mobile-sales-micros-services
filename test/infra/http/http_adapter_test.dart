@@ -56,6 +56,16 @@ void main() {
           'transactionid': '123456'
         }, body: '{"any_key":"any_value"}'
       ));
+
+      await sut.request(uri: uri, method: 'post', body: {'any_key': 'any_value'}, headers: {'any_header': 'any_value'});
+
+      verify(client.post(uri, headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json',
+          'any_header': 'any_value',
+          'transactionid': '123456'
+        }, body: '{"any_key":"any_value"}'
+      ));
     });
 
     test('Should call post without body', () async {
@@ -172,13 +182,22 @@ void main() {
 
     test('Should call get with correct values', () async {
       await sut.request(uri: uri, method: 'get');
-
       verify(client.get(uri, headers: {
           'content-type': 'application/json',
           'accept': 'application/json',
           'transactionid': '123456'
         }
       ));
+
+      await sut.request(uri: uri, method: 'get', body: {'any_key': 'any_value'}, headers: {'any_header': 'any_value'});
+
+      verify(client.get(uri, headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json',
+          'any_header': 'any_value',
+          'transactionid': '123456'
+        },
+      ));      
     });
 
     test('Should return data if get returns 200', () async {
