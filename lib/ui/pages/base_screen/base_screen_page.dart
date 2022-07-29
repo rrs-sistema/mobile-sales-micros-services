@@ -36,14 +36,47 @@ class _BasePageScreenState extends State<BasePageScreen> {
             stream: widget.presenter.productsStream,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Column(
-                  children: [
-                    Text(snapshot.error),
-                    ElevatedButton(
-                      onPressed: widget.presenter.loadData,
-                      child: Text(R.strings.reload),
+                return Scaffold(
+                  appBar: AppBar(
+                    backgroundColor: primaryColor,
+                    elevation: 0,
+                    title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
+                      TextSpan(text: 'Delivery Library ', style: TextStyle(fontSize: 22)),
+                      TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
+                    ])),
+                    centerTitle: true,
+                  ),
+                  body: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Column(
+                        children: [
+                          Text(snapshot.error, style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                          ),),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: widget.presenter.loadData,
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(primaryColor),
+                                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                  ),
+                                ),
+                                child: Text(R.strings.reload),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
+                  ),
                 );
               }
               if (snapshot.hasData) {

@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import '../../data/http/http.dart';
 
-class HttpAdapter<ResponseType> implements HttpClient<ResponseType> {
+class HttpAdapter<ResponseType> implements HttpClient {
   final Client client;
 
   HttpAdapter(this.client);

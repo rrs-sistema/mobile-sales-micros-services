@@ -8,7 +8,7 @@ import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/data/model/model.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
-class HttpClientSpy extends Mock implements HttpClient<List<Map>> {}
+class HttpClientSpy extends Mock implements HttpClient {}
 
 void main() {
   RemoteLoadProducts sut;

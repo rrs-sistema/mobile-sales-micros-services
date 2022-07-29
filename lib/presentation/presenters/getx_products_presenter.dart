@@ -6,7 +6,7 @@ import './../../domain/helpers/helpers.dart';
 import './../../ui/helpers/helpers.dart';
 import './../../ui/pages/pages.dart';
 
-class GetxProductsPresenter {
+class GetxProductsPresenter implements ProductsPresenter {
   final LoadProducts loadProducts;
 
   final _isLoading = true.obs;
@@ -38,7 +38,7 @@ class GetxProductsPresenter {
               ))
           .toList();
     } on DomainError {
-      _products.subject.addError(UIError.unexpected.description);
+      _products.addError(UIError.unexpected.description, StackTrace.empty);
     } finally {
       _isLoading.value = false;
     }

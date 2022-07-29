@@ -99,8 +99,7 @@ void main() {
 
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     sut.productsStream.listen(null,
-        onError: expectAsync1(
-            (error) => expect(error, UIError.unexpected.description)));
+      onError: (error, _) => expect(error, UIError.unexpected.description));
 
     await sut.loadData();
   });

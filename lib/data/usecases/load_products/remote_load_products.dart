@@ -8,14 +8,14 @@ import './../../http/http.dart';
 
 class RemoteLoadProducts implements LoadProducts {
   final Uri uri;
-  final HttpClient<List<Map>> httpClient;
+  final HttpClient httpClient;
 
   RemoteLoadProducts({@required this.uri, @required this.httpClient});
 
   Future<List<ProductEntity>> load() async {
     try {
       final httpResponse = await httpClient.request(uri: uri, method: 'get');
-      return httpResponse.map((json) => RemoteProductModel.fromJson(json).toEntity()).toList();      
+      return httpResponse.map<ProductEntity>((json) => RemoteProductModel.fromJson(json).toEntity()).toList();      
     } on HttpError catch(error) {
        throw error == HttpError.forbidden ? DomainError.accessDenied :DomainError.unexpected;
     }

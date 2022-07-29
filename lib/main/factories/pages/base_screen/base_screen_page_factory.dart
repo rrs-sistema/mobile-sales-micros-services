@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../ui/pages/pages.dart';
+import './../../../../main/factories/pages/base_screen/base_screen.dart';
+import './../../../../ui/pages/pages.dart';
 
-Widget makeBaseScreenPage() => BasePageScreen(null);
+Widget makeBaseScreenPage() => BasePageScreen(makeGetxBasePagePresenter());
