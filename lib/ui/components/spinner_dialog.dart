@@ -9,7 +9,7 @@ void showLoading(BuildContext context) {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            CircularProgressIndicator(),
+            CircularProgressIndicator(key: Key('circularProgressIndicatorShowLoading'),),
             SizedBox(
               height: 10,
             ),

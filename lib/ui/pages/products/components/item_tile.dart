@@ -29,7 +29,7 @@ class ItemTile extends StatelessWidget {
                   child: CachedNetworkImage(
                     height: 170,
                     imageUrl: item.imgUrl,
-                    placeholder: (context, url) => const CircularProgressIndicator(),
+                    placeholder: (context, url) => const CircularProgressIndicator(key: Key('progressIndicator(ItemProduct'),),
                     errorWidget: (context, url, error) => Image.asset(
                       'lib/ui/assets/sem-foto.jpg',
                       fit: BoxFit.fill,

@@ -1,3 +1,5 @@
 abstract class ProductsPresenter {
-  Future<void> loadData();
+  Stream<bool> get isLoadingStream;
+
+   Future<void> loadData();
 }
