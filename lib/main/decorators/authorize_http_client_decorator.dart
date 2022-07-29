@@ -12,8 +12,8 @@ class AuthorizeHttpClientDecorator implements HttpClient{
 
   Future<dynamic> request({@required Uri uri, @required String method, Map body, Map headers}) async {
     try {
-      final token = await fetchSecureCacheStorage.fetchSecure('accessToken');
-      final authorizadHeaders = headers ?? {}..addAll({'Authorizationn': token});
+      final accessToken = await fetchSecureCacheStorage.fetchSecure('accessToken');
+      final authorizadHeaders = headers ?? {}..addAll({'Authorization': accessToken});
       return await decoratee.request(uri: uri, method: method, body: body, headers: authorizadHeaders);      
     } on HttpError {
       rethrow;

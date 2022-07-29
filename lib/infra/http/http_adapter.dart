@@ -31,9 +31,8 @@ class HttpAdapter<ResponseType> implements HttpClient {
   }
 
   dynamic _handleResponse(Response response) {
-    print('Result response --> ${response.body}');
     switch (response.statusCode) {
-      case 200: return response.body.isEmpty ? null : jsonDecode(response.body);
+      case 200: return response.body.isEmpty ? null : json.decode(utf8.decode(response.bodyBytes));
       case 204: return null;
       case 400: throw HttpError.badRequest;
       case 401: throw HttpError.unauthorized;

@@ -9,17 +9,14 @@ import './../../ui/pages/pages.dart';
 class GetxProductsPresenter implements ProductsPresenter {
   final LoadProducts loadProducts;
 
-  final _isLoading = true.obs;
   final _products = Rx<List<ProductViewModel>>();
 
-  Stream<bool> get isLoadingStream => _isLoading.stream;
   Stream<List<ProductViewModel>> get productsStream => _products.stream;
 
   GetxProductsPresenter({@required this.loadProducts});
 
   Future<void> loadData() async {
     try {
-      _isLoading.value = true;
       final products = await loadProducts.load();
       _products.value = products
           .map((product) => ProductViewModel(
@@ -39,8 +36,6 @@ class GetxProductsPresenter implements ProductsPresenter {
           .toList();
     } on DomainError {
       _products.addError(UIError.unexpected.description, StackTrace.empty);
-    } finally {
-      _isLoading.value = false;
     }
   }
 }

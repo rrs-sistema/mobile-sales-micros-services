@@ -75,23 +75,10 @@ void main() {
 
   test('Should call decoratee with access token on header', () async {
     await sut.request(uri: uri, method: method, body: body);
-    verify(httpClient.request(
-        uri: uri,
-        method: method,
-        body: body,
-        headers: {'Authorization': token})).called(1);
-
-    await sut.request(
-        uri: uri,
-        method: method,
-        body: body,
-        headers: {'any_header': 'any_value'});
-    verify(httpClient.request(
-            uri: uri,
-            method: method,
-            body: body,
-            headers: {'Authorization': token, 'any_header': 'any_value'}))
-        .called(1);
+    verify(httpClient.request(uri: uri, method: method, body: body, headers: {'Authorization': token})).called(1);
+  
+    await sut.request(uri: uri, method: method, body: body, headers: {'any_header': 'any_value'});
+    verify(httpClient.request(uri: uri, method: method, body: body, headers: {'Authorization': token, 'any_header': 'any_value'})).called(1);
   });
 
   test('Should return same result as decoratee', () async {

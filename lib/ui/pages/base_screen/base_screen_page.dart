@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './../../../ui/components/components.dart';
 import './../../../ui/helpers/helpers.dart';
 import './../../../ui/common/common.dart';
 import './../../../ui/pages/pages.dart';
@@ -24,84 +23,100 @@ class _BasePageScreenState extends State<BasePageScreen> {
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Scaffold(
       backgroundColor: primaryColor,
-      body: Builder(builder: (context) {
-        widget.presenter.isLoadingStream.listen((isLoading) {
-          if (isLoading == true) {
-            showLoading(context);
-          } else {
-            hideLoading(context);
-          }
-        });
-        return StreamBuilder<List<ProductViewModel>>(
-            stream: widget.presenter.productsStream,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Scaffold(
-                  appBar: AppBar(
-                    backgroundColor: primaryColor,
-                    elevation: 0,
-                    title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
-                      TextSpan(text: 'Delivery Library ', style: TextStyle(fontSize: 22)),
-                      TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
-                    ])),
-                    centerTitle: true,
-                  ),
-                  body: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(snapshot.error, style: TextStyle(
+      body: StreamBuilder<List<ProductViewModel>>(
+          stream: widget.presenter.productsStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Scaffold(
+                appBar: AppBar(
+                  backgroundColor: primaryColor,
+                  elevation: 0,
+                  title: Text.rich(
+                      TextSpan(style: TextStyle(fontSize: 30), children: [
+                    TextSpan(
+                        text: 'Delivery Library ',
+                        style: TextStyle(fontSize: 22)),
+                    TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
+                  ])),
+                  centerTitle: true,
+                ),
+                body: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        snapshot.error,
+                        style: TextStyle(
                           fontSize: 16,
-                        ), textAlign: TextAlign.center,),
-                        const SizedBox(height: 10,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                              onPressed: widget.presenter.loadData,
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(primaryColor),
-                                foregroundColor: MaterialStateProperty.all(Colors.white),
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                  ),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: widget.presenter.loadData,
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(primaryColor),
+                              foregroundColor:
+                                  MaterialStateProperty.all(Colors.white),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
                                 ),
                               ),
-                              child: Text(R.strings.reload),
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                            child: Text(R.strings.reload),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                );
-              }
-              if (snapshot.hasData) {
-                return PageView(
-                  physics: NeverScrollableScrollPhysics(),
-                  controller: pageController,
-                  children: [
-                    ProductPage(
-                      products: snapshot.data,
-                      categories: appData.categories,
-                    ),
-                    Container(
-                      color: Colors.yellow,
-                    ),
-                    Container(
-                      color: Colors.blue,
-                    ),
-                    Container(
-                      color: Colors.purple,
-                    ),
-                  ],
-                );
-              }
-              return SizedBox(height: 0,);
-            });
-      }),
+                ),
+              );
+            }
+            if (snapshot.hasData) {
+              return PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: pageController,
+                children: [
+                  ProductPage(
+                    products: snapshot.data,
+                    categories: appData.categories,
+                  ),
+                  Container(
+                    color: Colors.yellow,
+                  ),
+                  Container(
+                    color: Colors.blue,
+                  ),
+                  Container(
+                    color: Colors.purple,
+                  ),
+                ],
+              );
+            }
+            return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Carregando dados, aguarde...', style: TextStyle(
+                  color: Colors.white,
+                ), textAlign: TextAlign.center),
+                const SizedBox(height: 15,),
+                const CircularProgressIndicator(
+                  key: Key("circularLoadProduct"),
+                  color: Colors.white,
+                )
+              ],
+            ));
+          }),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) {

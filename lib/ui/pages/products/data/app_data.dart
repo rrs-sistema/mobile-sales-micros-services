@@ -1,5 +1,5 @@
 import 'package:delivery_micros_services/domain/entities/entities.dart';
-
+/*
 ProductEntity bibliaAlmeida = ProductEntity(
     id: 1000,
     name: 'Bíblia Sagrada Nova Almeida Atualizada',
@@ -7,7 +7,7 @@ ProductEntity bibliaAlmeida = ProductEntity(
         'Essa edição da Bíblia Sagrada é ideal para quem deseja ler a Palavra de Deus diariamente e procura um texto clássico mas com linguagem atual. A Nova Almeida Atualizada (NAA) é uma tradução lançada em 2017 pela SBB, resultado de uma profunda revisão da consagrada tradução Almeida Revista e Atualizada. Ela apresenta um texto clássico com uma linguagem atual, seguindo a norma padrão do português escrito e falado no Brasil.',
     imgUrl: 'https://images-na.ssl-images-amazon.com/images/I/61lCKdWUOLL.jpg',
     quantityAvailable: 6,
-    createdAt: DateTime.parse('2022-07-28 03:11:46'),
+    createdAt: '28/07/2022 03:11:46',//DateTime.parse('2022-07-28 03:11:46'),
     price: 47.76,
     supplier: SupplierEntity(id: 1000, name: 'Sociedade Bíblica do Brasil'),
     category: CategoryEntity(id: 1000, description: 'Bíblia'));
@@ -19,7 +19,7 @@ ProductEntity bibliaPregador = ProductEntity(
         'A Bíblia do Pregador Pentecostal reúne 1.002 sermões bíblicos associados ao texto bíblico, que servirão de auxílio e orientação para pregações voltadas aos mais diversos públicos e ocasiões. Os sermões, preparados pelo teólogo e pastor Erivaldo de Jesus, abordam cada um dos 66 livros da Bíblia, além de tratarem de temas para ministrar a Palavra de Deus em convenções de pastores, reuniões de obreiros, escolas bíblicas, reuniões para mulheres e festividades em geral da Igreja.',
     imgUrl: 'https://m.media-amazon.com/images/P/B06XDJYW5F.01._SCLZZZZZZZ_SX500_.jpg',
     quantityAvailable: 7,
-    createdAt: DateTime.parse('2022-07-28 03:11:46'),
+    createdAt: '28/07/2022 03:11:46',//DateTime.parse('2022-07-28 03:11:46'),
     price: 88.11,
     supplier: SupplierEntity(id: 1000, name: 'Sociedade Bíblica do Brasil'),
     category: CategoryEntity(id: 1000, description: 'Bíblia'));
@@ -31,7 +31,7 @@ ProductEntity comentarioBiblicoLar = ProductEntity(
         'Comentário bíblico lar, família & casamento: Fundamentos, desafios e estudo bíblico-teológico prático para líderes, conselheiros e casais',
     imgUrl: 'https://m.media-amazon.com/images/I/510o-XcWKSL.jpg',
     quantityAvailable: 8,
-    createdAt: DateTime.parse('2022-07-28 03:11:46'),
+    createdAt: '28/07/2022 03:11:46',//DateTime.parse('2022-07-28 03:11:46'),
     price: 92.28,
     supplier: SupplierEntity(id: 1000, name: 'Sociedade Bíblica do Brasil'),
     category: CategoryEntity(id: 1000, description: 'Bíblia'));
@@ -44,7 +44,7 @@ ProductEntity useACabecaJava = ProductEntity(
     imgUrl:
         'https://images-na.ssl-images-amazon.com/images/I/517KvLLwZXL._SX372_BO1,204,203,200_.jpg',
     quantityAvailable: 8,
-    createdAt: DateTime.parse('2022-07-28 03:11:46'),
+    createdAt: '28/07/2022 03:11:46',//DateTime.parse('2022-07-28 03:11:46'),,
     price: 146.58,
     supplier: SupplierEntity(id: 1003, name: 'Novatec'),
     category: CategoryEntity(id: 1003, description: 'Tecnologia e Ciência'));
@@ -89,6 +89,17 @@ ProductEntity enciclopediaReceitasBrasil = ProductEntity(
     supplier: SupplierEntity(id: 1004, name: 'Viva bem'),
     category: CategoryEntity(id: 1004, description: 'Gastronomia'));
 
+List<ProductEntity> items = [
+  bibliaAlmeida,
+  bibliaPregador,
+  comentarioBiblicoLar,
+  useACabecaJava,
+  flutterNaPratica,
+  divinaAlquimia,
+  enciclopediaReceitasBrasil
+];
+
+*/
   List<CategoryEntity> categories = [
     CategoryEntity(
       id: 1000,
@@ -108,12 +119,3 @@ ProductEntity enciclopediaReceitasBrasil = ProductEntity(
     ),
   ];
 
-List<ProductEntity> items = [
-  bibliaAlmeida,
-  bibliaPregador,
-  comentarioBiblicoLar,
-  useACabecaJava,
-  flutterNaPratica,
-  divinaAlquimia,
-  enciclopediaReceitasBrasil
-];

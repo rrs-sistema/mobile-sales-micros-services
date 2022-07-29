@@ -8,7 +8,7 @@ class ProductViewModel extends Equatable {
   final String imgUrl;
   final int quantityAvailable;
   final double price;
-  final DateTime createdAt;
+  final String createdAt;
   final SupplierViewModel supplier;
   final CategoryViewModel category;
 

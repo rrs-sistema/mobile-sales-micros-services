@@ -26,7 +26,7 @@ void main() {
             description: 'Bíblia atualizada de Almeida e Corrigida',
             imgUrl: imgUrl001,
             quantityAvailable: 8,
-            createdAt: DateTime.parse('2022-07-28 03:11:46'),
+            createdAt: '29/07/2022 03:11:46', //DateTime.parse('2022-07-28 03:11:46'),
             price: 92.28,
             supplier:
                 SupplierEntity(id: 1000, name: 'Sociedade Bíblica do Brasil'),
@@ -37,7 +37,7 @@ void main() {
             description: 'Bíblia Pentecostal atualizada de Almeida e Corrigida',
             imgUrl: imgUrl002,
             quantityAvailable: 8,
-            createdAt: DateTime.parse('2022-07-28 08:15:32'),
+            createdAt: '28/07/2022 08:15:32',//DateTime.parse('2022-07-28 08:15:32'),
             price: 135.98,
             supplier:
                 SupplierEntity(id: 1000, name: 'Sociedade Bíblica do Brasil'),
@@ -67,7 +67,6 @@ void main() {
   });
 
   test('Shoul emit correct LoadProducts on loadData', () async {
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     sut.productsStream.listen(expectAsync1((products) => expect(products, [
           ProductViewModel(
               id: products[0].id,
@@ -97,7 +96,6 @@ void main() {
   test('Shoul emit correct events on failure', () async {
     mocakLoadProductsError();
 
-    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     sut.productsStream.listen(null,
       onError: (error, _) => expect(error, UIError.unexpected.description));
 
