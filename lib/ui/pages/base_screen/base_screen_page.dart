@@ -46,35 +46,34 @@ class _BasePageScreenState extends State<BasePageScreen> {
                     ])),
                     centerTitle: true,
                   ),
-                  body: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Column(
-                        children: [
-                          Text(snapshot.error, style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                          ),),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: widget.presenter.loadData,
-                                style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all(primaryColor),
-                                  foregroundColor: MaterialStateProperty.all(Colors.white),
-                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(snapshot.error, style: TextStyle(
+                          fontSize: 16,
+                        ), textAlign: TextAlign.center,),
+                        const SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ElevatedButton(
+                              onPressed: widget.presenter.loadData,
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(primaryColor),
+                                foregroundColor: MaterialStateProperty.all(Colors.white),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
                                   ),
                                 ),
-                                child: Text(R.strings.reload),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                              child: Text(R.strings.reload),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 );
