@@ -17,13 +17,17 @@ class AuthorizeHttpClientDecorator {
 class FetchSecureCacheStorageSpy extends Mock implements FetchSecureCacheStorage {}
 
 void main() {
+  AuthorizeHttpClientDecorator sut;
+  FetchSecureCacheStorageSpy fetchSecureCacheStorage;
 
-  test('Should call FetchSecureCacheStorage with correct key', () async {
-    final fetchSecureCacheStorage = FetchSecureCacheStorageSpy();
-    final sut = AuthorizeHttpClientDecorator(
+  setUp((){
+    fetchSecureCacheStorage = FetchSecureCacheStorageSpy();
+    sut = AuthorizeHttpClientDecorator(
       fetchSecureCacheStorage: fetchSecureCacheStorage
     );
+  });
 
+  test('Should call FetchSecureCacheStorage with correct key', () async {
     await sut.request();
 
     verify(fetchSecureCacheStorage.fetchSecure('accessToken')).called(1);
