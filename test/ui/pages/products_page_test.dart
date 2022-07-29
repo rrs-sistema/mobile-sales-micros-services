@@ -1,12 +1,12 @@
-import 'package:delivery_micros_services/ui/helpers/services/services.dart';
-import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:mockito/mockito.dart';
+import 'package:faker/faker.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:delivery_micros_services/ui/pages/base_screen/base_screen.dart';
+import 'package:delivery_micros_services/ui/helpers/services/services.dart';
 import 'package:delivery_micros_services/ui/pages/products/products.dart';
 import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';
 
@@ -138,6 +138,5 @@ void main() {
 
     verify(presenter.loadData()).called(2);
   });
-
 
 }
