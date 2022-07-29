@@ -1,3 +1,5 @@
+import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
+import 'package:delivery_micros_services/ui/helpers/helpers.dart';
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:test/test.dart';
@@ -20,25 +22,30 @@ class GetxProductsPresenter {
   GetxProductsPresenter({@required this.loadProducts});
 
   Future<void> loadData() async {
-    _isLoading.value = true;
-    final products = await loadProducts.load();
-    _products.value = products
-        .map((product) => ProductViewModel(
-              id: product.id,
-              name: product.name,
-              description: product.description,
-              imgUrl: product.imgUrl,
-              quantityAvailable: product.quantityAvailable,
-              createdAt: product.createdAt,
-              price: product.price,
-              supplier: SupplierViewModel(
-                  id: product.supplier.id, name: product.supplier.name),
-              category: CategoryViewModel(
-                  id: product.category.id,
-                  description: product.category.description),
-            ))
-        .toList();
-    _isLoading.value = false;
+    try {
+      _isLoading.value = true;
+      final products = await loadProducts.load();
+      _products.value = products
+          .map((product) => ProductViewModel(
+                id: product.id,
+                name: product.name,
+                description: product.description,
+                imgUrl: product.imgUrl,
+                quantityAvailable: product.quantityAvailable,
+                createdAt: product.createdAt,
+                price: product.price,
+                supplier: SupplierViewModel(
+                    id: product.supplier.id, name: product.supplier.name),
+                category: CategoryViewModel(
+                    id: product.category.id,
+                    description: product.category.description),
+              ))
+          .toList();
+    } on DomainError {
+      _products.subject.addError(UIError.unexpected.description);
+    } finally {
+      _isLoading.value = false;
+    }
   }
 }
 
@@ -77,10 +84,15 @@ void main() {
             category: CategoryEntity(id: 1000, description: 'Bíblia'))
       ];
 
+  PostExpectation mockLoadProductsCall() => when(loadProducts.load());
+
   void mockLoadProducts(List<ProductEntity> data) {
     products = data;
-    when(loadProducts.load()).thenAnswer((_) async => products);
+    mockLoadProductsCall().thenAnswer((_) async => products);
   }
+
+  void mocakLoadProductsError() =>
+      mockLoadProductsCall().thenThrow(DomainError.unexpected);
 
   setUp(() {
     loadProducts = LoadProductSpy();
@@ -118,6 +130,17 @@ void main() {
               supplier: products[1].supplier,
               category: products[1].category)
         ])));
+
+    await sut.loadData();
+  });
+
+  test('Shoul emit correct events on failure', () async {
+    mocakLoadProductsError();
+
+    expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
+    sut.productsStream.listen(null,
+        onError: expectAsync1(
+            (error) => expect(error, UIError.unexpected.description)));
 
     await sut.loadData();
   });
