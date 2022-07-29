@@ -33,7 +33,7 @@ class _BasePageScreenState extends State<BasePageScreen> {
           }
         });
         return StreamBuilder<List<ProductViewModel>>(
-            stream: widget.presenter.loadProductsStream,
+            stream: widget.presenter.productsStream,
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Column(

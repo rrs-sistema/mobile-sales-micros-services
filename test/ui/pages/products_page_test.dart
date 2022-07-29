@@ -15,21 +15,21 @@ class ProductsPresenterSpy extends Mock implements ProductsPresenter {}
 void main() {
   ProductsPresenterSpy presenter;
   StreamController<bool> isLoadingController;
-  StreamController<List<ProductViewModel>> loadProductsController;
+  StreamController<List<ProductViewModel>> productsController;
 
   void initStreams() {
     isLoadingController = StreamController<bool>();   
-    loadProductsController =  StreamController<List<ProductViewModel>>();
+    productsController =  StreamController<List<ProductViewModel>>();
   }
   
   void mockStreams() {
     when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);  
-    when(presenter.loadProductsStream).thenAnswer((_) => loadProductsController.stream); 
+    when(presenter.productsStream).thenAnswer((_) => productsController.stream); 
   }  
 
   void closeStreams(){
     isLoadingController.close();
-    loadProductsController.close();
+    productsController.close();
   }
 
   Future<void> loadPage(WidgetTester tester) async {
@@ -104,10 +104,10 @@ void main() {
     expect(circularProgressIndicator, findsNothing);       
   }); 
   
-  testWidgets('Should present error if loadProductsStream fails', (WidgetTester tester) async{
+  testWidgets('Should present error if productsStream fails', (WidgetTester tester) async{
     await loadPage(tester);
 
-    loadProductsController.addError(UIError.unexpected.description);
+    productsController.addError(UIError.unexpected.description);
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
@@ -115,10 +115,10 @@ void main() {
     expect(find.text('Bíblia'), findsNothing);
   }); 
   
-  testWidgets('Should present error if loadProductsStream succeeds', (WidgetTester tester) async{
+  testWidgets('Should present error if productsStream succeeds', (WidgetTester tester) async{
     await loadPage(tester);
 
-    loadProductsController.add(makeProducts());
+    productsController.add(makeProducts());
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
@@ -132,7 +132,7 @@ void main() {
   testWidgets('Should call LoadProducts on reload button click', (WidgetTester tester) async {
     await loadPage(tester);
 
-    loadProductsController.addError(UIError.unexpected.description);
+    productsController.addError(UIError.unexpected.description);
     await tester.pump();
     await tester.tap(find.text('Recarregar'));
 
