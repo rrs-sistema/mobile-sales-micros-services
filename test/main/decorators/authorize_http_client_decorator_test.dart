@@ -6,24 +6,27 @@ import 'package:meta/meta.dart';
 import 'package:delivery_micros_services/data/cache/cache.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
-class AuthorizeHttpClientDecorator {
+class AuthorizeHttpClientDecorator implements HttpClient{
   final FetchSecureCacheStorage fetchSecureCacheStorage;
   final HttpClient decoratee;
 
-  AuthorizeHttpClientDecorator({@required this.fetchSecureCacheStorage, @required this.decoratee});
+  AuthorizeHttpClientDecorator(
+      {@required this.fetchSecureCacheStorage, @required this.decoratee});
 
-  Future<void> request(
+  Future<dynamic> request(
       {@required Uri uri,
       @required String method,
       Map body,
       Map headers}) async {
     final token = await fetchSecureCacheStorage.fetchSecure('accessToken');
     final authorizadHeaders = headers ?? {}..addAll({'x-access-token': token});
-    await decoratee.request(uri: uri, method: method, body: body, headers: authorizadHeaders);
+    return await decoratee.request(uri: uri, method: method, body: body, headers: authorizadHeaders);
   }
 }
 
-class FetchSecureCacheStorageSpy extends Mock implements FetchSecureCacheStorage {}
+class FetchSecureCacheStorageSpy extends Mock
+    implements FetchSecureCacheStorage {}
+
 class HttpClientSpy extends Mock implements HttpClient {}
 
 void main() {
@@ -35,24 +38,36 @@ void main() {
   String method;
   Map body;
   String token;
+  String httpResponse;
 
   void mackToken() {
     token = faker.guid.guid();
-    when(fetchSecureCacheStorage.fetchSecure(any)).thenAnswer((_) async => token);
+    when(fetchSecureCacheStorage.fetchSecure(any))
+        .thenAnswer((_) async => token);
+  }
+
+  void mackHttpResponse() {
+    httpResponse = faker.randomGenerator.string(50);
+    when(httpClient.request(
+            uri: anyNamed('uri'),
+            method: anyNamed('method'),
+            body: anyNamed('body'),
+            headers: anyNamed('headers')))
+        .thenAnswer((_) async => httpResponse);
   }
 
   setUp(() {
     fetchSecureCacheStorage = FetchSecureCacheStorageSpy();
     httpClient = HttpClientSpy();
     sut = AuthorizeHttpClientDecorator(
-      fetchSecureCacheStorage: fetchSecureCacheStorage,
-      decoratee: httpClient
-    );
+        fetchSecureCacheStorage: fetchSecureCacheStorage,
+        decoratee: httpClient);
     url = faker.internet.httpUrl();
     uri = Uri.parse(url);
     method = faker.randomGenerator.string(10);
     body = {'any_key': 'any_value'};
     mackToken();
+    mackHttpResponse();
   });
 
   test('Should call FetchSecureCacheStorage with correct key', () async {
@@ -63,9 +78,28 @@ void main() {
 
   test('Should call decoratee with access token on header', () async {
     await sut.request(uri: uri, method: method, body: body);
-    verify(httpClient.request(uri: uri, method: method, body: body, headers: {'x-access-token': token})).called(1);
+    verify(httpClient.request(
+        uri: uri,
+        method: method,
+        body: body,
+        headers: {'x-access-token': token})).called(1);
 
-    await sut.request(uri: uri, method: method, body: body, headers: {'any_header': 'any_value'});
-    verify(httpClient.request(uri: uri, method: method, body: body, headers: {'x-access-token': token, 'any_header': 'any_value'})).called(1);    
+    await sut.request(
+        uri: uri,
+        method: method,
+        body: body,
+        headers: {'any_header': 'any_value'});
+    verify(httpClient.request(
+            uri: uri,
+            method: method,
+            body: body,
+            headers: {'x-access-token': token, 'any_header': 'any_value'}))
+        .called(1);
+  });
+
+  test('Should return same result as decoratee', () async {
+    final response = await sut.request(uri: uri, method: method, body: body);
+
+    expect(response, httpResponse);
   });
 }
