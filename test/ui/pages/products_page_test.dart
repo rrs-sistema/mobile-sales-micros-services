@@ -8,11 +8,10 @@ import 'package:delivery_micros_services/ui/pages/products/products.dart';
 class ProductsPresenterSpy extends Mock implements ProductsPresenter {}
 
 void main() {
+  ProductsPresenterSpy presenter;
 
-  testWidgets('Should call LoadProducts on page load',
-      (WidgetTester tester) async {
-    final presenter = ProductsPresenterSpy();
-
+  Future<void> loadPage(WidgetTester tester) async {
+    presenter = ProductsPresenterSpy();
     final basePageScreen = GetMaterialApp(
       initialRoute: '/base_screen',
       getPages: [
@@ -21,9 +20,13 @@ void main() {
           page: () => BasePageScreen(presenter,)),
       ],
     );
-    await tester.pumpAndSettle(); // Espera a animação acontecer
     await tester.pumpWidget(basePageScreen);
+  }
+
+  testWidgets('Should call LoadProducts on page load', (WidgetTester tester) async {
+    await loadPage(tester);
 
     verify(presenter.loadData()).called(1);
   });
+
 }
