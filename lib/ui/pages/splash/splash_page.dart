@@ -16,12 +16,18 @@ class SplashPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
-        title: Text('RRS Sales Micros Services'),
+        backgroundColor: primaryColor,
+        elevation: 0,
+        title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
+          TextSpan(text: 'Delivery Library ', style: TextStyle(fontSize: 22)),
+          TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
+        ])),
+        centerTitle: true,
       ),
       body: Builder(
         builder: (context) {
           presenter.navigateToStream.listen((page) {
-            if(page?.isNotEmpty == true) {
+            if (page?.isNotEmpty == true) {
               Get.offAllNamed(page);
             }
           });
