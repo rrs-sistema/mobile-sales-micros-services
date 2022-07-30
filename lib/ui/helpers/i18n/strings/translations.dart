@@ -22,6 +22,7 @@ abstract class Translations {
   String get userEmail;
   String get userName;
 
+  String get titleCategorie; 
   String get titleNavBarHome; 
   String get titleNavBarCarrinho;
   String get titleNavBarPedido;

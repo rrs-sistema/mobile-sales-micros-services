@@ -7,7 +7,8 @@ import './../products/data/data.dart' as appData;
 
 class BasePageScreen extends StatefulWidget {
   final ProductsPresenter presenter;
-  BasePageScreen(this.presenter);
+  final CategoriesPresenter presenterCategory;
+  BasePageScreen(this.presenter, this.presenterCategory);
 
   @override
   _BasePageScreenState createState() => _BasePageScreenState();
@@ -90,9 +91,7 @@ class _BasePageScreenState extends State<BasePageScreen> {
                     products: snapshot.data,
                     categories: appData.categories,
                   ),
-                  Container(
-                    color: Colors.yellow,
-                  ),
+                  CategoriesPage(widget.presenterCategory),
                   Container(
                     color: Colors.blue,
                   ),

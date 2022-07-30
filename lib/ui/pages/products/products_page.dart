@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
+import './../../../ui/pages/views_models/views_models.dart';
 import './../../../domain/entities/entities.dart';
 import './../../../ui/common/common.dart';
-import './views_models/views_models.dart';
 import './components/components.dart';
 
 class ProductPage extends StatefulWidget {

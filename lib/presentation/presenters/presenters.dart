@@ -1,3 +1,4 @@
+export './getx_categories_presenter.dart';
 export './getx_products_presenter.dart';
 export './getx_splash_presenter.dart';
 export './getx_signup_presenter.dart';

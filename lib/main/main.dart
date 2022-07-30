@@ -1,4 +1,3 @@
-import 'package:delivery_micros_services/main/factories/pages/base_screen/base_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,8 @@ class App extends StatelessWidget {
         GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
         GetPage(name: '/signup', page: makeSignUpPage),
         GetPage(name: '/base_screen', page: makeBaseScreenPage, transition: Transition.fadeIn),
-        GetPage(name: '/products', page: makeProductsPage, transition: Transition.fadeIn)
+        GetPage(name: '/products', page: makeProductsPage, transition: Transition.fadeIn),
+        GetPage(name: '/categories', page: makeCategoriesPage, transition: Transition.fadeIn)
       ],
     );
   }

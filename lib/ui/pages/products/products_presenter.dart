@@ -1,4 +1,4 @@
-import './views_models/views_models.dart';
+import './products.dart';
 
 abstract class ProductsPresenter {
   Stream<List<ProductViewModel>> get productsStream;  

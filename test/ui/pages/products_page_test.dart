@@ -26,7 +26,7 @@ void main() {
       getPages: [
         GetPage(
           name: '/base_screen',
-          page: () => BasePageScreen(presenter,)),
+          page: () => BasePageScreen(presenter, null)),
       ],
     );
     await tester.pumpWidget(basePageScreen);

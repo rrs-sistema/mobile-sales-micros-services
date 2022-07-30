@@ -1,0 +1,1 @@
+export './categories_page_factory.dart';
