@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
 import './../../../ui/pages/views_models/views_models.dart';
-import './../../../domain/entities/entities.dart';
 import './../../../ui/common/common.dart';
 import './components/components.dart';
 
 class ProductPage extends StatefulWidget {
 
   final List<ProductViewModel> products;
-  final List<CategoryEntity> categories;
+  final List<CategoryViewModel> categories;
 
   ProductPage({Key key, this.products, this.categories}) : super(key: key);
 
@@ -18,8 +17,8 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  CategoryEntity selectedCategory =
-      CategoryEntity(id: 1000, description: 'Bíblia');
+  CategoryViewModel selectedCategory =
+      CategoryViewModel(id: 1000, description: 'Bíblia');
 
   @override
   Widget build(BuildContext context) {

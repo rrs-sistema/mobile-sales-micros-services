@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
+import './../../../main/factories/factories.dart';
 import './../../../ui/helpers/helpers.dart';
 import './../../../ui/common/common.dart';
 import './../../../ui/pages/pages.dart';
-import './../products/data/data.dart' as appData;
 
 class BasePageScreen extends StatefulWidget {
   final ProductsPresenter presenter;
   final CategoriesPresenter presenterCategory;
+
   BasePageScreen(this.presenter, this.presenterCategory);
 
   @override
@@ -21,6 +22,7 @@ class _BasePageScreenState extends State<BasePageScreen> {
   @override
   Widget build(BuildContext context) {
     widget.presenter.loadData();
+
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Scaffold(
       backgroundColor: primaryColor,
@@ -28,93 +30,39 @@ class _BasePageScreenState extends State<BasePageScreen> {
           stream: widget.presenter.productsStream,
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Scaffold(
-                appBar: AppBar(
-                  backgroundColor: primaryColor,
-                  elevation: 0,
-                  title: Text.rich(
-                      TextSpan(style: TextStyle(fontSize: 30), children: [
-                    TextSpan(
-                        text: 'Delivery Library ',
-                        style: TextStyle(fontSize: 22)),
-                    TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
-                  ])),
-                  centerTitle: true,
-                ),
-                body: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        snapshot.error,
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: widget.presenter.loadData,
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(primaryColor),
-                              foregroundColor:
-                                  MaterialStateProperty.all(Colors.white),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                              ),
-                            ),
-                            child: Text(R.strings.reload),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              return returnError(primaryColor, snapshot.error);
             }
             if (snapshot.hasData) {
-              return PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: pageController,
-                children: [
-                  ProductPage(
-                    products: snapshot.data,
-                    categories: appData.categories,
-                  ),
-                  CategoriesPage(widget.presenterCategory),
-                  Container(
-                    color: Colors.blue,
-                  ),
-                  Container(
-                    color: Colors.purple,
-                  ),
-                ],
-              );
+              widget.presenterCategory.loadData();
+              return StreamBuilder<List<CategoryViewModel>>(
+                  stream: widget.presenterCategory.categoriesStream,
+                  builder: (context, snapshotCat) {
+                    if (snapshotCat.hasError) {
+                      return returnError(primaryColor, snapshotCat.error);
+                    }
+                    if (!snapshotCat.hasData) {
+                      return returnCircularProgress('Carregando as categorias, aguarde...',);
+                    }
+                    return PageView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: pageController,
+                      children: [
+                        ProductPage(
+                          products: snapshot.data,
+                          categories: snapshotCat.data,
+                        ),
+                        makeCategoriesPage(),
+                        Container(
+                          color: Colors.blue,
+                        ),
+                        Container(
+                          color: Colors.purple,
+                        ),
+                      ],
+                    );
+                  });
             }
-            return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Carregando dados, aguarde...', style: TextStyle(
-                  color: Colors.white,
-                ), textAlign: TextAlign.center),
-                const SizedBox(height: 15,),
-                const CircularProgressIndicator(
-                  key: Key("circularLoadProduct"),
-                  color: Colors.white,
-                )
-              ],
-            ));
+            return returnCircularProgress('Carregando os produtos, aguarde...',);
           }),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
@@ -146,6 +94,76 @@ class _BasePageScreenState extends State<BasePageScreen> {
               label: R.strings.titleNavBarPerfil,
             ),
           ]),
+    );
+  }
+
+  Center returnCircularProgress(String text) {
+    return Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(text,
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+            textAlign: TextAlign.center),
+        const SizedBox(
+          height: 15,
+        ),
+        const CircularProgressIndicator(
+          key: Key("circularLoadProduct"),
+          color: Colors.white,
+        )
+      ],
+    ));
+  }
+
+  Scaffold returnError(Color primaryColor, String error) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        elevation: 0,
+        title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
+          TextSpan(text: 'Delivery Library ', style: TextStyle(fontSize: 22)),
+          TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
+        ])),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              error,
+              style: TextStyle(
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: widget.presenter.loadData,
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(primaryColor),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
+                  child: Text(R.strings.reload),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

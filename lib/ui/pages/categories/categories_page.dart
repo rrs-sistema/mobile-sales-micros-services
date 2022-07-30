@@ -48,10 +48,27 @@ class CategoriesPage extends StatelessWidget {
                         return CategoryListTile(category: snapshot.data[index]);
                       });
                 }
-                return const CircularProgressIndicator(
-                  key: Key("circularLoadCategory"),
-                  color: Colors.white,
-                );
+             
+                return Center(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Carregando os dados, aguarde...',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18
+                        ),
+                        textAlign: TextAlign.center),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    const CircularProgressIndicator(
+                      key: Key("circularLoadCategory"),
+                      color: Colors.white,
+                    )
+                  ],
+                ));
               });
         },
       ),

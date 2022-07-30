@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import './../../../../domain/entities/entities.dart';
+import './../../../../ui/pages/views_models/views_models.dart';
 import './../../../../ui/common/common.dart';
 
 class CategoryTile extends StatelessWidget {
   
   const CategoryTile({ Key key, this.category, this.isSelected, this.onPressed }) : super(key: key);
 
-  final CategoryEntity category;
+  final CategoryViewModel category;
   final bool isSelected;
   final VoidCallback onPressed;
 
