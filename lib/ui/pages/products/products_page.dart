@@ -2,34 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
 import './../../../ui/pages/views_models/views_models.dart';
+import './../../../ui/pages/categories/categories.dart';
+import './../../../ui/helpers/helpers.dart';
 import './../../../ui/common/common.dart';
 import './components/components.dart';
 
-class ProductPage extends StatefulWidget {
-
+class ProductPage extends StatelessWidget {
   final List<ProductViewModel> products;
-  final List<CategoryViewModel> categories;
+  final CategoriesPresenter presenterCategory;
 
-  ProductPage({Key key, this.products, this.categories}) : super(key: key);
-
-  @override
-  _ProductPageState createState() => _ProductPageState();
-}
-
-class _ProductPageState extends State<ProductPage> {
-  CategoryViewModel selectedCategory =
-      CategoryViewModel(id: 1000, description: 'Bíblia');
+  ProductPage({Key key, this.products, this.presenterCategory})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
+
+    final categories = products.map((cat) => cat.category).toList();
+    List<CategoryViewModel> allCategories = [];
+    categories.forEach((cat) {
+      if (allCategories.where((ex) => ex.id == cat.id).length == 0) {
+        allCategories.add(cat);
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 0,
         title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
-          TextSpan(text: 'Delivery Library ', style: TextStyle(fontSize: 22)),
-          TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
+          TextSpan(
+              text: R.strings.titleAppName, style: TextStyle(fontSize: 22)),
+          //TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
         ])),
         centerTitle: true,
         actions: [
@@ -73,28 +77,30 @@ class _ProductPageState extends State<ProductPage> {
                           const BorderSide(width: 0, style: BorderStyle.none))),
             ),
           ),
-          Container(
-            height: 40,
-            padding: const EdgeInsets.only(left: 25),
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (_, index) {
-                  return CategoryTile(
-                    onPressed: () {
-                      setState(() {
-                        selectedCategory = widget.categories[index];
-                      });
-                    },
-                    category: widget.categories[index],
-                    isSelected:
-                        widget.categories[index].id == selectedCategory.id,
-                  );
-                },
-                separatorBuilder: (_, index) => const SizedBox(
-                      width: 10,
-                    ),
-                itemCount: widget.categories.length),
+          CategoriesSeach(allCategories.toList(),
           ),
+          // Container(
+          //   height: 40,
+          //   padding: const EdgeInsets.only(left: 25),
+          //   child: ListView.separated(
+          //       scrollDirection: Axis.horizontal,
+          //       itemBuilder: (_, index) {
+          //         return CategoryTile(
+          //           onPressed: () {
+          //             setState(() {
+          //               selectedCategory = widget.categories[index];
+          //             });
+          //           },
+          //           category: widget.categories[index],
+          //           isSelected:
+          //               widget.categories[index].id == selectedCategory.id,
+          //         );
+          //       },
+          //       separatorBuilder: (_, index) => const SizedBox(
+          //             width: 10,
+          //           ),
+          //       itemCount: widget.categories.length),
+          // ),
           Expanded(
             child: GridView.builder(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -105,13 +111,13 @@ class _ProductPageState extends State<ProductPage> {
                   crossAxisSpacing: 10,
                   childAspectRatio: 9 / 11.5,
                 ),
-                itemCount: widget.products.length,
+                itemCount: products.length,
                 itemBuilder: (_, index) {
                   return ProductListTile(
                     key: Key(
-                      widget.products[index].id.toString(),
+                      products[index].id.toString(),
                     ),
-                    item: widget.products[index],
+                    item: products[index],
                   );
                 }),
           )

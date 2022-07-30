@@ -27,13 +27,13 @@ class ProductListTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: CachedNetworkImage(
-                    height: 170,
+                    height: 160,
                     imageUrl: item.imgUrl,
                     placeholder: (context, url) => Container(
-                      width: 50.0,
+                        width: 50.0,
                         child: const CircularProgressIndicator(
-                      key: Key('progressIndicatorItemProduct'),
-                    )),
+                          key: Key('progressIndicatorItemProduct'),
+                        )),
                     errorWidget: (context, url, error) => Image.asset(
                       'lib/ui/assets/sem-foto.jpg',
                       fit: BoxFit.fill,
@@ -46,7 +46,10 @@ class ProductListTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  item.name,
+                  //item.name,
+                  item.name.length > 40
+                      ? '${item.name.substring(0, 39)}...'
+                      : item.name,
                   key: Key('itemProductName'),
                   style: TextStyle(
                       fontSize: 14,
@@ -54,6 +57,7 @@ class ProductListTile extends StatelessWidget {
                       decoration: item.quantityAvailable < 1
                           ? TextDecoration.lineThrough
                           : TextDecoration.none),
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   UtilsServices().priceToCurrency(item.price),

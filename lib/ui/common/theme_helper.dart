@@ -15,11 +15,14 @@ class ThemeHelper{
   }
 
   InputDecoration textInputDecoration([String lableText= '', String hintText = '', String errorText]){
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return InputDecoration(
       labelText: lableText,
       hintText: hintText,
       errorText: errorText,
       fillColor: Colors.white,
+      labelStyle: TextStyle(color: primaryColor),
+      hintStyle: TextStyle(color: primaryColor),      
       filled: true,
       contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey)),
@@ -30,9 +33,10 @@ class ThemeHelper{
   }
 
   BoxDecoration inputBoxDecorationShaddow() {
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return BoxDecoration(boxShadow: [
       BoxShadow(
-        color: Colors.black.withOpacity(0.1),
+        color: primaryColor.withOpacity(0.1),
         blurRadius: 20,
         offset: const Offset(0, 5),
       )
@@ -40,6 +44,7 @@ class ThemeHelper{
   }
 
   BoxDecoration buttonBoxDecoration(BuildContext context, [String color1 = "", String color2 = ""]) {
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     Color c1 = Theme.of(context).primaryColor;
     Color c2 = Theme.of(context).accentColor;
     if (color1.isEmpty == false) {
@@ -51,7 +56,7 @@ class ThemeHelper{
 
     return BoxDecoration(
       boxShadow: [
-        BoxShadow(color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
+        BoxShadow(color: primaryColor, offset: Offset(0, 4), blurRadius: 5.0)
       ],
       gradient: LinearGradient(
         begin: Alignment.topLeft,

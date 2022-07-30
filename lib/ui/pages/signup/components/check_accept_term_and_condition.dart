@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './../../../../ui/common/common.dart';
 import './../../../helpers/helpers.dart';
 
 class CheckAcceptTermAndCondition extends StatefulWidget {
@@ -13,6 +14,7 @@ class _CheckAcceptTermAndConditionState extends State<CheckAcceptTermAndConditio
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Row(
       children: <Widget>[
         Checkbox(
@@ -24,7 +26,7 @@ class _CheckAcceptTermAndConditionState extends State<CheckAcceptTermAndConditio
               });
             }),
         Text(R.strings.acceptanceTerm,
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(color: primaryColor),
         ),
       ],
     );

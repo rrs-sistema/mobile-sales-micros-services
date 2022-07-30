@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import './../../../../ui/common/common.dart';
 import '../signup_presenter.dart';
 
 class RadioUserAdmin extends StatefulWidget {
@@ -14,12 +15,13 @@ class _RadioUserAdmintate extends State<RadioUserAdmin> {
   @override
   Widget build(BuildContext context) {
     final presenter = Provider.of<SignUpPresenter>(context);
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
         Expanded(
           child: ListTile(
-            title: Text('Sim'),
+            title: Text('Sim', style: TextStyle(color: primaryColor,)),
             leading: Radio(
               key: const ValueKey('adminSim'),
               value: 1,
@@ -30,13 +32,13 @@ class _RadioUserAdmintate extends State<RadioUserAdmin> {
                   val = admin;
                 });
               },
-              activeColor: Colors.green,
+              activeColor: primaryColor,
             ),
           ),
         ),
         Expanded(
           child: ListTile(
-            title: Text('Não'),
+            title: Text('Não', style: TextStyle(color: primaryColor,)),
             leading: Radio(
               key: const ValueKey('adminNao'),
               value: 2,
@@ -47,7 +49,7 @@ class _RadioUserAdmintate extends State<RadioUserAdmin> {
                   val = admin;
                 });
               },
-              activeColor: Colors.red,
+              activeColor: primaryColor,
             ),
           ),
         ),

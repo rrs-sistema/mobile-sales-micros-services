@@ -11,7 +11,6 @@ import './../../common/common.dart';
 import './signup_presenter.dart';
 
 class SignUpPage extends StatelessWidget {
-
   final SignUpPresenter presenter;
   const SignUpPage(this.presenter);
 
@@ -19,29 +18,30 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double _headerHeight = 250;
     Key _formKey = GlobalKey<FormState>();
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: Builder(builder: (context) {
-        if(presenter != null) {
-        presenter.isLoadingStream.listen((isLoading) {
-          if (isLoading == true) {
-            showLoading(context);
-          } else {
-            hideLoading(context);
-          }
-        });       
-        presenter.mainErrorStream.listen((error) {
-          if (error != null) {
-            showErrorMessage(context, error.description);
-          }
-        });   
-        presenter.navigateToStream.listen((page) {
-          if (page?.isNotEmpty == true) {
-            Get.offAllNamed(page);
-          }
-        }); 
-        }             
+        if (presenter != null) {
+          presenter.isLoadingStream.listen((isLoading) {
+            if (isLoading == true) {
+              showLoading(context);
+            } else {
+              hideLoading(context);
+            }
+          });
+          presenter.mainErrorStream.listen((error) {
+            if (error != null) {
+              showErrorMessage(context, error.description);
+            }
+          });
+          presenter.navigateToStream.listen((page) {
+            if (page?.isNotEmpty == true) {
+              Get.offAllNamed(page);
+            }
+          });
+        }
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -61,13 +61,17 @@ class SignUpPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'RRS Sales Micros Services',
+                        R.strings.titleAppName,
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            color: primaryColor,
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold),
                       ),
                       Text(
                         R.strings.createAnAccoun,
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(
+                          color: primaryColor,
+                        ),
                       ),
                       SizedBox(height: 30.0),
                       Provider(
@@ -101,7 +105,7 @@ class SignUpPage extends StatelessWidget {
                               ),
                               SizedBox(height: 30.0),
                               Text("Usuário é administrador",
-                                  style: TextStyle(fontSize: 16)),
+                                  style: TextStyle(fontSize: 16, color: primaryColor,)),
                               SizedBox(height: 10.0),
                               Container(
                                 child: RadioUserAdmin(),
@@ -124,10 +128,10 @@ class SignUpPage extends StatelessWidget {
                                 margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
                                 //child: Text('Don\'t have an account? Create'),
                                 child: ToGoLoginButton(),
-                              ),                              
+                              ),
                               Text(
                                 R.strings.createAccountWithSocial,
-                                style: TextStyle(color: Colors.grey),
+                                style: TextStyle(color: primaryColor,),
                               ),
                               SizedBox(height: 25.0),
                               Row(
@@ -160,9 +164,11 @@ class SignUpPage extends StatelessWidget {
                                     child: Container(
                                       padding: EdgeInsets.all(0),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(100),
+                                        borderRadius:
+                                            BorderRadius.circular(100),
                                         border: Border.all(
-                                            width: 5, color: HexColor("#40ABF0")),
+                                            width: 5,
+                                            color: HexColor("#40ABF0")),
                                         color: HexColor("#40ABF0"),
                                       ),
                                       child: FaIcon(

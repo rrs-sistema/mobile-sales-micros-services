@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
+import './../../../ui/helpers/helpers.dart';
 import './factories/factories.dart';
 import '../ui/common/common.dart';
 
@@ -18,7 +19,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     return new GetMaterialApp(
-      title: 'Vendas',
+      title: R.strings.titleAppName,
       debugShowCheckedModeBanner: false,
       theme: ThemeHelper().makeAppTheme(),
       initialRoute: '/',
@@ -28,7 +29,7 @@ class App extends StatelessWidget {
         GetPage(name: '/signup', page: makeSignUpPage),
         GetPage(name: '/base_screen', page: makeBaseScreenPage, transition: Transition.fadeIn),
         GetPage(name: '/products', page: makeProductsPage, transition: Transition.fadeIn),
-        GetPage(name: '/categories', page: makeCategoriesPage, transition: Transition.fadeIn)
+        GetPage(name: '/categories', page: makeCategoriesPage, transition: Transition.fadeIn),
       ],
     );
   }

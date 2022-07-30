@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import './../../../main/factories/factories.dart';
 import './../../../ui/helpers/helpers.dart';
 import './../../../ui/common/common.dart';
 import './../../../ui/pages/pages.dart';
@@ -33,36 +32,27 @@ class _BasePageScreenState extends State<BasePageScreen> {
               return returnError(primaryColor, snapshot.error);
             }
             if (snapshot.hasData) {
-              widget.presenterCategory.loadData();
-              return StreamBuilder<List<CategoryViewModel>>(
-                  stream: widget.presenterCategory.categoriesStream,
-                  builder: (context, snapshotCat) {
-                    if (snapshotCat.hasError) {
-                      return returnError(primaryColor, snapshotCat.error);
-                    }
-                    if (!snapshotCat.hasData) {
-                      return returnCircularProgress('Carregando as categorias, aguarde...',);
-                    }
-                    return PageView(
-                      physics: NeverScrollableScrollPhysics(),
-                      controller: pageController,
-                      children: [
-                        ProductPage(
-                          products: snapshot.data,
-                          categories: snapshotCat.data,
-                        ),
-                        makeCategoriesPage(),
-                        Container(
-                          color: Colors.blue,
-                        ),
-                        Container(
-                          color: Colors.purple,
-                        ),
-                      ],
-                    );
-                  });
+              return PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: pageController,
+                children: [
+                  ProductPage(
+                    products: snapshot.data,
+                    presenterCategory: widget.presenterCategory,
+                  ),
+                  CategoriesPage(widget.presenterCategory),
+                  Container(
+                    color: Colors.blue,
+                  ),
+                  Container(
+                    color: Colors.purple,
+                  ),
+                ],
+              );
             }
-            return returnCircularProgress('Carregando os produtos, aguarde...',);
+            return returnCircularProgress(
+              'Carregando os produtos, aguarde...',
+            );
           }),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,

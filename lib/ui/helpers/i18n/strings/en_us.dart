@@ -24,6 +24,7 @@ class EnUs implements Translations {
   String get userEmail => 'User email '; // E-mail do usuário
   String get userName => 'User name '; // Nome do usuário
 
+  String get titleAppName => 'Delivery Library Services';
   String get titleCategorie => 'Category';
   String get titleNavBarHome => 'Home';
   String get titleNavBarCarrinho => 'Cart';

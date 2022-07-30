@@ -95,7 +95,7 @@ void main() {
     expect(find.text('Bíblia Pentecostal'), findsOneWidget);
     expect(find.text(UtilsServices().priceToCurrency(92.28)), findsOneWidget);
     expect(find.text(UtilsServices().priceToCurrency(135.98)), findsOneWidget); 
-    expect(circularProgressIndicator, findsNothing);  
+    expect(circularProgressIndicator, findsNothing); 
   }); 
 
   testWidgets('Should call LoadProducts on reload button click', (WidgetTester tester) async {

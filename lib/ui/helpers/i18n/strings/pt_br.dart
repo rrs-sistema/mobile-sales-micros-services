@@ -24,6 +24,7 @@ class PtBr implements Translations {
   String get userEmail => 'Email de usuário ';
   String get userName => 'Nome de usuário ';
 
+  String get titleAppName => 'Delivery Library Services';
   String get titleCategorie => 'Categorias';
   String get titleNavBarHome => 'Inicio';
   String get titleNavBarCarrinho => 'Carrinho';

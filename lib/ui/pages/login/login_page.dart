@@ -16,6 +16,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double _headerHeight = 250;
     Key _formKey = GlobalKey<FormState>();
+    final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -59,13 +60,14 @@ class LoginPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'RRS Sales Micros Services',
+                        R.strings.titleAppName,
                         style: TextStyle(
+                          color: primaryColor,
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         R.strings.loginToYourAccount,
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: primaryColor),
                       ),
                       SizedBox(height: 30.0),
                       Provider(
@@ -96,7 +98,7 @@ class LoginPage extends StatelessWidget {
                                   child: Text(
                                     R.strings.forgotYourPassword,
                                     style: TextStyle(
-                                      color: Colors.grey,
+                                      color: primaryColor,
                                     ),
                                   ),
                                 ),
