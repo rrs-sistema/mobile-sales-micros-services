@@ -6,9 +6,9 @@ import './../../../../ui/helpers/services/services.dart';
 import './../../../../ui/common/common.dart';
 import './../../products/products.dart';
 
-class ItemTile extends StatelessWidget {
+class ProductListTile extends StatelessWidget {
   final ProductViewModel item;
-  const ItemTile({@required Key key, @required this.item}) : super(key: key);
+  const ProductListTile({@required Key key, @required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

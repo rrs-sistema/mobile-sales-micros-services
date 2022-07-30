@@ -107,7 +107,7 @@ class _ProductPageState extends State<ProductPage> {
                 ),
                 itemCount: widget.products.length,
                 itemBuilder: (_, index) {
-                  return ItemTile(
+                  return ProductListTile(
                     key: Key(
                       widget.products[index].id.toString(),
                     ),
