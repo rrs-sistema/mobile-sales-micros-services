@@ -259,6 +259,23 @@ void main() {
         verify(cacheStorage.delete('products')).called(1);
       });
 
+      test('Should delete cache if it is incomplete', () async {
+        mockFetch([
+          {
+            'id': '1002',
+            'name': 'Bíblia atualizada',
+            'description': 'Bíblia atualizada de Almeida e Corrigida',
+            'quantity_available': '8',
+            'created_at': '01/08/2022 12:00:00',
+            "price": '92.28',
+          },
+        ]);
+
+        await sut.validate();
+
+        verify(cacheStorage.delete('products')).called(1);
+      });
+
   });
 
 }
