@@ -11,7 +11,6 @@ import 'package:delivery_micros_services/data/model/model.dart';
 class CacheStorageSpy extends Mock implements CacheStorage {}
 
 void main() {
-
   group('load', () {
     LocalLoadProducts sut;
       CacheStorageSpy cacheStorage;
@@ -71,7 +70,7 @@ void main() {
         mockFetch(mockValidData());
       });
 
-      test('Should call CacheStorage', () async {
+      test('Should call CacheStorage whith correct key', () async {
         await sut.load();
 
         verify(cacheStorage.fetch('products')).called(1);
@@ -170,6 +169,71 @@ void main() {
         final future = sut.load();
 
         expect(future, throwsA(DomainError.unexpected));
+      });
+
+  });
+
+  group('validate', () {
+    LocalLoadProducts sut;
+      CacheStorageSpy cacheStorage;
+      final imgUrl001 = faker.image.image();
+      final imgUrl002 = faker.image.image();
+      List<Map> data;
+
+      List<Map> mockValidData() => [
+          {
+            'id': '1002',
+            'name': 'Bíblia atualizada',
+            'description': 'Bíblia atualizada de Almeida e Corrigida',
+            'quantity_available': '8',
+            'created_at': '01/08/2022 12:00:00',
+            "price": '92.28',
+            'img_url': imgUrl001,
+            "supplier": {
+              "id": '1000',
+              "name": 'Sociedade Bíblica do Brasil',
+            },
+            "category": {
+              "id": '1000',
+              "description": 'Bíblia',
+            },
+          },
+          {
+            'id': '1002',
+            'name': 'Bíblia Pentecostal',
+            'description': 'Bíblia Pentecostal atualizada de Almeida e Corrigida',
+            'quantity_available': '8',
+            'created_at': '28/07/2022 08:15:32',
+            "price": '135.98',
+            'img_url': imgUrl002,
+            "supplier": {
+              "id": '1000',
+              "name": 'Sociedade Bíblica do Brasil',
+            },
+            "category": {
+              "id": '1000',
+              "description": 'Bíblia',
+            },
+          }
+        ];
+
+      PostExpectation  mockFetchAll() => when(cacheStorage.fetch(any));
+
+      void mockFetch(List<Map> list) {
+        data = list;
+        mockFetchAll().thenAnswer((_) async => data);
+      }
+
+      setUp(() {
+        cacheStorage = CacheStorageSpy();
+        sut = LocalLoadProducts(cacheStorage: cacheStorage);
+        mockFetch(mockValidData());
+      });
+
+      test('Should call CacheStorage whith correct key', () async {
+        await sut.validate();
+
+        verify(cacheStorage.fetch('products')).called(1);
       });
 
   });
