@@ -7,13 +7,13 @@ import './../../cache/cache.dart';
 import './../../model/model.dart';
 
 class LocalLoadProducts implements LoadProducts {
-  final FetchCacheStorage fetchCacheStorage;
+  final CacheStorage cacheStorage;
 
-  LocalLoadProducts({@required this.fetchCacheStorage});
+  LocalLoadProducts({@required this.cacheStorage});
 
   Future<List<ProductEntity>> load() async {
     try {
-      final data = await fetchCacheStorage.fetch('products');      
+      final data = await cacheStorage.fetch('products');      
       if(data?.isEmpty != false) {
       throw Exception();
     }

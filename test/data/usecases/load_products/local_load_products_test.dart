@@ -8,13 +8,13 @@ import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/data/cache/cache.dart';
 import 'package:delivery_micros_services/data/model/model.dart';
 
-class FetchCacheStorageSpy extends Mock implements FetchCacheStorage {}
+class CacheStorageSpy extends Mock implements CacheStorage {}
 
 void main() {
-  
+
   group('load', () {
     LocalLoadProducts sut;
-      FetchCacheStorageSpy fetchCacheStorage;
+      CacheStorageSpy cacheStorage;
       final imgUrl001 = faker.image.image();
       final imgUrl002 = faker.image.image();
       List<Map> data;
@@ -56,7 +56,7 @@ void main() {
           }
         ];
 
-      PostExpectation  mockFetchAll() => when(fetchCacheStorage.fetch(any));
+      PostExpectation  mockFetchAll() => when(cacheStorage.fetch(any));
 
       void mockFetch(List<Map> list) {
         data = list;
@@ -66,15 +66,15 @@ void main() {
       void mockFetchError() => mockFetchAll().thenThrow(Exception());
       
       setUp(() {
-        fetchCacheStorage = FetchCacheStorageSpy();
-        sut = LocalLoadProducts(fetchCacheStorage: fetchCacheStorage);
+        cacheStorage = CacheStorageSpy();
+        sut = LocalLoadProducts(cacheStorage: cacheStorage);
         mockFetch(mockValidData());
       });
 
-      test('Should call FetchCacheStorage', () async {
+      test('Should call CacheStorage', () async {
         await sut.load();
 
-        verify(fetchCacheStorage.fetch('products')).called(1);
+        verify(cacheStorage.fetch('products')).called(1);
       });
 
       test('Should return a list of products on success', () async {
