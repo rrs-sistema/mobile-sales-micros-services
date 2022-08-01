@@ -17,7 +17,7 @@ class LocalLoadProducts implements LoadProducts {
       if(data?.isEmpty != false) {
       throw Exception();
     }
-      return data.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
+      return map(data);
     } catch (error) {
       throw DomainError.unexpected;
     }
@@ -26,10 +26,13 @@ class LocalLoadProducts implements LoadProducts {
   Future<void> validate() async {
     try {
       final data = await cacheStorage.fetch('products');  
-      data.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
+      map(data);
     } catch (error) {
       await cacheStorage.delete('products'); 
     }
   }
+
+  List<ProductEntity> map(List<Map> list) => 
+    list.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
 
 }
