@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import './../../domain/entities/entities.dart';
-//import './../../data/http/http.dart';
 
 class LocalCategoryModel {
   final int id;
@@ -12,12 +11,12 @@ class LocalCategoryModel {
       @required this.description,});
 
   factory LocalCategoryModel.fromJson(Map json) {
-    // if (!json.keys.toSet().containsAll([
-    //   'id',
-    //   'description',
-    // ])) {
-    //   throw HttpError.invalidData;
-    // }
+    if (!json.keys.toSet().containsAll([
+      'id',
+      'description',
+    ])) {
+      throw Exception();
+    }
     return LocalCategoryModel(
         id: int.parse(json['id']),
         description: json['description'],);

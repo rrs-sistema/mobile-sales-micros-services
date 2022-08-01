@@ -1,9 +1,9 @@
-import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
+import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/data/model/model.dart';
 
@@ -160,5 +160,24 @@ void main() {
 
     expect(future, throwsA(DomainError.unexpected));
   });
+
+  test('Should throw UnexpectedError if cache is incomplete', () async {
+    mockGetch([
+      {
+        'id': '1002',
+        'name': 'Bíblia atualizada',
+        'description': 'Bíblia atualizada de Almeida e Corrigida',
+        'quantity_available': '8',
+        'created_at': '01/08/2022 12:00:00',
+        "price": '92.28',
+        'img_url': imgUrl001,
+      },
+    ]);
+
+    final future = sut.load();
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
 
 }

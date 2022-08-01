@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 
 import './../../domain/entities/entities.dart';
-//import './../../data/http/http.dart';
 import './../model/model.dart';
 
 class LocalProductModel {
@@ -12,8 +11,8 @@ class LocalProductModel {
   final int quantityAvailable;
   final double price;
   final String createdAt;
-  final RemoteSupplierModel supplier;
-  final RemoteCategoryModel category;
+  final LocalSupplierModel supplier;
+  final LocalCategoryModel category;
 
   LocalProductModel(
       {@required this.id,
@@ -27,7 +26,6 @@ class LocalProductModel {
       @required this.category});
 
   factory LocalProductModel.fromJson(Map json) {
-    /*
     if (!json.keys.toSet().containsAll([
       'id',
       'name',
@@ -39,9 +37,9 @@ class LocalProductModel {
       'supplier',
       'category'
     ])) {
-      throw HttpError.invalidData;
+      throw Exception();
     }
-    */
+    
     return LocalProductModel(
         id: int.parse(json['id']),
         name: json['name'],
@@ -50,8 +48,8 @@ class LocalProductModel {
         quantityAvailable: int.parse(json['quantity_available']),
         createdAt: json['created_at'],
         price: double.parse(json['price']),
-        category: RemoteCategoryModel.fromJson(json['category']),
-        supplier: RemoteSupplierModel.fromJson(json['supplier']));
+        category: LocalCategoryModel.fromJson(json['category']),
+        supplier: LocalSupplierModel.fromJson(json['supplier']));
   }
 
   ProductEntity toEntity() => ProductEntity(
