@@ -236,6 +236,29 @@ void main() {
         verify(cacheStorage.fetch('products')).called(1);
       });
 
+      test('Should delete cache if it is invalid', () async {
+        mockFetch([
+          {
+            'id': '1002',
+            'name': 'Bíblia atualizada',
+            'description': 'Bíblia atualizada de Almeida e Corrigida',
+            'created_at': 'invalid created_at',
+            "supplier": {
+              "id": '1000',
+              "name": 'Sociedade Bíblica do Brasil',
+            },
+            "category": {
+              "id": '1000',
+              "description": 'Bíblia',
+            },
+          },
+        ]);
+
+        await sut.validate();
+
+        verify(cacheStorage.delete('products')).called(1);
+      });
+
   });
 
 }

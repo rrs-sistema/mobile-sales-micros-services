@@ -24,7 +24,12 @@ class LocalLoadProducts implements LoadProducts {
   }
 
   Future<void> validate() async {
-    await cacheStorage.fetch('products');
+    try {
+      final data = await cacheStorage.fetch('products');  
+      data.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
+    } catch (error) {
+      await cacheStorage.delete('products'); 
+    }
   }
 
 }
