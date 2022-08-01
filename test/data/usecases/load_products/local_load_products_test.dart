@@ -1,30 +1,12 @@
 import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
-import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 
+import 'package:delivery_micros_services/data/usecases/load_products/load_products.dart';
 import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/data/cache/cache.dart';
 import 'package:delivery_micros_services/data/model/model.dart';
-
-class LocalLoadProducts {
-  final FetchCacheStorage fetchCacheStorage;
-
-  LocalLoadProducts({@required this.fetchCacheStorage});
-
-  Future<List<ProductEntity>> load() async {
-    try {
-      final data = await fetchCacheStorage.fetch('products');      
-      if(data?.isEmpty != false) {
-      throw Exception();
-    }
-      return data.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
-    } catch (error) {
-      throw DomainError.unexpected;
-    }
-  }
-}
 
 class FetchCacheStorageSpy extends Mock implements FetchCacheStorage {}
 
