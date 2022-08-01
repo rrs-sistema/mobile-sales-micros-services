@@ -13,8 +13,8 @@ class LocalLoadProducts {
   LocalLoadProducts({@required this.fetchCacheStorage});
 
   Future<List<ProductEntity>> load() async {
-    final data = await fetchCacheStorage.fetch('products');
     try {
+      final data = await fetchCacheStorage.fetch('products');      
       if(data?.isEmpty != false) {
       throw Exception();
     }
@@ -75,15 +75,19 @@ void main() {
       }
     ];
 
-  void mockGetch(List<Map> list) {
+  PostExpectation  mockFetchAll() => when(fetchCacheStorage.fetch(any));
+
+  void mockFetch(List<Map> list) {
     data = list;
-    when(fetchCacheStorage.fetch(any)).thenAnswer((_) async => data);
+    mockFetchAll().thenAnswer((_) async => data);
   }
 
+  void mockFetchError() => mockFetchAll().thenThrow(Exception());
+  
   setUp(() {
     fetchCacheStorage = FetchCacheStorageSpy();
     sut = LocalLoadProducts(fetchCacheStorage: fetchCacheStorage);
-    mockGetch(mockValidData());
+    mockFetch(mockValidData());
   });
 
   test('Should call FetchCacheStorage', () async {
@@ -120,7 +124,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if cache is empty', () async {
-    mockGetch([]);
+    mockFetch([]);
 
     final future = sut.load();
 
@@ -128,7 +132,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if cache is null', () async {
-    mockGetch(null);
+    mockFetch(null);
 
     final future = sut.load();
 
@@ -136,7 +140,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if cache is isvalid', () async {
-    mockGetch([
+    mockFetch([
       {
         "id": 'invalid id',
         'name': 'Bíblia atualizada',
@@ -162,7 +166,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if cache is incomplete', () async {
-    mockGetch([
+    mockFetch([
       {
         'id': '1002',
         'name': 'Bíblia atualizada',
@@ -179,5 +183,12 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
+  test('Should throw UnexpectedError if cache is error', () async {
+    mockFetchError();
+
+    final future = sut.load();
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
 
 }
