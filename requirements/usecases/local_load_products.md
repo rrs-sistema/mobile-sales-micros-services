@@ -1,7 +1,7 @@
 ## Local Load Produtos
 
  ## Caso de sucesso
-1. ❌ Sistema solicita os dados dos produtos do Cache
+1. ✅ Sistema solicita os dados dos produtos do Cache
 2. ❌ Sistema entrega os dados dos produtos
 
 ## Exceção - Erro ao carregar dados do Cache
