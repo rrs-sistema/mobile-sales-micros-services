@@ -223,6 +223,8 @@ void main() {
         data = list;
         mockFetchAll().thenAnswer((_) async => data);
       }
+      
+      void mockFetchError() => mockFetchAll().thenThrow(Exception());
 
       setUp(() {
         cacheStorage = CacheStorageSpy();
@@ -270,6 +272,14 @@ void main() {
             "price": '92.28',
           },
         ]);
+
+        await sut.validate();
+
+        verify(cacheStorage.delete('products')).called(1);
+      });
+
+      test('Should delete cache if it is incomplete', () async {
+        mockFetchError();
 
         await sut.validate();
 
