@@ -14,10 +14,14 @@ class LocalLoadProducts {
 
   Future<List<ProductEntity>> load() async {
     final data = await fetchCacheStorage.fetch('products');
-    if(data?.isEmpty != false) {
+    try {
+      if(data?.isEmpty != false) {
+      throw Exception();
+    }
+      return data.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
+    } catch (error) {
       throw DomainError.unexpected;
     }
-    return data.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
   }
 }
 
@@ -125,6 +129,32 @@ void main() {
 
   test('Should throw UnexpectedError if cache is null', () async {
     mockGetch(null);
+
+    final future = sut.load();
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
+
+  test('Should throw UnexpectedError if cache is isvalid', () async {
+    mockGetch([
+      {
+        "id": 'invalid id',
+        'name': 'Bíblia atualizada',
+        'description': 'Bíblia atualizada de Almeida e Corrigida',
+        "quantity_available": 'invalid price',
+        'created_at': '01/08/2022 12:00:00',
+        "price": 'invalid price',
+        'img_url': imgUrl001,
+        "supplier": {
+          "id": '1000',
+          "name": 'Sociedade Bíblica do Brasil',
+        },
+        "category": {
+          "id": '1000',
+          "description": 'Bíblia',
+        },
+      },
+    ]);
 
     final future = sut.load();
 
