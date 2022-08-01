@@ -14,7 +14,7 @@ class LocalLoadProducts {
 
   Future<List<ProductEntity>> load() async {
     final data = await fetchCacheStorage.fetch('products');
-    if(data.isEmpty) {
+    if(data?.isEmpty != false) {
       throw DomainError.unexpected;
     }
     return data.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
@@ -123,5 +123,12 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
+  test('Should throw UnexpectedError if cache is null', () async {
+    mockGetch(null);
+
+    final future = sut.load();
+
+    expect(future, throwsA(DomainError.unexpected));
+  });
 
 }
