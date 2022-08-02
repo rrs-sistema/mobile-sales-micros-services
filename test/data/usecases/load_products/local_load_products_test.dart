@@ -175,116 +175,197 @@ void main() {
 
   group('validate', () {
     LocalLoadProducts sut;
-      CacheStorageSpy cacheStorage;
-      final imgUrl001 = faker.image.image();
-      final imgUrl002 = faker.image.image();
-      List<Map> data;
+    CacheStorageSpy cacheStorage;
+    final imgUrl001 = faker.image.image();
+    final imgUrl002 = faker.image.image();
+    List<Map> data;
 
-      List<Map> mockValidData() => [
-          {
-            'id': '1002',
-            'name': 'Bíblia atualizada',
-            'description': 'Bíblia atualizada de Almeida e Corrigida',
-            'quantity_available': '8',
-            'created_at': '01/08/2022 12:00:00',
-            "price": '92.28',
-            'img_url': imgUrl001,
-            "supplier": {
-              "id": '1000',
-              "name": 'Sociedade Bíblica do Brasil',
-            },
-            "category": {
-              "id": '1000',
-              "description": 'Bíblia',
-            },
+    List<Map> mockValidData() => [
+        {
+          'id': '1002',
+          'name': 'Bíblia atualizada',
+          'description': 'Bíblia atualizada de Almeida e Corrigida',
+          'quantity_available': '8',
+          'created_at': '01/08/2022 12:00:00',
+          "price": '92.28',
+          'img_url': imgUrl001,
+          "supplier": {
+            "id": '1000',
+            "name": 'Sociedade Bíblica do Brasil',
           },
-          {
-            'id': '1002',
-            'name': 'Bíblia Pentecostal',
-            'description': 'Bíblia Pentecostal atualizada de Almeida e Corrigida',
-            'quantity_available': '8',
-            'created_at': '28/07/2022 08:15:32',
-            "price": '135.98',
-            'img_url': imgUrl002,
-            "supplier": {
-              "id": '1000',
-              "name": 'Sociedade Bíblica do Brasil',
-            },
-            "category": {
-              "id": '1000',
-              "description": 'Bíblia',
-            },
-          }
-        ];
-
-      PostExpectation  mockFetchAll() => when(cacheStorage.fetch(any));
-
-      void mockFetch(List<Map> list) {
-        data = list;
-        mockFetchAll().thenAnswer((_) async => data);
-      }
-      
-      void mockFetchError() => mockFetchAll().thenThrow(Exception());
-
-      setUp(() {
-        cacheStorage = CacheStorageSpy();
-        sut = LocalLoadProducts(cacheStorage: cacheStorage);
-        mockFetch(mockValidData());
-      });
-
-      test('Should call CacheStorage whith correct key', () async {
-        await sut.validate();
-
-        verify(cacheStorage.fetch('products')).called(1);
-      });
-
-      test('Should delete cache if it is invalid', () async {
-        mockFetch([
-          {
-            'id': '1002',
-            'name': 'Bíblia atualizada',
-            'description': 'Bíblia atualizada de Almeida e Corrigida',
-            'created_at': 'invalid created_at',
-            "supplier": {
-              "id": '1000',
-              "name": 'Sociedade Bíblica do Brasil',
-            },
-            "category": {
-              "id": '1000',
-              "description": 'Bíblia',
-            },
+          "category": {
+            "id": '1000',
+            "description": 'Bíblia',
           },
-        ]);
-
-        await sut.validate();
-
-        verify(cacheStorage.delete('products')).called(1);
-      });
-
-      test('Should delete cache if it is incomplete', () async {
-        mockFetch([
-          {
-            'id': '1002',
-            'name': 'Bíblia atualizada',
-            'description': 'Bíblia atualizada de Almeida e Corrigida',
-            'quantity_available': '8',
-            'created_at': '01/08/2022 12:00:00',
-            "price": '92.28',
+        },
+        {
+          'id': '1002',
+          'name': 'Bíblia Pentecostal',
+          'description': 'Bíblia Pentecostal atualizada de Almeida e Corrigida',
+          'quantity_available': '8',
+          'created_at': '28/07/2022 08:15:32',
+          "price": '135.98',
+          'img_url': imgUrl002,
+          "supplier": {
+            "id": '1000',
+            "name": 'Sociedade Bíblica do Brasil',
           },
-        ]);
+          "category": {
+            "id": '1000',
+            "description": 'Bíblia',
+          },
+        }
+      ];
 
-        await sut.validate();
+    PostExpectation  mockFetchAll() => when(cacheStorage.fetch(any));
 
-        verify(cacheStorage.delete('products')).called(1);
-      });
+    void mockFetch(List<Map> list) {
+      data = list;
+      mockFetchAll().thenAnswer((_) async => data);
+    }
+    
+    void mockFetchError() => mockFetchAll().thenThrow(Exception());
 
-      test('Should delete cache if it is incomplete', () async {
-        mockFetchError();
+    setUp(() {
+      cacheStorage = CacheStorageSpy();
+      sut = LocalLoadProducts(cacheStorage: cacheStorage);
+      mockFetch(mockValidData());
+    });
 
-        await sut.validate();
+    test('Should call CacheStorage whith correct key', () async {
+      await sut.validate();
 
-        verify(cacheStorage.delete('products')).called(1);
-      });
+      verify(cacheStorage.fetch('products')).called(1);
+    });
+
+    test('Should delete cache if it is invalid', () async {
+      mockFetch([
+        {
+          'id': '1002',
+          'name': 'Bíblia atualizada',
+          'description': 'Bíblia atualizada de Almeida e Corrigida',
+          'created_at': 'invalid created_at',
+          "supplier": {
+            "id": '1000',
+            "name": 'Sociedade Bíblica do Brasil',
+          },
+          "category": {
+            "id": '1000',
+            "description": 'Bíblia',
+          },
+        },
+      ]);
+
+      await sut.validate();
+
+      verify(cacheStorage.delete('products')).called(1);
+    });
+
+    test('Should delete cache if it is incomplete', () async {
+      mockFetch([
+        {
+          'id': '1002',
+          'name': 'Bíblia atualizada',
+          'description': 'Bíblia atualizada de Almeida e Corrigida',
+          'quantity_available': '8',
+          'created_at': '01/08/2022 12:00:00',
+          "price": '92.28',
+        },
+      ]);
+
+      await sut.validate();
+
+      verify(cacheStorage.delete('products')).called(1);
+    });
+
+    test('Should delete cache if it is incomplete', () async {
+      mockFetchError();
+
+      await sut.validate();
+
+      verify(cacheStorage.delete('products')).called(1);
+    });
+
+  });
+
+  group('save', () {
+    LocalLoadProducts sut;
+    CacheStorageSpy cacheStorage;
+    List<ProductEntity> products;
+    final imgUrl001 = faker.image.image();
+    final imgUrl002 = faker.image.image();
+
+    List<ProductEntity> mockProducts() => [
+      ProductEntity(
+          id: 1002,
+          name: 'Bíblia atualizada',
+          description: 'Bíblia atualizada de Almeida e Corrigida',
+          imgUrl: imgUrl001,
+          quantityAvailable: 8,
+          createdAt: '01/08/2022 12:00:00',
+          price: 92.28,
+          supplier: SupplierEntity(id: 1000, name: 'Sociedade Bíblica do Brasil'),
+          category: CategoryEntity(id: 1000, description: 'Bíblia'),),
+      ProductEntity(
+          id: 1003,
+          name: 'Bíblia Pentecostal',
+          description: 'Bíblia Pentecostal atualizada de Almeida e Corrigida',
+          imgUrl: imgUrl002,
+          quantityAvailable: 6,
+          createdAt: '28/07/2022 08:15:32',
+          price: 135.98,
+          supplier: SupplierEntity(id: 1000, name: 'Sociedade Bíblica do Brasil'),
+          category: CategoryEntity(id: 1000, description: 'Bíblia')),          
+    ];
+
+    setUp(() {
+      cacheStorage = CacheStorageSpy();
+      sut = LocalLoadProducts(cacheStorage: cacheStorage);
+      products = mockProducts();
+    });
+
+    test('Should call CacheStorage whith correct values', () async {
+      final List<Map<String, dynamic>> list = [{
+        "id": "1002",
+        "name": "Bíblia atualizada",
+        "description": "Bíblia atualizada de Almeida e Corrigida",
+        "imgUrl": imgUrl001,
+        "quantityAvailable": "8",
+        "createdAt": "01/08/2022 12:00:00",
+        "price": "92.28",
+        "category": {
+          "id": "1000",
+          "description": "Bíblia",
+        },        
+        "supplier": {
+          "id": "1000",
+          "name": "Sociedade Bíblica do Brasil",
+        },
+      },
+        {
+          "id": "1003",
+          "name": "Bíblia Pentecostal",
+          "description": "Bíblia Pentecostal atualizada de Almeida e Corrigida",
+          "imgUrl": imgUrl002,          
+          "quantityAvailable": "6",
+          "createdAt": "28/07/2022 08:15:32",
+          "price": "135.98",
+          "category": {
+            "id": "1000",
+            "description": "Bíblia",
+          },          
+          "supplier": {
+            "id": "1000",
+            "name": "Sociedade Bíblica do Brasil",
+          },
+        }
+      ];
+
+      await sut.save(products);
+
+      verify(cacheStorage.save(key: 'products', value: list)).called(1);
+    });
+
 
   });
 

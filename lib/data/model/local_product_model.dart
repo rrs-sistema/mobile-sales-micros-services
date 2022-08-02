@@ -39,7 +39,6 @@ class LocalProductModel {
     ])) {
       throw Exception();
     }
-    
     return LocalProductModel(
         id: int.parse(json['id']),
         name: json['name'],
@@ -52,6 +51,19 @@ class LocalProductModel {
         supplier: LocalSupplierModel.fromJson(json['supplier']));
   }
 
+  factory LocalProductModel.fromEntity(ProductEntity entity) => LocalProductModel(
+    id: entity.id,
+    name: entity.name,
+    description: entity.description,
+    imgUrl: entity.imgUrl,
+    quantityAvailable: entity.quantityAvailable,
+    createdAt: entity.createdAt,
+    price: entity.price,
+    category: LocalCategoryModel(id: entity.category.id, description: entity.category.description,),
+    supplier: LocalSupplierModel(id: entity.category.id, name: entity.supplier.name,),
+  );
+  
+
   ProductEntity toEntity() => ProductEntity(
       id: id,
       name: name,
@@ -62,4 +74,17 @@ class LocalProductModel {
       price: price,
       category: category.toEntity(),
       supplier: supplier.toEntity());
+
+      Map<String, dynamic> toJson() => {
+        'id': id.toString(),
+        'name': name,
+        'description': description,
+        'imgUrl': imgUrl,
+        'quantityAvailable': quantityAvailable.toString(),
+        'createdAt': createdAt,
+        'price': price.toString(),
+        'category': {'id': category.id.toString(), 'description': category.description},
+        'supplier': {'id': supplier.id.toString(), 'name': supplier.name},
+      };
+
 }

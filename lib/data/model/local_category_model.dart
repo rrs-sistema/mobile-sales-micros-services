@@ -6,9 +6,10 @@ class LocalCategoryModel {
   final int id;
   final String description;
 
-  LocalCategoryModel(
-      {@required this.id,
-      @required this.description,});
+  LocalCategoryModel({
+    @required this.id,
+    @required this.description,
+  });
 
   factory LocalCategoryModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([
@@ -18,11 +19,16 @@ class LocalCategoryModel {
       throw Exception();
     }
     return LocalCategoryModel(
-        id: int.parse(json['id']),
-        description: json['description'],);
+      id: int.parse(json['id']),
+      description: json['description'],
+    );
   }
 
   CategoryEntity toEntity() => CategoryEntity(
-      id: id,
-      description: description,);
+        id: id,
+        description: description,
+      );
+
+  Map<String, String> toJson() =>
+      {'id': id.toString(), 'description': description};
 }

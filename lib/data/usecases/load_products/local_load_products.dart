@@ -17,7 +17,7 @@ class LocalLoadProducts implements LoadProducts {
       if(data?.isEmpty != false) {
       throw Exception();
     }
-      return _map(data);
+      return _mapToEntity(data);
     } catch (error) {
       throw DomainError.unexpected;
     }
@@ -26,13 +26,25 @@ class LocalLoadProducts implements LoadProducts {
   Future<void> validate() async {
     try {
       final data = await cacheStorage.fetch('products');       
-      _map(data);
+      _mapToEntity(data);
     } catch (error) {
       await cacheStorage.delete('products'); 
     }
   }
 
-  List<ProductEntity> _map(List<Map> list) => 
+  Future<void> save(List<ProductEntity> products) async {
+    try {
+      final dataMap = _mapToJson(products);
+      await cacheStorage.save(key: 'products', value: dataMap);
+    } catch(error) {
+      throw DomainError.unexpected;
+    }
+  }
+
+  List<ProductEntity> _mapToEntity(dynamic list) =>
     list.map<ProductEntity>((json) => LocalProductModel.fromJson(json).toEntity()).toList();
+
+  List<Map> _mapToJson(List<ProductEntity> list) =>
+    list.map((entity) => LocalProductModel.fromEntity(entity).toJson()).toList();
 
 }

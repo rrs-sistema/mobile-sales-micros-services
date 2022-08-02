@@ -14,7 +14,7 @@ class LocalSupplierModel {
       'name',
     ])) {
       throw Exception();
-    }    
+    }
     return LocalSupplierModel(id: int.parse(json['id']), name: json['name']);
   }
 
@@ -22,4 +22,6 @@ class LocalSupplierModel {
         id: id,
         name: name,
       );
+
+  Map<String, String> toJson() => {'id': id.toString(), 'name': name};
 }

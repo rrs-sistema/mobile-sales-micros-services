@@ -15,7 +15,7 @@ class RemoteLoadCategories implements LoadCategories {
   Future<List<CategoryEntity>> load() async {
     try {
       final httpResponse = await httpClient.request(uri: uri, method: 'get');
-      return httpResponse._map<CategoryEntity>((json) => RemoteCategoryModel.fromJson(json).toEntity()).toList();      
+      return httpResponse.map<CategoryEntity>((json) => RemoteCategoryModel.fromJson(json).toEntity()).toList();      
     } on HttpError catch(error) {
        throw error == HttpError.forbidden ? DomainError.accessDenied :DomainError.unexpected;
     }
