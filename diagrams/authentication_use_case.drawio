@@ -115,7 +115,7 @@
         <mxCell id="Rr7qTUu8dgHcbzoiwqKY-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#66FFFF;strokeWidth=2;" parent="FGCttp_2XBIN2jRvHXgS-1" source="FGCttp_2XBIN2jRvHXgS-54" target="FGCttp_2XBIN2jRvHXgS-24" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="FGCttp_2XBIN2jRvHXgS-54" value="LocalStorageAdapter" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#009999;strokeWidth=1;fillColor=default;" parent="FGCttp_2XBIN2jRvHXgS-1" vertex="1">
+        <mxCell id="FGCttp_2XBIN2jRvHXgS-54" value="SecureStorageAdapter" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#009999;strokeWidth=1;fillColor=default;" parent="FGCttp_2XBIN2jRvHXgS-1" vertex="1">
           <mxGeometry x="320" y="135" width="200" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Rr7qTUu8dgHcbzoiwqKY-0" value="SplashPresenter" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000099;strokeWidth=1;fillColor=default;dashed=1;" parent="FGCttp_2XBIN2jRvHXgS-1" vertex="1">
