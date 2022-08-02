@@ -295,6 +295,10 @@ void main() {
     final imgUrl001 = faker.image.image();
     final imgUrl002 = faker.image.image();
 
+    PostExpectation  mockFetchAll() => when(cacheStorage.save(key: anyNamed('key'), value: anyNamed('value')));
+    
+    void mockSaveError() => mockFetchAll().thenThrow(Exception());
+
     List<ProductEntity> mockProducts() => [
       ProductEntity(
           id: 1002,
@@ -365,7 +369,14 @@ void main() {
 
       verify(cacheStorage.save(key: 'products', value: list)).called(1);
     });
+    
+    test('Should throw UnexpectedError if save throws', () async {
+      mockSaveError();
 
+      final future = sut.save(products);
+
+      expect(future, throwsA(DomainError.unexpected));
+    });    
 
   });
 
