@@ -1,9 +1,9 @@
 import './../../../../presentation/presenters/presenters.dart';
-import './../../../../main/factories/factories.dart';
 import './../../../../ui/pages/pages.dart';
+import './../../factories.dart';
 
 ProductsPresenter makeGetxBasePagePresenter() {
   return GetxProductsPresenter(
-    loadProducts: makeRemoteLoadProducts()
+    loadProducts: makeRemoteLoadProductsWithLocalFallback(),
   );
 }

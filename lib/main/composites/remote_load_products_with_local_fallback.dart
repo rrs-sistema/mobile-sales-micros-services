@@ -1,9 +1,10 @@
 import 'package:meta/meta.dart';
+import 'package:get/get.dart';
 
-import '../../domain/entities/entities.dart';
-import '../../domain/usecases/usecases.dart';
-import '../../domain/helpers/helpers.dart';
-import '../../data/usecases/usecases.dart';
+import './../../domain/entities/entities.dart';
+import './../../domain/usecases/usecases.dart';
+import './../../domain/helpers/helpers.dart';
+import './../../data/usecases/usecases.dart';
 
 class RemoteLoadProductsWithLocalFallback implements LoadProducts {
   final RemoteLoadProducts remote;
@@ -14,6 +15,10 @@ class RemoteLoadProductsWithLocalFallback implements LoadProducts {
     @required this.local
   });
 
+  final _navigateTo = RxString();
+
+  Stream<String> get navigateToStream => _navigateTo.stream;
+
   Future<List<ProductEntity>> load() async {
     try {
       final products = await remote.load();
@@ -21,6 +26,7 @@ class RemoteLoadProductsWithLocalFallback implements LoadProducts {
       return products;
     } catch(error) {
       if (error == DomainError.accessDenied) {
+        _navigateTo.value = '/login';
         rethrow;
       }
       await local.validate();

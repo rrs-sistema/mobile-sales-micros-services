@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:get/get.dart';
 
 import './../../../domain/entities/entities.dart';
 import './../../../domain/usecases/usecases.dart';
@@ -11,6 +12,10 @@ class RemoteLoadProducts implements LoadProducts {
   final HttpClient httpClient;
 
   RemoteLoadProducts({@required this.uri, @required this.httpClient});
+
+  final _navigateTo = RxString();
+
+  Stream<String> get navigateToStream => _navigateTo.stream;
 
   Future<List<ProductEntity>> load() async {
     try {
