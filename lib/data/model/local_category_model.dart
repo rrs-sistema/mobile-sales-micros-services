@@ -29,6 +29,12 @@ class LocalCategoryModel {
         description: description,
       );
 
+  factory LocalCategoryModel.fromEntity(CategoryEntity entity) =>
+      LocalCategoryModel(
+        id: entity.id,
+        description: entity.description,
+      );
+
   Map<String, String> toJson() =>
       {'id': id.toString(), 'description': description};
 }

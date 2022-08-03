@@ -17,6 +17,7 @@ class RemoteLoadCategories implements LoadCategories {
       final httpResponse = await httpClient.request(uri: uri, method: 'get');
       return httpResponse.map<CategoryEntity>((json) => RemoteCategoryModel.fromJson(json).toEntity()).toList();      
     } on HttpError catch(error) {
+      print('Erro da API de categories --->> $error');
        throw error == HttpError.forbidden ? DomainError.accessDenied :DomainError.unexpected;
     }
   }

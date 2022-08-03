@@ -2,9 +2,9 @@ import 'package:mockito/mockito.dart';
 import 'package:faker/faker.dart';
 import 'package:test/test.dart';
 
-import 'package:delivery_micros_services/data/usecases/load_products/load_products.dart';
 import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
+import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/data/cache/cache.dart';
 import 'package:delivery_micros_services/data/model/model.dart';
 

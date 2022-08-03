@@ -8,3 +8,12 @@ LoadCategories makeRemoteLoadCategories() {
     uri: makeApiProduct('category')
   );
 }
+
+LoadCategories makeLocalLoadCategories() => LocalLoadCategories(
+  cacheStorage: makeLocalStorageAdapter()
+);
+
+LoadCategories makeRemoteLoadCategoriesWithLocalFallback() => RemoteLoadCategoriesWithLocalFallback(
+  remote: makeRemoteLoadCategories(),
+  local: makeLocalLoadCategories()
+);

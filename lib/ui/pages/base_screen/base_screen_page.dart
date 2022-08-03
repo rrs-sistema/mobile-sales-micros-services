@@ -18,10 +18,11 @@ class _BasePageScreenState extends State<BasePageScreen> {
   int _currentIndex = 0;
   final pageController = PageController();
 
+
   @override
   Widget build(BuildContext context) {
-    widget.presenter.loadData();
-
+    if(_currentIndex == 0)
+      widget.presenter.loadData();
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Scaffold(
       backgroundColor: primaryColor,
@@ -56,10 +57,11 @@ class _BasePageScreenState extends State<BasePageScreen> {
           }),
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
-          onTap: (index) {
+          onTap: (index) async {
             setState(() {
               _currentIndex = index;
-              pageController.jumpToPage(index);
+              if (pageController.hasClients) 
+                pageController.jumpToPage(index);
             });
           },
           type: BottomNavigationBarType.fixed,

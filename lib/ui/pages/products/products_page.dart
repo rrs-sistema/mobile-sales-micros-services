@@ -77,30 +77,7 @@ class ProductPage extends StatelessWidget {
                           const BorderSide(width: 0, style: BorderStyle.none))),
             ),
           ),
-          CategoriesSeach(allCategories.toList(),
-          ),
-          // Container(
-          //   height: 40,
-          //   padding: const EdgeInsets.only(left: 25),
-          //   child: ListView.separated(
-          //       scrollDirection: Axis.horizontal,
-          //       itemBuilder: (_, index) {
-          //         return CategoryTile(
-          //           onPressed: () {
-          //             setState(() {
-          //               selectedCategory = widget.categories[index];
-          //             });
-          //           },
-          //           category: widget.categories[index],
-          //           isSelected:
-          //               widget.categories[index].id == selectedCategory.id,
-          //         );
-          //       },
-          //       separatorBuilder: (_, index) => const SizedBox(
-          //             width: 10,
-          //           ),
-          //       itemCount: widget.categories.length),
-          // ),
+          CategoriesSeach(allCategories.toList(),),
           Expanded(
             child: GridView.builder(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
