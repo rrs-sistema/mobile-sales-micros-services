@@ -3,6 +3,7 @@ import './../../factories/factories.dart';
 import './../../../data/http/http.dart';
 
 HttpClient makeAuthorizeHttpClientDecorator() => AuthorizeHttpClientDecorator(
-  fetchSecureCacheStorage: makeSecureStorageAdapter(), 
-  decoratee: makeHttpAdapter()
+  decoratee: makeHttpAdapter(),
+  fetchSecureCacheStorage: makeSecureStorageAdapter(),
+  deleteSecureCacheStorage: makeSecureStorageAdapter(),
 );

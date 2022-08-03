@@ -7,11 +7,11 @@
 
 ## Exceção - Falha ao obter dados do cache
 1. ✅ Retornar erro HTTP Forbidden - 403
-3. ❌ Apagar token de acesso do Cache
+3. ✅ Apagar token de acesso do Cache
 
 ## Exceção - HttpClient retornou alguma exceção (menos Forbidden)
 1. ✅ Retornar a mesma exceção recebida
 
 ## Exceção - HttpClient retornou erro Forbidden
-1. ❌ Retornar erro HTTP Forbidden - 403
-3. ❌ Apagar token de acesso do Cache
+1. ✅ Retornar erro HTTP Forbidden - 403
+3. ✅ Apagar token de acesso do Cache
