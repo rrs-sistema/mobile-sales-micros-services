@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
-import './../../../ui/pages/views_models/views_models.dart';
-import './../../../ui/pages/categories/categories.dart';
-import './../../../ui/helpers/helpers.dart';
-import './../../../ui/common/common.dart';
+import './../views_models/views_models.dart';
+import './../categories/categories.dart';
+import './../../helpers/helpers.dart';
 import './components/components.dart';
+import './../../common/common.dart';
 
 class ProductPage extends StatelessWidget {
   final List<ProductViewModel> products;

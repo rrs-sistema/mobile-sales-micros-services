@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import './../../../ui/helpers/helpers.dart';
-import './../../../ui/common/common.dart';
-import './../../../ui/pages/pages.dart';
+import './../../helpers/helpers.dart';
 import './components/components.dart';
+import './../../common/common.dart';
+import './../../pages/pages.dart';
 
 class BasePageScreen extends StatefulWidget {
   final ProductsPresenter presenter;

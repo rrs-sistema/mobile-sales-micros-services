@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import './../../../../ui/pages/views_models/views_models.dart';
-import './../components/components.dart';
+import './../../views_models/views_models.dart';
+import './components.dart';
 
 class GridViewProducts extends StatelessWidget {
   const GridViewProducts({
