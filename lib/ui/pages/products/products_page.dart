@@ -59,47 +59,15 @@ class ProductPage extends StatelessWidget {
               horizontal: 20,
               vertical: 10,
             ),
-            child: TextFormField(
-              decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  isDense: true,
-                  hintText: 'Pesquise aqui...',
-                  hintStyle: TextStyle(color: primaryColor, fontSize: 14),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: primaryColor,
-                    size: 22,
-                  ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(60),
-                      borderSide:
-                          const BorderSide(width: 0, style: BorderStyle.none))),
-            ),
+            child: PesquiseAqui(primaryColor: primaryColor),
           ),
           CategoriesSeach(allCategories.toList(),),
           Expanded(
-            child: GridView.builder(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                physics: const BouncingScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  childAspectRatio: 9 / 11.5,
-                ),
-                itemCount: products.length,
-                itemBuilder: (_, index) {
-                  return ProductListTile(
-                    key: Key(
-                      products[index].id.toString(),
-                    ),
-                    item: products[index],
-                  );
-                }),
+            child: GridViewProducts(products: products),
           )
         ],
       ),
     );
   }
 }
+
