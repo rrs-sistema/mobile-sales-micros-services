@@ -1,94 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import './../../helpers/helpers.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 import './../../pages/pages.dart';
 
-class BasePageScreen extends StatefulWidget {
+class BasePageScreen extends StatelessWidget  {
+
   final ProductsPresenter presenter;
-  final CategoriesPresenter presenterCategory;
 
-  BasePageScreen(this.presenter, this.presenterCategory);
-
-  @override
-  _BasePageScreenState createState() => _BasePageScreenState();
-}
-
-class _BasePageScreenState extends State<BasePageScreen> {
-  int _currentIndex = 0;
-  final pageController = PageController();
-
+  BasePageScreen(this.presenter);
 
   @override
   Widget build(BuildContext context) {
-    if(_currentIndex == 0)
-      widget.presenter.loadData();
+
+    int _currentIndex = 0;
+    final pageController = PageController();
+
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return Scaffold(
       backgroundColor: primaryColor,
-      body: StreamBuilder<List<ProductViewModel>>(
-          stream: widget.presenter.productsStream,
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              return Error(primaryColor, snapshot.error, widget.presenter);
+      body: Builder(
+        builder: (context) {
+          presenter.isSessionExpiredStream.listen((isExpired) {
+            if (isExpired == true) {
+              Get.offAllNamed('/login');
             }
-            if (snapshot.hasData) {
-              return PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: pageController,
-                children: [
-                  ProductPage(
-                    products: snapshot.data,
-                    presenterCategory: widget.presenterCategory,
-                  ),
-                  Container(
-                    color: Colors.green
-                  ),
-                  Container(
-                    color: Colors.blue,
-                  ),
-                  Container(
-                    color: Colors.purple,
-                  ),
-                ],
-              );
+          });
+
+          presenter.navigateToStream.listen((page) {
+            if (page?.isNotEmpty == true) {
+              Get.toNamed(page);
             }
-            return CircularProgress(
-              'Carregando os produtos, aguarde...',
-            );
-          }),
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          onTap: (index) async {
-            setState(() {
-              _currentIndex = index;
-              if (pageController.hasClients) 
-                pageController.jumpToPage(index);
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: primaryColor,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withAlpha(100),
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: R.strings.titleNavBarHome,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.show_chart_outlined),
-              label: R.strings.titleNavBarCarrinho,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              label: R.strings.titleNavBarPedido,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              label: R.strings.titleNavBarPerfil,
-            ),
-          ]),
+          });    
+          presenter.loadData();              
+          return StreamBuilder<List<ProductViewModel>>(
+              stream: presenter.productsStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Error(primaryColor, snapshot.error, presenter);
+                }
+                if (snapshot.hasData) {
+                  return PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: pageController,
+                    children: [
+                      ProductPage(
+                        products: snapshot.data,
+                      ),
+                      Container(color: Colors.green),
+                      Container(
+                        color: Colors.blue,
+                      ),
+                      Container(
+                        color: Colors.purple,
+                      ),
+                    ],
+                  );
+                }
+                return CircularProgress(
+                  'Carregando os produtos, aguarde...',
+                );
+              });
+        },
+      ),
+      bottomNavigationBar: BottomNavigationBarWidget(primaryColor, _currentIndex, pageController),
     );
   }
 }

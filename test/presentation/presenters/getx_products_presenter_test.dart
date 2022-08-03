@@ -14,8 +14,8 @@ class LoadProductSpy extends Mock implements LoadProducts {}
 void main() {
   LoadProductSpy loadProducts;
   GetxProductsPresenter sut;
-
   List<ProductEntity> products;
+  
   final imgUrl001 = faker.image.image();
   final imgUrl002 = faker.image.image();
 
@@ -51,8 +51,8 @@ void main() {
     mockLoadProductsCall().thenAnswer((_) async => products);
   }
 
-  void mocakLoadProductsError() =>
-      mockLoadProductsCall().thenThrow(DomainError.unexpected);
+  void mocakLoadProductsError() => mockLoadProductsCall().thenThrow(DomainError.unexpected);
+  void mockAccessDeniedError() => mockLoadProductsCall().thenThrow(DomainError.accessDenied);
 
   setUp(() {
     loadProducts = LoadProductSpy();
@@ -101,4 +101,13 @@ void main() {
 
     await sut.loadData();
   });
+
+  test('Should emit correct events on access denied', () async {
+    mockAccessDeniedError();
+
+    expectLater(sut.isSessionExpiredStream, emits(true));
+
+    await sut.loadData();
+  });
+
 }

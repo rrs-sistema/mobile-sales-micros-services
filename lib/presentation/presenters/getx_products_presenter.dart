@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import './../../domain/usecases/usecases.dart';
 import './../../domain/helpers/helpers.dart';
 import './../../ui/helpers/helpers.dart';
+import './../mixins/mixins.dart';
 import './../../ui/pages/pages.dart';
 
-class GetxProductsPresenter implements ProductsPresenter {
+class GetxProductsPresenter extends GetxController with SessionManager, NavigationManager implements ProductsPresenter {
   final LoadProducts loadProducts;
 
   final _products = Rx<List<ProductViewModel>>();
@@ -34,8 +35,17 @@ class GetxProductsPresenter implements ProductsPresenter {
                     description: product.category.description),
               ))
           .toList();
-    } on DomainError {
-      _products.addError(UIError.unexpected.description, StackTrace.empty);
+    } on DomainError catch(error) {
+      if (error == DomainError.accessDenied) {
+        isSessionExpired = true;
+      } else {
+        _products.addError(UIError.unexpected.description, StackTrace.empty);
+      }
     }
   }
+
+  void goToDetailResult(String productId) {
+    navigateTo = '/detail_result/$productId';
+  }
+
 }
