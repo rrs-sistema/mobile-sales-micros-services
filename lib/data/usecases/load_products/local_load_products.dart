@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:get/get.dart';
 
 import './../../../domain/helpers/domain_error.dart';
 import './../../../domain/usecases/usecases.dart';
@@ -11,10 +10,6 @@ class LocalLoadProducts implements LoadProducts {
   final CacheStorage cacheStorage;
 
   LocalLoadProducts({@required this.cacheStorage});
-
-  final _navigateTo = RxString();
-
-  Stream<String> get navigateToStream => _navigateTo.stream;
 
   Future<List<ProductEntity>> load() async {
     try {

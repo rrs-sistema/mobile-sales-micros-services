@@ -16,7 +16,7 @@ class LocalStorageAdapter implements CacheStorage {
 
   Future<void> delete(String key) async {
     await localStorage.ready;
-    //await localStorage.deleteItem(key);
+    await localStorage.deleteItem(key);
   }
 
   Future<dynamic> fetch(String key) async {
