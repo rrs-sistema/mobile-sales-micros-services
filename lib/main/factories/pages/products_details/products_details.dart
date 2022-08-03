@@ -1,0 +1,1 @@
+export './products_details_page_factory.dart';

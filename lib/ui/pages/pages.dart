@@ -1,3 +1,4 @@
+export './products_details/products_details.dart';
 export './base_screen/base_screen.dart';
 export './categories/categories.dart';
 export './products/products.dart';

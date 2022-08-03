@@ -6,5 +6,5 @@ abstract class ProductsPresenter {
   Stream<String> get navigateToStream;  
 
   Future<void> loadData();
-  void goToDetailResult(String productId);
+  void goToDetailResult(int productId);
 }

@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 import './components/components.dart';
@@ -36,8 +37,11 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
                     physics: NeverScrollableScrollPhysics(),
                     controller: pageController,
                     children: [
-                      ProductPage(
-                        products: snapshot.data,
+                      Provider(
+                        create: (_) => presenter,
+                        child: ProductPage(
+                          products: snapshot.data,
+                        ),
                       ),
                       Container(color: Colors.green),
                       Container(

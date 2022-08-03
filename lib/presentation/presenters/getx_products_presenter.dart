@@ -44,7 +44,7 @@ class GetxProductsPresenter extends GetxController with SessionManager, Navigati
     }
   }
 
-  void goToDetailResult(String productId) {
+  void goToDetailResult(int productId) {
     navigateTo = '/detail_result/$productId';
   }
 

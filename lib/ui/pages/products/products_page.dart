@@ -16,9 +16,9 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
-
-    final categories = products.map((cat) => cat.category).toList();
     List<CategoryViewModel> allCategories = [];
+ 
+    final categories = products.map((cat) => cat.category).toList(); 
     categories.forEach((cat) {
       if (allCategories.where((ex) => ex.id == cat.id).length == 0) {
         allCategories.add(cat);
@@ -30,8 +30,7 @@ class ProductPage extends StatelessWidget {
         backgroundColor: primaryColor,
         elevation: 0,
         title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
-          TextSpan(
-              text: R.strings.titleAppName, style: TextStyle(fontSize: 22)),
+          TextSpan(text: R.strings.titleAppName, style: TextStyle(fontSize: 22)),
           //TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
         ])),
         centerTitle: true,
