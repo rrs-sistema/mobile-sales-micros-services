@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import './components/components.dart';
 import './../../common/common.dart';
+import './../../mixins/mixins.dart';
 import './../../pages/pages.dart';
 
-class BasePageScreen extends StatelessWidget  {
+class BasePageScreen extends StatelessWidget with SessionManager, NavigationManager   {
 
   final ProductsPresenter presenter;
 
@@ -22,17 +22,8 @@ class BasePageScreen extends StatelessWidget  {
       backgroundColor: primaryColor,
       body: Builder(
         builder: (context) {
-          presenter.isSessionExpiredStream.listen((isExpired) {
-            if (isExpired == true) {
-              Get.offAllNamed('/login');
-            }
-          });
-
-          presenter.navigateToStream.listen((page) {
-            if (page?.isNotEmpty == true) {
-              Get.toNamed(page);
-            }
-          });    
+          handleSessionExpired(presenter.isSessionExpiredStream);
+          handleNavigation(presenter.navigateToStream);
           presenter.loadData();              
           return StreamBuilder<List<ProductViewModel>>(
               stream: presenter.productsStream,
