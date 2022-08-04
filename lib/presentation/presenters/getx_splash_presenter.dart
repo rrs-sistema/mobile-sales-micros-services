@@ -21,4 +21,5 @@ class GetxSplashPresenter implements SplashPresenter {
       _navigateTo.value = '/login';
     }
   }
+  
 }

@@ -7,6 +7,8 @@ import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
+import '../../../mocks/mocks.dart';
+
 class HttpClientSpy extends Mock implements HttpClient {}
 
 void main() {
@@ -14,7 +16,6 @@ void main() {
   RemoteAuthentication sut;
   AuthenticationParams params;
   Uri uri;
-  Map mockValidData() => {'accessToken': faker.guid.guid()};
 
   PostExpectation mockRequest() =>
   when(httpClient.request(uri: anyNamed('uri'), method: anyNamed('method'), body: anyNamed('body')));
@@ -32,8 +33,8 @@ void main() {
     final url = faker.internet.httpUrl();
     uri = Uri.parse(url);
     sut = RemoteAuthentication(httpClient: httpClient, uri: uri);
-    params = AuthenticationParams(email: faker.internet.email(), secret: faker.internet.password());
-    mockHttpData(mockValidData());
+    params = FakeParamsFactory.makeAuthentication();
+    mockHttpData(FakeAccountFactory.makeApiJson());
   });
 
   test('Shoul call HttpClient with correct values', () async {
@@ -79,7 +80,7 @@ void main() {
   });
 
   test('Should return an Account if HttpClient returns 200', () async {
-    final validData = mockValidData();
+    final validData = FakeAccountFactory.makeApiJson();
     mockHttpData(validData);
 
     final account = await sut.auth(params);

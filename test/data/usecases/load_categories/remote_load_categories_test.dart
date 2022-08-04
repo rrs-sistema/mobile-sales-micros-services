@@ -22,7 +22,7 @@ void main() {
     'description': 'Bíblia'
   },
   {
-    'id': 1003,
+    'id': 1002,
     'description': 'Tecnologia e Ciência',
   }
 ];

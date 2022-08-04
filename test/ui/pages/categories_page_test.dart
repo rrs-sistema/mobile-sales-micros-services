@@ -34,7 +34,7 @@ void main() {
       id: 1000,
       description: 'Bíblia',),
     CategoryViewModel(
-      id: 1003,
+      id: 1002,
       description: 'Tecnologia e Ciência',),          
   ];
 

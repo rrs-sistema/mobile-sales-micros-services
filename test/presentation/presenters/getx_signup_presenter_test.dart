@@ -8,6 +8,7 @@ import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
+import './../../mocks/mocks.dart';
 
 class ValidationSpy extends Mock implements Validation {}
 
@@ -24,8 +25,8 @@ void main() {
   String name;
   String password;
   String passwordConfirmation;
-  String accessToken;
   bool admin;
+  AccountEntity account;
 
   PostExpectation mockValidationCall(String field) => when(validation.validate(
       field: field == null ? anyNamed('field') : field,
@@ -37,9 +38,9 @@ void main() {
 
   PostExpectation mockAddAccountCall() => when(addAccount.add(any));
 
-  void mockAddAccount() {
-    mockAddAccountCall()
-        .thenAnswer((_) async => AccountEntity(accessToken: accessToken));
+  void mockAddAccount(AccountEntity data) {
+    account = data;
+    mockAddAccountCall().thenAnswer((_) async => data);
   }
 
   void mockAddAccountError(DomainError error) {
@@ -66,9 +67,8 @@ void main() {
     password = faker.internet.password();
     passwordConfirmation = faker.internet.password();
     admin = false;
-    accessToken = faker.guid.guid();
     mockValidation();
-    mockAddAccount();
+    mockAddAccount(FakeAccountFactory.makeEntity());
   });
 
   test('Should call Validation with correct email', () {
@@ -329,7 +329,7 @@ void main() {
 
     await sut.signUp();
 
-    verify(saveCurrentAccount.save(AccountEntity(accessToken: accessToken)))
+    verify(saveCurrentAccount.save(account))
         .called(1);
   });
 

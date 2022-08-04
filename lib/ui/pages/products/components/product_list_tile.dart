@@ -16,6 +16,7 @@ class ProductListTile extends StatelessWidget {
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     final presenter = Provider.of<ProductsPresenter>(context);
     return GestureDetector(
+      key: Key('onClickProductListTile'),
       onTap: () => presenter.goToDetailResult(item.id),
       child: Stack(
         children: [
@@ -50,7 +51,6 @@ class ProductListTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    //item.name,
                     item.name.length > 40
                         ? '${item.name.substring(0, 39)}...'
                         : item.name,

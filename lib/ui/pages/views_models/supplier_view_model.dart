@@ -7,5 +7,5 @@ class SupplierViewModel extends Equatable {
 
   SupplierViewModel({@required this.id, @required this.name});
 
-  List get props => ['id', 'name'];
+  List get props => [id, name];
 }

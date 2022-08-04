@@ -25,14 +25,14 @@ class ProductEntity extends Equatable {
       @required this.category});
 
   List get props => [
-        'id',
-        'name',
-        'description',
-        'imgUrl',
-        'quantityAvailable',
-        'createdAt',
-        'price',
-        'supplier',
-        'category'
+        id,
+        name,
+        description,
+        imgUrl,
+        quantityAvailable,
+        createdAt,
+        price,
+        supplier,
+        category
       ];
 }

@@ -7,6 +7,8 @@ import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
+import '../../../mocks/fake_params_factory.dart';
+
 class HttpClientSpy extends Mock implements HttpClient {}
 
 void main() {
@@ -33,12 +35,7 @@ void main() {
     final url = faker.internet.httpUrl();
     uri = Uri.parse(url);
     sut = RemoteAddAccount(httpClient: httpClient, uri: uri);
-    params = AddAccountParams(
-      name: faker.person.name(), 
-      email: faker.internet.email(), 
-      password: faker.internet.password(), 
-      passwordConfirmation: faker.internet.password(), 
-      admin: false);
+    params = FakeParamsFactory.makeAddAccount();
     mockHttpData(mockValidData());
   });
 

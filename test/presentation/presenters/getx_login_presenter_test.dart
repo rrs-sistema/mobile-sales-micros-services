@@ -9,6 +9,7 @@ import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';
 import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
+import './../../mocks/mocks.dart';
 
 class ValidationSpy extends Mock implements Validation {}
 class AuthenticationSpy extends Mock implements Authentication {}
@@ -22,7 +23,7 @@ void main() {
   SaveCurrentAccountSpy saveCurrentAccount;
   String email;
   String password;
-  String accessToken;
+  AccountEntity account;
 
   PostExpectation mockValidationCall(String field) => 
     when(validation.validate(field: field == null ? anyNamed('field') : field, input: anyNamed('input')));
@@ -33,8 +34,9 @@ void main() {
 
   PostExpectation mockAuthenticationCall() => when(authentication.auth(any));
 
-  void mockcAuthentication() {
-    mockAuthenticationCall().thenAnswer((_) async => AccountEntity(accessToken: accessToken));
+  void mockcAuthentication(AccountEntity data) {
+    account = data;
+    mockAuthenticationCall().thenAnswer((_) async => data);
   }
 
   void mockcAuthenticationError(DomainError error) {
@@ -58,9 +60,8 @@ void main() {
     );
     email = faker.internet.email();
     password = faker.internet.password();
-    accessToken = faker.guid.guid();
     mockValidation();
-    mockcAuthentication();
+    mockcAuthentication(FakeAccountFactory.makeEntity());
   });
 
   test('Should call Validation with correct email', () {
@@ -166,7 +167,7 @@ void main() {
 
     await sut.auth();
 
-    verify(saveCurrentAccount.save(AccountEntity(accessToken: accessToken))).called(1);
+    verify(saveCurrentAccount.save(account)).called(1);
   });  
 
   test('Should emit UnexpectedError if SaveCurrentAccount fails', () async {

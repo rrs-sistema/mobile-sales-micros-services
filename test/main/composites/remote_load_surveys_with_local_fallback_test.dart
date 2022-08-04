@@ -1,4 +1,3 @@
-import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -6,6 +5,8 @@ import 'package:delivery_micros_services/main/composites/composites.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
+
+import '../../mocks/mocks.dart';
 
 class RemoteLoadProductsSpy extends Mock implements RemoteLoadProducts {}
 
@@ -18,30 +19,10 @@ void main() {
   List<ProductEntity> remoteProducts;
   List<ProductEntity> localProducts;
 
-  List<ProductEntity> mockProducts() => [
-        ProductEntity(
-            id: 1002,
-            name: faker.randomGenerator.string(50),
-            description: faker.randomGenerator.string(150),
-            imgUrl: faker.image.image(),
-            quantityAvailable: faker.randomGenerator.integer(15),
-            createdAt:
-                '29/07/2022 03:11:46', //DateTime.parse('2022-07-28 03:11:46'),
-            price: faker.randomGenerator.decimal(),
-            supplier: SupplierEntity(
-              id: faker.randomGenerator.integer(50),
-              name: faker.randomGenerator.string(50),
-            ),
-            category: CategoryEntity(
-              id: faker.randomGenerator.integer(50),
-              description: faker.randomGenerator.string(50),
-            )),
-      ];
-
   PostExpectation mockRemoteLoadCall() => when(remote.load());
 
   void mockRemoteLoad() {
-    remoteProducts = mockProducts();
+    remoteProducts = FakeProductsFactory.makeEntities();
     mockRemoteLoadCall().thenAnswer((_) async => remoteProducts);
   }
 
@@ -51,7 +32,7 @@ void main() {
   PostExpectation mockLocalLoadCall() => when(local.load());
 
   void mockLocalLoad() {
-    localProducts = mockProducts();
+    localProducts = FakeProductsFactory.makeEntities();
     mockLocalLoadCall().thenAnswer((_) async => localProducts);
   }
 

@@ -7,5 +7,5 @@ class CategoryViewModel extends Equatable {
 
   CategoryViewModel({@required this.id, @required this.description});
 
-  List get props => ['id', 'description'];
+  List get props => [id, description];
 }
