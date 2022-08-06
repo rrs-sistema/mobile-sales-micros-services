@@ -5,7 +5,7 @@ import './../../../../ui/common/common.dart';
 
 class CategoryTile extends StatelessWidget {
   
-  const CategoryTile({ Key key, this.category, this.isSelected, this.onPressed }) : super(key: key);
+  const CategoryTile({ required this.category, required this.isSelected, required this.onPressed });
 
   final CategoryViewModel category;
   final bool isSelected;

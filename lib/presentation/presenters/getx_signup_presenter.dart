@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:get/get.dart';
 
 import './../../domain/helpers/domain_error.dart';
@@ -14,29 +13,28 @@ class GetxSignUpPresenter extends GetxController with LoadingManager, Navigation
   final AddAccount addAccount;
   final SaveCurrentAccount saveCurrentAccount;
 
-  String _name;
-  String _email;
-  String _password;
-  String _passwordConfirmation;
-  bool _admin;
+  var _emailError = Rx<UIError?>(null);
+  var _nameError = Rx<UIError?>(null);
+  var _passwordError = Rx<UIError?>(null);
+  var _passwordConfirmationError = Rx<UIError?>(null);
+  var _isAdminError = Rx<UIError?>(null);
 
-  var _emailError = Rx<UIError>();
-  var _nameError = Rx<UIError>();
-  var _passwordError = Rx<UIError>();
-  var _passwordConfirmationError = Rx<UIError>();
-  var _isAdminError = Rx<UIError>();
+  String? _name;
+  String? _email;
+  String? _password;
+  String? _passwordConfirmation;
+  bool _admin = false;
 
-  Stream<UIError> get emailErrorStream => _emailError.stream;
-  Stream<UIError> get nameErrorStream => _nameError.stream;
-  Stream<UIError> get passwordErrorStream => _passwordError.stream;
-  Stream<UIError> get passwordConfirmationErrorStream => _passwordConfirmationError.stream;
-  
-  Stream<UIError> get isAdminErrorStream => _isAdminError.stream;
+  Stream<UIError?> get emailErrorStream => _emailError.stream;
+  Stream<UIError?> get nameErrorStream => _nameError.stream;
+  Stream<UIError?> get passwordErrorStream => _passwordError.stream;
+  Stream<UIError?> get passwordConfirmationErrorStream => _passwordConfirmationError.stream;
+  Stream<UIError?> get isAdminErrorStream => _isAdminError.stream;
 
   GetxSignUpPresenter({
-      @required this.validation, 
-      @required this.addAccount, 
-      @required this.saveCurrentAccount
+      required this.validation, 
+      required this.addAccount, 
+      required this.saveCurrentAccount
     });
 
   void validateName(String name) {
@@ -69,7 +67,7 @@ class GetxSignUpPresenter extends GetxController with LoadingManager, Navigation
     _validateForm();
   }
 
-  UIError _validateField(String field,) {
+  UIError? _validateField(String field,) {
     final formData = {
       'name': _name,
       'email': _email,
@@ -80,9 +78,7 @@ class GetxSignUpPresenter extends GetxController with LoadingManager, Navigation
     final error = validation.validate(field: field, input: formData);
     switch (error) {
       case ValidationError.requiredField : return UIError.requiredField;
-        break;
       case ValidationError.invalidField : return UIError.invalidField;
-        break;        
       default: return null;
     }
   }
@@ -95,8 +91,7 @@ class GetxSignUpPresenter extends GetxController with LoadingManager, Navigation
       && _name != null 
       && _email != null 
       && _password != null
-      && _passwordConfirmation != null
-      && _admin != null; 
+      && _passwordConfirmation != null; 
   }
   
   Future<void> signUp() async {
@@ -104,10 +99,10 @@ class GetxSignUpPresenter extends GetxController with LoadingManager, Navigation
       isLoading = true;  
       mainError = null;
       final account = await addAccount.add(AddAccountParams(
-        name: _name, 
-        email: _email, 
-        password: _password, 
-        passwordConfirmation: _passwordConfirmation, 
+        name: _name!, 
+        email: _email!, 
+        password: _password!, 
+        passwordConfirmation: _passwordConfirmation!, 
         admin: _admin));
       await saveCurrentAccount.save(account);
       navigateTo = '/base_screen';

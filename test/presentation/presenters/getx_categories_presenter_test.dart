@@ -1,4 +1,4 @@
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 import 'package:delivery_micros_services/presentation/presenters/presenters.dart';
@@ -11,10 +11,10 @@ import 'package:delivery_micros_services/ui/helpers/helpers.dart';
 class LoadCategorySpy extends Mock implements LoadCategories {}
 
 void main() {
-  LoadCategorySpy loadCategories;
-  GetxCategoriesPresenter sut;
+  late LoadCategorySpy loadCategories;
+  late GetxCategoriesPresenter sut;
 
-  List<CategoryEntity> products;
+  late List<CategoryEntity> products;
 
   List<CategoryEntity> mockValidData() => [
         CategoryEntity(
@@ -27,7 +27,7 @@ void main() {
       )
       ];
 
-  PostExpectation mockLoadProductsCall() => when(loadCategories.load());
+  When mockLoadProductsCall() => when(() => loadCategories.load());
 
   void mockLoadProducts(List<CategoryEntity> data) {
     products = data;
@@ -46,13 +46,13 @@ void main() {
   test('Shoul call LoadProdiucts on loadData', () async {
     await sut.loadData();
 
-    verify(loadCategories.load()).called(1);
+    verify(() => loadCategories.load()).called(1);
   });
 
   test('Shoul emit correct LoadCategories on loadData', () async {
     sut.categoriesStream.listen(expectAsync1((products) => expect(products, [
           CategoryViewModel(
-              id: products[0].id,
+              id: products![0].id,
               description: products[0].description,),
           CategoryViewModel(
               id: products[1].id,

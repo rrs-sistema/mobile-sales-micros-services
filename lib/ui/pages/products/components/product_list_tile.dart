@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import './../../../../ui/helpers/services/services.dart';
 import './../../../../ui/common/common.dart';
@@ -9,7 +8,7 @@ import './../../products/products.dart';
 
 class ProductListTile extends StatelessWidget {
   final ProductViewModel item;
-  const ProductListTile({@required Key key, @required this.item}) : super(key: key);
+  const ProductListTile({required Key key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

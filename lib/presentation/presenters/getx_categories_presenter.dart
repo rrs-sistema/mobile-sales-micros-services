@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:get/get.dart';
 
 import './../../domain/usecases/usecases.dart';
@@ -9,11 +8,11 @@ import './../../ui/pages/pages.dart';
 class GetxCategoriesPresenter implements CategoriesPresenter {
   final LoadCategories loadCategories;
 
-  final _categories = Rx<List<CategoryViewModel>>();
+  final _categories = Rx<List<CategoryViewModel>?>(null);
 
-  Stream<List<CategoryViewModel>> get categoriesStream => _categories.stream;
+  Stream<List<CategoryViewModel>?> get categoriesStream => _categories.stream;
 
-  GetxCategoriesPresenter({@required this.loadCategories});
+  GetxCategoriesPresenter({required this.loadCategories});
 
   Future<void> loadData() async {
     try {

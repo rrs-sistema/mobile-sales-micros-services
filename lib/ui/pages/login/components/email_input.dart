@@ -11,7 +11,7 @@ class EmailInput extends StatelessWidget {
     final presenter = Provider.of<LoginPresenter>(context);
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
 
-    return StreamBuilder<UIError>(
+    return StreamBuilder<UIError?>(
         stream: presenter.emailErrorStream,
         builder: (context, snapshot) {
           return TextFormField(
@@ -24,7 +24,7 @@ class EmailInput extends StatelessWidget {
             */
             decoration: InputDecoration(
               labelText: R.strings.userEmail,
-              errorText: snapshot.hasData ? snapshot.data.description : null,
+              errorText: snapshot.data?.description,
               labelStyle: TextStyle(
                 color: primaryColor
               ),

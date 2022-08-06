@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import './../../domain/entities/entities.dart';
 import './../../data/http/http.dart';
 
@@ -8,8 +6,8 @@ class RemoteCategoryModel {
   final String description;
 
   RemoteCategoryModel(
-      {@required this.id,
-      @required this.description,});
+      {required this.id,
+      required this.description,});
 
   factory RemoteCategoryModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([

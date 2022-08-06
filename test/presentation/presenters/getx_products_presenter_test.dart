@@ -1,51 +1,42 @@
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
 
 import 'package:delivery_micros_services/presentation/presenters/presenters.dart';
 import 'package:delivery_micros_services/domain/helpers/domain_error.dart';
-import 'package:delivery_micros_services/domain/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/entities/entities.dart';
 import 'package:delivery_micros_services/ui/helpers/helpers.dart';
-import '../../mocks/mocks.dart';
 
-class LoadProductSpy extends Mock implements LoadProducts {}
+import './../../ui/model/mocks/mocks.dart';
+import './../../domain/mocks/mocks.dart';
+import './../../data/mocks/mocks.dart';
 
 void main() {
-  LoadProductSpy loadProducts;
-  GetxProductsPresenter sut;
-  List<ProductEntity> products;
-
-  PostExpectation mockLoadProductsCall() => when(loadProducts.load());
-
-  void mockLoadProducts(List<ProductEntity> data) {
-    products = data;
-    mockLoadProductsCall().thenAnswer((_) async => products);
-  }
-
-  void mocakLoadProductsError() => mockLoadProductsCall().thenThrow(DomainError.unexpected);
-  void mockAccessDeniedError() => mockLoadProductsCall().thenThrow(DomainError.accessDenied);
+  late LoadProductsSpy loadProducts;
+  late GetxProductsPresenter sut;
+  late List<ProductEntity> products;
 
   setUp(() {
-    loadProducts = LoadProductSpy();
+    products = EntityFactory.makeProductList();
+    loadProducts = LoadProductsSpy();
+    loadProducts.mockLoad(products);
     sut = GetxProductsPresenter(loadProducts: loadProducts);
-    mockLoadProducts(FakeProductsFactory.makeEntities());
   });
 
   test('Shoul call LoadProdiucts on loadData', () async {
     await sut.loadData();
 
-    verify(loadProducts.load()).called(1);
+    verify(() => loadProducts.load()).called(1);
   });
 
   test('Shoul emit correct LoadProducts on loadData', () async {
-    final listMock = FakeProductsFactory.makeViewModel();
+    final listMock = ModelFactory.makeViewModel();
     sut.productsStream.listen(expectAsync1((products) => expect(products, listMock)));
 
     await sut.loadData();
   });
 
   test('Shoul emit correct events on failure', () async {
-    mocakLoadProductsError();
+    loadProducts.mockLoadError(DomainError.unexpected);
 
     sut.productsStream.listen(null,
       onError: (error, _) => expect(error, UIError.unexpected.description));
@@ -54,7 +45,8 @@ void main() {
   });
 
   test('Should emit correct events on access denied', () async {
-    mockAccessDeniedError();
+    //mockAccessDeniedError();
+    loadProducts.mockLoadError(DomainError.accessDenied);
 
     expectLater(sut.isSessionExpiredStream, emits(true));
 

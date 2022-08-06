@@ -4,7 +4,7 @@ import 'package:delivery_micros_services/presentation/protocols/validation.dart'
 import 'package:delivery_micros_services/validators/validators/validators.dart';
 
 void main() {
-  RequiredFieldValidation sut;
+  late RequiredFieldValidation sut;
   setUp(() {
     sut = RequiredFieldValidation('any_field');
   });

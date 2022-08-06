@@ -8,13 +8,13 @@ class ThemeHelper{
     Color _accentColor = HexColor('#8A02AE');
     return ThemeData(
         primaryColor: _primaryColor,
-        accentColor: _accentColor,
+        secondaryHeaderColor: _accentColor,
         scaffoldBackgroundColor: Colors.white.withAlpha(190),
         primarySwatch: Colors.grey,
       );
   }
 
-  InputDecoration textInputDecoration([String lableText= '', String hintText = '', String errorText]){
+  InputDecoration textInputDecoration([String lableText= '', String hintText = '', String? errorText]){
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     return InputDecoration(
       labelText: lableText,
@@ -46,7 +46,7 @@ class ThemeHelper{
   BoxDecoration buttonBoxDecoration(BuildContext context, [String color1 = "", String color2 = ""]) {
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     Color c1 = Theme.of(context).primaryColor;
-    Color c2 = Theme.of(context).accentColor;
+    Color c2 = Theme.of(context).secondaryHeaderColor;
     if (color1.isEmpty == false) {
       c1 = HexColor(color1);
     }

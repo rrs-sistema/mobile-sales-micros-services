@@ -2,4 +2,4 @@ import 'package:flutter/material.dart';
 
 import '../../../../ui/pages/pages.dart';
 
-Widget makeProductsPage() => ProductPage();
+Widget makeProductsPage(List<ProductViewModel> products) => ProductPage(products: products);

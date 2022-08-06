@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:get/get.dart';
 
 import './../../domain/entities/entities.dart';
@@ -11,11 +10,11 @@ class RemoteLoadCategoriesWithLocalFallback implements LoadCategories {
   final LocalLoadCategories local;
 
   RemoteLoadCategoriesWithLocalFallback({
-    @required this.remote,
-    @required this.local
+    required this.remote,
+    required this.local
   });
 
-  final _navigateTo = RxString();
+  final _navigateTo = RxString('');
 
   Stream<String> get navigateToStream => _navigateTo.stream;
 

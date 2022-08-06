@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import './entities.dart';
 
 class ProductEntity extends Equatable {
@@ -14,15 +13,15 @@ class ProductEntity extends Equatable {
   final CategoryEntity category;
 
   ProductEntity(
-      {@required this.id,
-      @required this.name,
-      @required this.description,
-      @required this.imgUrl,
-      @required this.quantityAvailable,
-      @required this.createdAt,
-      @required this.price,
-      @required this.supplier,
-      @required this.category});
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.imgUrl,
+      required this.quantityAvailable,
+      required this.createdAt,
+      required this.price,
+      required this.supplier,
+      required this.category});
 
   List get props => [
         id,

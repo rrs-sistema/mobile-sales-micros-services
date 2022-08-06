@@ -1,4 +1,4 @@
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:faker/faker.dart';
 import 'package:test/test.dart';
 
@@ -7,43 +7,33 @@ import 'package:delivery_micros_services/data/usecases/usecases.dart';
 import 'package:delivery_micros_services/domain/helpers/helpers.dart';
 import 'package:delivery_micros_services/data/http/http.dart';
 
-import '../../../mocks/fake_params_factory.dart';
-
-class HttpClientSpy extends Mock implements HttpClient {}
+import './../../../domain/mocks/mocks.dart';
+import '../../../infra/mocks/mocks.dart';
+import './../../mocks/mocks.dart';
 
 void main() {
-  RemoteAddAccount sut;
-  HttpClientSpy httpClient;
-  AddAccountParams params;
-  Uri uri;
+  late RemoteAddAccount sut;
+  late HttpClientSpy httpClient;
+  late AddAccountParams params;
+  late String url;
+  late Map apiResult;
 
-  Map mockValidData() => {'accessToken': faker.guid.guid(), 'name': faker.person.name()};
-
-  PostExpectation mockRequest() =>
-    when(httpClient.request(uri: anyNamed('uri'), method: anyNamed('method'), body: anyNamed('body')));
-
-  void mockHttpData(Map data) {
-    mockRequest().thenAnswer((_) async => data);
-  }
-
-  void mockHttpError(HttpError error) {
-    mockRequest().thenThrow(error);
-  }
-  
   setUp(() {
+    apiResult = ApiFactory.makeAccountJson();
+    params = ParamsFactory.makeAddAccount();
+
+    url = faker.internet.httpUrl();
+
     httpClient = HttpClientSpy();
-    final url = faker.internet.httpUrl();
-    uri = Uri.parse(url);
-    sut = RemoteAddAccount(httpClient: httpClient, uri: uri);
-    params = FakeParamsFactory.makeAddAccount();
-    mockHttpData(mockValidData());
+    httpClient.mockRequest(apiResult);
+    sut = RemoteAddAccount(httpClient: httpClient, url: url);
   });
 
   test('Should call HttpClient with correct values', () async {
     await sut.add(params);
 
-    verify(httpClient.request(
-      uri: uri,
+    verify(() => httpClient.request(
+      url: url,
       method: 'post',
       body: {
         'name': params.name,
@@ -56,7 +46,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if HttpClient returns 400', () async {
-    mockHttpError(HttpError.badRequest);
+    httpClient.mockRequestError(HttpError.badRequest);
 
     final future = sut.add(params);
 
@@ -64,7 +54,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if HttpClient returns 404', () async {
-    mockHttpError(HttpError.notFound);
+    httpClient.mockRequestError(HttpError.notFound);
 
     final future = sut.add(params);
 
@@ -72,7 +62,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if HttpClient returns 500', () async {
-    mockHttpError(HttpError.serverError);
+    httpClient.mockRequestError(HttpError.serverError);
 
     final future = sut.add(params);
 
@@ -80,7 +70,7 @@ void main() {
   });
 
   test('Should throw InvalidCredentialsError if HttpClient returns 403', () async {
-    mockHttpError(HttpError.forbidden);
+    httpClient.mockRequestError(HttpError.forbidden);
 
     final future = sut.add(params);
 
@@ -88,8 +78,8 @@ void main() {
   });
 
   test('Should return an Account if HttpClient returns 200', () async {
-    final validData = mockValidData();
-    mockHttpData(validData);
+    final validData = ApiFactory.makeAccountJson();
+    httpClient.mockRequest(validData);
 
     final account = await sut.add(params);
 
@@ -97,7 +87,7 @@ void main() {
   });
 
   test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {
-    mockHttpData({'invalid_key': 'invalid_value'});
+    httpClient.mockRequest({'invalid_key': 'invalid_value'});
 
     final future = sut.add(params);
 

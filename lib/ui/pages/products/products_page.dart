@@ -10,8 +10,7 @@ import './../../common/common.dart';
 class ProductPage extends StatelessWidget {
   final List<ProductViewModel> products;
 
-  ProductPage({Key key, this.products,})
-      : super(key: key);
+  ProductPage({required this.products});
 
   @override
   Widget build(BuildContext context) {

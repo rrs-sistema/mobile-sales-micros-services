@@ -4,7 +4,7 @@ import 'package:delivery_micros_services/presentation/protocols/protocols.dart';
 import 'package:delivery_micros_services/validators/validators/validators.dart';
 
 void main() {
-  EmailValidation sut;
+  late EmailValidation sut;
 
   setUp(() {
     sut = EmailValidation('any_field');

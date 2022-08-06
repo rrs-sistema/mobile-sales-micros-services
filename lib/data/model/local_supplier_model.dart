@@ -1,12 +1,10 @@
-import 'package:meta/meta.dart';
-
 import './../../domain/entities/entities.dart';
 
 class LocalSupplierModel {
   final int id;
   final String name;
 
-  LocalSupplierModel({@required this.id, @required this.name});
+  LocalSupplierModel({required this.id, required this.name});
 
   factory LocalSupplierModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([

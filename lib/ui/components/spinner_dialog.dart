@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 
 import './../../../ui/common/common.dart';
 
-void showLoading(BuildContext context) {
+Future<void> showLoading(BuildContext context) async {
   final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
-  showDialog(
+  await Future.delayed(Duration.zero);
+  await showDialog(
     context: context,
     barrierDismissible: false,
     builder: (ctx) => SimpleDialog(

@@ -2,14 +2,14 @@ import '../../../domain/usecases/usecases.dart';
 import '../../../data/usecases/usecases.dart';
 import '../factories.dart';
 
-LoadCategories makeRemoteLoadCategories() {
+RemoteLoadCategories makeRemoteLoadCategories() {
   return RemoteLoadCategories(
     httpClient: makeAuthorizeHttpClientDecorator(), 
-    uri: makeApiProduct('category')
+    url: makeApiProduct('category')
   );
 }
 
-LoadCategories makeLocalLoadCategories() => LocalLoadCategories(
+LocalLoadCategories makeLocalLoadCategories() => LocalLoadCategories(
   cacheStorage: makeLocalStorageAdapter()
 );
 

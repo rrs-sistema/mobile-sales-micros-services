@@ -4,7 +4,7 @@ import 'package:delivery_micros_services/presentation/protocols/validation.dart'
 import 'package:delivery_micros_services/validators/validators/validators.dart';
 
 void main() {
-  CompareFieldsValidation sut;
+  late CompareFieldsValidation sut;
   setUp(() {
     sut = CompareFieldsValidation(field: 'any_field', fieldToCompare: 'other_field');
   });

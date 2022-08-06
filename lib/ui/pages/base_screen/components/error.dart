@@ -8,7 +8,7 @@ class Error extends StatelessWidget {
   final Color primaryColor;
   final String error;
 
-  const Error(this.primaryColor, this.error, this.presenter);
+  const Error({required this.primaryColor, required this.error, required this.presenter});
 
   @override
   Widget build(BuildContext context) {

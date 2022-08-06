@@ -1,6 +1,8 @@
+
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import './../../../main/factories/factories.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 import './../../mixins/mixins.dart';
@@ -26,11 +28,11 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
           handleSessionExpired(presenter.isSessionExpiredStream);
           handleNavigation(presenter.navigateToStream);
           presenter.loadData();              
-          return StreamBuilder<List<ProductViewModel>>(
+          return StreamBuilder<List<ProductViewModel>?>(
               stream: presenter.productsStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Error(primaryColor, snapshot.error, presenter);
+                  return Error(primaryColor: primaryColor, error: '${snapshot.error}', presenter: presenter,);
                 }
                 if (snapshot.hasData) {
                   return PageView(
@@ -39,8 +41,8 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
                     children: [
                       Provider(
                         create: (_) => presenter,
-                        child: ProductPage(
-                          products: snapshot.data,
+                        child: makeProductsPage(
+                          snapshot.data!
                         ),
                       ),
                       Container(color: Colors.green),

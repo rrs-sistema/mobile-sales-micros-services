@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import './../../../domain/helpers/domain_error.dart';
 import './../../../domain/usecases/usecases.dart';
 import './../../../domain/entities/entities.dart';
@@ -9,7 +7,7 @@ import './../../model/model.dart';
 class LocalLoadProducts implements LoadProducts {
   final CacheStorage cacheStorage;
 
-  LocalLoadProducts({@required this.cacheStorage});
+  LocalLoadProducts({required this.cacheStorage});
 
   Future<List<ProductEntity>> load() async {
     try {

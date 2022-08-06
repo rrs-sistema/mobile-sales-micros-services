@@ -5,7 +5,7 @@ class HeaderWidget extends StatefulWidget {
   final bool _showIcon;
   final IconData _icon;
 
-  const HeaderWidget(this._height, this._showIcon, this._icon, {Key key}) : super(key: key);
+  const HeaderWidget(this._height, this._showIcon, this._icon);
 
   @override
   _HeaderWidgetState createState() => _HeaderWidgetState(_height, _showIcon, _icon);
@@ -34,7 +34,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 gradient: new LinearGradient(
                     colors: [
                       Theme.of(context).primaryColor.withOpacity(0.4),
-                      Theme.of(context).accentColor.withOpacity(0.4),
+                      Theme.of(context).secondaryHeaderColor.withOpacity(0.4),
                     ],
                     begin: const FractionalOffset(0.0, 0.0),
                     end: const FractionalOffset(1.0, 0.0),
@@ -58,7 +58,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 gradient: new LinearGradient(
                     colors: [
                       Theme.of(context).primaryColor.withOpacity(0.4),
-                      Theme.of(context).accentColor.withOpacity(0.4),
+                      Theme.of(context).secondaryHeaderColor.withOpacity(0.4),
                     ],
                     begin: const FractionalOffset(0.0, 0.0),
                     end: const FractionalOffset(1.0, 0.0),
@@ -82,7 +82,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 gradient: new LinearGradient(
                     colors: [
                       Theme.of(context).primaryColor,
-                      Theme.of(context).accentColor,
+                      Theme.of(context).secondaryHeaderColor,
                     ],
                     begin: const FractionalOffset(0.0, 0.0),
                     end: const FractionalOffset(1.0, 0.0),

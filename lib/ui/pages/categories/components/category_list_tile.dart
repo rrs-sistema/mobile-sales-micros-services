@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import './../../products/products.dart';
 
 class CategoryListTile extends StatelessWidget {
   final CategoryViewModel category;
-  const CategoryListTile({@required this.category});
+  const CategoryListTile({required this.category});
 
   @override
   Widget build(BuildContext context) {

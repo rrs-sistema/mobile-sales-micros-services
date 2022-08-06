@@ -1,5 +1,4 @@
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 import '../../data/http/http.dart';
@@ -9,8 +8,8 @@ class HttpAdapter<ResponseType> implements HttpClient {
 
   HttpAdapter(this.client);
 
-  Future<dynamic> request({@required Uri uri, @required String method, Map body, Map headers}) async {
-    final defautHeaders = headers?.cast<String, String>() ?? {}..addAll({
+  Future<dynamic> request({required String url, required String method, Map? body, Map? headers}) async {
+    final defaultHeaders = headers?.cast<String, String>() ?? {}..addAll({
       'content-type': 'application/json',
       'accept': 'application/json',
       'transactionid': '123456'
@@ -18,11 +17,16 @@ class HttpAdapter<ResponseType> implements HttpClient {
 
     final jsonBody = body != null ? jsonEncode(body) : null;
     var response = Response('', 500);
+    Future<Response>? futureResponse;
     try {
+      final uri = Uri.parse(url);
       if (method == 'post') {
-        response = await client.post(uri, headers: defautHeaders, body: jsonBody);
+        futureResponse = client.post(uri, headers: defaultHeaders, body: jsonBody);
       } else if (method == 'get') {
-        response = await client.get(uri, headers: defautHeaders);
+        futureResponse = client.get(uri, headers: defaultHeaders);
+      }
+      if(futureResponse != null){
+        response = await futureResponse.timeout(Duration(seconds: 10));
       }
     } catch(error) {
       throw HttpError.serverError;

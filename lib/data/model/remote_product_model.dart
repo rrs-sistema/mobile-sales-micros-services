@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import './../../domain/entities/entities.dart';
 import './../../data/http/http.dart';
 import './../model/model.dart';
@@ -16,15 +14,15 @@ class RemoteProductModel {
   final RemoteCategoryModel category;
 
   RemoteProductModel(
-      {@required this.id,
-      @required this.name,
-      @required this.description,
-      @required this.imgUrl,
-      @required this.quantityAvailable,
-      @required this.createdAt,
-      @required this.price,
-      @required this.supplier,
-      @required this.category});
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.imgUrl,
+      required this.quantityAvailable,
+      required this.createdAt,
+      required this.price,
+      required this.supplier,
+      required this.category});
 
   factory RemoteProductModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([

@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import './../../domain/entities/entities.dart';
 import './../model/model.dart';
 
@@ -15,15 +13,15 @@ class LocalProductModel {
   final LocalCategoryModel category;
 
   LocalProductModel(
-      {@required this.id,
-      @required this.name,
-      @required this.description,
-      @required this.imgUrl,
-      @required this.quantityAvailable,
-      @required this.createdAt,
-      @required this.price,
-      @required this.supplier,
-      @required this.category});
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.imgUrl,
+      required this.quantityAvailable,
+      required this.createdAt,
+      required this.price,
+      required this.supplier,
+      required this.category});
 
   factory LocalProductModel.fromJson(Map json) {
     if (!json.keys.toSet().containsAll([

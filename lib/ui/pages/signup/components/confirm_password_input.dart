@@ -11,13 +11,13 @@ class ConfirmPasswordInput extends StatelessWidget {
     final presenter = Provider.of<SignUpPresenter>(context);
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
 
-    return StreamBuilder<UIError>(
+    return StreamBuilder<UIError?>(
         stream: presenter.passwordConfirmationErrorStream,
         builder: (context, snapshot) {
           return TextFormField(
             decoration: InputDecoration(
               labelText: R.strings.confirmPassword,
-              errorText: snapshot.hasData ? snapshot.data.description : null,
+              errorText: snapshot.data?.description,
               labelStyle: TextStyle(color: primaryColor),
             ),
             obscureText: true,

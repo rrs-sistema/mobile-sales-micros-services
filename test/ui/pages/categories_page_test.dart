@@ -1,32 +1,19 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
-import 'package:mockito/mockito.dart';
-import 'package:get/get.dart';
-import 'dart:async';
+import 'package:mocktail/mocktail.dart';
 
 import 'package:delivery_micros_services/ui/pages/categories/categories.dart';
 import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';
 
-class CategoriesPresenterSpy extends Mock implements CategoriesPresenter {}
+import './../helpers/helpers.dart';
+import './../mocks/mosks.dart';
 
 void main() {
-  CategoriesPresenterSpy presenter;
-  StreamController<List<CategoryViewModel>> categoriesController;
+  late CategoriesPresenterSpy presenter;
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = CategoriesPresenterSpy();
-    categoriesController =  StreamController<List<CategoryViewModel>>();
-    when(presenter.categoriesStream).thenAnswer((_) => categoriesController.stream);
-
-    final basePageScreen = GetMaterialApp(
-      initialRoute: '/categories',
-      getPages: [
-        GetPage(
-          name: '/categories',
-          page: () => CategoriesPage(presenter)),
-      ],
-    );
-    await tester.pumpWidget(basePageScreen);
+    await tester.pumpWidget(makePage(path: '/categories', page: () => CategoriesPage(presenter)));
   }
 
   List<CategoryViewModel> makeCategories() => [
@@ -40,13 +27,13 @@ void main() {
 
   // Roda sempre no final dos testes
   tearDown(() {
-    categoriesController.close();
+    presenter.dispose();
   });
 
   testWidgets('Should call LoadCategories on page load', (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(presenter.loadData()).called(1);
+    verify(() => presenter.loadData()).called(1);
   });
   
   testWidgets('Should present error if categoriesStream fails', (WidgetTester tester) async{
@@ -54,7 +41,7 @@ void main() {
     final circularProgressIndicator = find.byKey(ValueKey("circularLoadCategory"));
     expect(circularProgressIndicator, findsOneWidget);
 
-    categoriesController.addError(UIError.unexpected.description);
+    presenter.emiteCategoriesError(UIError.unexpected.description);
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
@@ -69,7 +56,7 @@ void main() {
     final circularProgressIndicator = find.byKey(ValueKey("circularLoadCategory"));
     expect(circularProgressIndicator, findsOneWidget);
 
-    categoriesController.add(makeCategories());
+    presenter.emiteCategories(makeCategories());
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
@@ -82,11 +69,11 @@ void main() {
   testWidgets('Should call LoadCategories on reload button click', (WidgetTester tester) async {
     await loadPage(tester);
 
-    categoriesController.addError(UIError.unexpected.description);
+    presenter.emiteCategoriesError(UIError.unexpected.description);
     await tester.pump();
     await tester.tap(find.text('Recarregar'));
 
-    verify(presenter.loadData()).called(2);
+    verify(() => presenter.loadData()).called(2);
   });
 
 }

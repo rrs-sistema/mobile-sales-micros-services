@@ -21,8 +21,8 @@ class _CheckAcceptTermAndConditionState extends State<CheckAcceptTermAndConditio
             value: _value,
             onChanged: (value) {
               setState(() {
-                _value = value;
-                //state.didChange(value);
+                if(value != null)
+                  _value = value;
               });
             }),
         Text(R.strings.acceptanceTerm,

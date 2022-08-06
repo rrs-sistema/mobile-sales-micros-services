@@ -7,7 +7,7 @@ import './splash_presenter.dart';
 class SplashPage extends StatelessWidget with NavigationManager  {
   final SplashPresenter presenter;
 
-  SplashPage({@required this.presenter});
+  SplashPage({required this.presenter});
 
   @override
   Widget build(BuildContext context) {

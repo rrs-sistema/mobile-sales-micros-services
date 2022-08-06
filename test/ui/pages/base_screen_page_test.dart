@@ -1,64 +1,38 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:flutter/material.dart';
-import 'package:mockito/mockito.dart';
-import 'dart:async';
 
 import 'package:delivery_micros_services/ui/pages/base_screen/base_screen.dart';
 import 'package:delivery_micros_services/ui/helpers/services/services.dart';
-import 'package:delivery_micros_services/ui/pages/products/products.dart';
 import 'package:delivery_micros_services/ui/helpers/errors/errors.dart';
 
+import './../model/mocks/mocks.dart';
 import './../helpers/helpers.dart';
-import './../../mocks/mocks.dart';
-
-class ProductsPresenterSpy extends Mock implements ProductsPresenter {}
+import './../mocks/mosks.dart';
 
 void main() {
-  ProductsPresenterSpy presenter;
-  StreamController<List<ProductViewModel>> productsController;
-  StreamController<bool> isSessionExpiredController;
-  StreamController<String> navigateToController;  
-
-  void initStreams() {
-    isSessionExpiredController = StreamController<bool>();
-    productsController = StreamController<List<ProductViewModel>>();
-    navigateToController = StreamController<String>();
-  }
-
-  void mockStreams() {
-    when(presenter.isSessionExpiredStream).thenAnswer((_) => isSessionExpiredController.stream);
-    when(presenter.productsStream).thenAnswer((_) => productsController.stream);
-    when(presenter.navigateToStream).thenAnswer((_) => navigateToController.stream);
-  }
-
-  void closeStreams() {
-    isSessionExpiredController.close();
-    productsController.close();
-    navigateToController.close();
-  }
+  late ProductsPresenterSpy presenter;
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = ProductsPresenterSpy();
-    initStreams();
-    mockStreams();
     await tester.pumpWidget(makePage(path: '/base_screen', page: () => BasePageScreen(presenter)));
   }
 
   // Roda sempre no final dos testes
   tearDown(() {
-    closeStreams();
+    presenter.dispose();
   });
 
   testWidgets('Should call LoadProducts on page load', (WidgetTester tester) async {
     await loadPage(tester);
 
-    verify(presenter.loadData()).called(1);
+    verify(() => presenter.loadData()).called(1);
   });
 
   testWidgets('Should present error if productsStream fails', (WidgetTester tester) async {
     await loadPage(tester);
 
-    productsController.addError(UIError.unexpected.description);
+    presenter.emiteProductsError(UIError.unexpected.description);
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsOneWidget);
@@ -71,7 +45,7 @@ void main() {
     final circularProgressIndicator = find.byKey(ValueKey("circularLoadProduct"));
     expect(circularProgressIndicator, findsOneWidget);
 
-    productsController.add(FakeProductsFactory.makeViewModel());
+    presenter.emiteProducts(ModelFactory.makeViewModel());
     await tester.pump();
 
     expect(find.text('Algo errado aconteceu. Tente novamente em breve.'), findsNothing);
@@ -86,17 +60,17 @@ void main() {
   testWidgets('Should call LoadProducts on reload button click', (WidgetTester tester) async {
     await loadPage(tester);
 
-    productsController.addError(UIError.unexpected.description);
+    presenter.emiteProductsError(UIError.unexpected.description);
     await tester.pump();
     await tester.tap(find.text('Recarregar'));
 
-    verify(presenter.loadData()).called(2);
+    verify(() => presenter.loadData()).called(2);
   });
  
   testWidgets('Should change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    navigateToController.add('/any_route');
+    presenter.emiteNavigateTo('/any_route');
     await tester.pumpAndSettle();
 
     expect(currentRoute, '/any_route');
@@ -106,11 +80,7 @@ void main() {
   testWidgets('Should not change page', (WidgetTester tester) async {
     await loadPage(tester);
 
-    navigateToController.add('');
-    await tester.pump();
-    expect(currentRoute, '/base_screen');
-
-    navigateToController.add(null);
+    presenter.emiteNavigateTo('');
     await tester.pump();
     expect(currentRoute, '/base_screen');
   });
@@ -118,7 +88,7 @@ void main() {
   testWidgets('Should logout', (WidgetTester tester) async {
     await loadPage(tester);
 
-    isSessionExpiredController.add(true);
+    presenter.emiteSessionExpired();
     
     await tester.pumpAndSettle();
 
@@ -129,11 +99,7 @@ void main() {
   testWidgets('Should not logout', (WidgetTester tester) async {
     await loadPage(tester);
 
-    isSessionExpiredController.add(false);
-    await tester.pump();
-    expect(currentRoute, '/base_screen');
-
-    isSessionExpiredController.add(null);
+    presenter.emiteSessionExpired(false);
     await tester.pump();
     expect(currentRoute, '/base_screen');
   });  
@@ -147,7 +113,7 @@ void main() {
     await tester.tap(find.text('Bíblia atualizada'));    
     await tester.pump();
 
-    verify(presenter.goToDetailResult(1002)).called(1);
+    verify(() => presenter.goToDetailResult(1002)).called(1);
   });
   */
 

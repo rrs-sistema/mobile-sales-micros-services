@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:get/get.dart';
 
 import './../../../domain/helpers/domain_error.dart';
@@ -10,9 +9,9 @@ import './../../model/model.dart';
 class LocalLoadCategories implements LoadCategories {
   final CacheStorage cacheStorage;
 
-  LocalLoadCategories({@required this.cacheStorage});
+  LocalLoadCategories({required this.cacheStorage});
 
-  final _navigateTo = RxString();
+  final _navigateTo = RxString('');
 
   Stream<String> get navigateToStream => _navigateTo.stream;
 

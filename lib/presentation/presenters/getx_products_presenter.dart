@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:get/get.dart';
 
 import './../../domain/usecases/usecases.dart';
@@ -10,11 +9,11 @@ import './../../ui/pages/pages.dart';
 class GetxProductsPresenter extends GetxController with SessionManager, NavigationManager implements ProductsPresenter {
   final LoadProducts loadProducts;
 
-  final _products = Rx<List<ProductViewModel>>();
+  final _products = Rx<List<ProductViewModel>?>(null);
 
-  Stream<List<ProductViewModel>> get productsStream => _products.stream;
+  Stream<List<ProductViewModel>?> get productsStream => _products.stream;
 
-  GetxProductsPresenter({@required this.loadProducts});
+  GetxProductsPresenter({required this.loadProducts});
 
   Future<void> loadData() async {
     try {

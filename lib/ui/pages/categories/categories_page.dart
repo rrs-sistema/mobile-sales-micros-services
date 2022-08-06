@@ -20,7 +20,7 @@ class CategoriesPage extends StatelessWidget {
       ),
       body: Builder(
         builder: (context) {
-          return StreamBuilder<List<CategoryViewModel>>(
+          return StreamBuilder<List<CategoryViewModel>?>(
               stream: presenter.categoriesStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
@@ -29,7 +29,7 @@ class CategoriesPage extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(snapshot.error,
+                        Text('${snapshot.error}',
                             style: TextStyle(fontSize: 16),
                             textAlign: TextAlign.center),
                         SizedBox(height: 10),
@@ -43,9 +43,9 @@ class CategoriesPage extends StatelessWidget {
                 }
                 if (snapshot.hasData) {
                   return ListView.builder(
-                      itemCount: snapshot.data.length,
+                      itemCount: snapshot.data?.length,
                       itemBuilder: (_, index) {
-                        return CategoryListTile(category: snapshot.data[index]);
+                        return CategoryListTile(category: snapshot.data![index]);
                       });
                 }
              

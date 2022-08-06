@@ -5,9 +5,8 @@ import './components.dart';
 
 class GridViewProducts extends StatelessWidget {
   const GridViewProducts({
-    Key key,
-    @required this.products,
-  }) : super(key: key);
+    required this.products,
+  });
 
   final List<ProductViewModel> products;
 

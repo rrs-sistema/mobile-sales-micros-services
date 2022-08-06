@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 class PesquiseAqui extends StatelessWidget {
   const PesquiseAqui({
-    Key key,
-    @required this.primaryColor,
-  }) : super(key: key);
+    required this.primaryColor,
+  });
 
   final Color primaryColor;
 

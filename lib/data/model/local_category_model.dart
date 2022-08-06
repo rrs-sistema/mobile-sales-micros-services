@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import './../../domain/entities/entities.dart';
 
 class LocalCategoryModel {
@@ -7,8 +5,8 @@ class LocalCategoryModel {
   final String description;
 
   LocalCategoryModel({
-    @required this.id,
-    @required this.description,
+    required this.id,
+    required this.description,
   });
 
   factory LocalCategoryModel.fromJson(Map json) {

@@ -3,14 +3,14 @@ import './../../../data/usecases/usecases.dart';
 import './../../composites/composites.dart';
 import './../factories.dart';
 
-LoadProducts makeRemoteLoadProducts() {
+RemoteLoadProducts makeRemoteLoadProducts() {
   return RemoteLoadProducts(
     httpClient: makeAuthorizeHttpClientDecorator(), 
-    uri: makeApiProduct('product')
+    url: makeApiProduct('product')
   );
 }
 
-LoadProducts makeLocalLoadProducts() => LocalLoadProducts(
+LocalLoadProducts makeLocalLoadProducts() => LocalLoadProducts(
   cacheStorage: makeLocalStorageAdapter()
 );
 
