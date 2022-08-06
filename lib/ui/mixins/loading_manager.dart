@@ -4,9 +4,9 @@ import '../components/components.dart';
 
 mixin LoadingManager {
   void handleLoading(BuildContext context, Stream<bool> stream) {
-    stream.listen((isLoading) async {
+    stream.listen((isLoading) {
       if (isLoading == true) {
-        await showLoading(context);
+        showLoading(context);
       } else {
         hideLoading(context);
       }
