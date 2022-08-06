@@ -10,13 +10,23 @@ class RemoteLoadProducts implements LoadProducts {
 
   RemoteLoadProducts({required this.url, required this.httpClient});
 
+  Future<ProductEntity> loadById(int id) async {
+    try {
+      final _url = '$url/$id';
+      final httpResponse = await httpClient.request(url: _url, method: 'get');
+      return RemoteProductModel.fromJson(httpResponse).toEntity();
+    } on HttpError catch(error) {
+      throw error == HttpError.forbidden ? DomainError.accessDenied : error == HttpError.unauthorized ? DomainError.accessDenied : DomainError.unexpected;
+    }
+  }
+
   Future<List<ProductEntity>> load() async {
     try {
       final httpResponse = await httpClient.request(url: url, method: 'get');
       return httpResponse.map<ProductEntity>((json) => RemoteProductModel.fromJson(json).toEntity()).toList();
     } on HttpError catch(error) {
-      throw error == HttpError.forbidden ? DomainError.accessDenied : DomainError.unexpected;
+      throw error == HttpError.forbidden ? DomainError.accessDenied : error == HttpError.unauthorized ? DomainError.accessDenied : DomainError.unexpected;
     }
   }
-
+  
 }

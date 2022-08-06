@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:delivery_micros_services/ui/pages/pages.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,15 @@ class ProductListTile extends StatelessWidget {
     final presenter = Provider.of<ProductsPresenter>(context);
     return GestureDetector(
       key: Key('onClickProductListTile'),
-      onTap: () => presenter.goToDetailResult(item.id),
+      //onTap: () => presenter.goToDetailResult(item.id),
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+          return Provider(
+            create: (_) => presenter,
+            child: ProductsDetailsScreen(item.id)
+          );          
+        }));
+      },
       child: Stack(
         children: [
           Card(

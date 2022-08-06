@@ -29,8 +29,7 @@ class ProductPage extends StatelessWidget {
         backgroundColor: primaryColor,
         elevation: 0,
         title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
-          TextSpan(text: R.strings.titleAppName, style: TextStyle(fontSize: 22)),
-          //TextSpan(text: 'Services', style: TextStyle(fontSize: 22))
+          TextSpan(text: R.strings.titleAppName, style: TextStyle(fontSize: 22, color: Colors.white,)),
         ])),
         centerTitle: true,
         actions: [

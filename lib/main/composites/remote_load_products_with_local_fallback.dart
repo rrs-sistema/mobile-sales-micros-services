@@ -18,6 +18,21 @@ class RemoteLoadProductsWithLocalFallback implements LoadProducts {
 
   Stream<String> get navigateToStream => _navigateTo.stream;
 
+  Future<ProductEntity> loadById(int id) async {
+    try {
+      final product = await remote.loadById(id);
+      await local.saveOne(product);
+      return product;
+    } catch(error) {
+      if (error == DomainError.accessDenied) {
+        _navigateTo.value = '/login';
+        rethrow;
+      }
+      await local.validate();
+      return await local.loadById(id);
+    }
+  }
+
   Future<List<ProductEntity>> load() async {
     try {
       final products = await remote.load();
@@ -32,4 +47,5 @@ class RemoteLoadProductsWithLocalFallback implements LoadProducts {
       return await local.load();
     }
   }
+
 }
