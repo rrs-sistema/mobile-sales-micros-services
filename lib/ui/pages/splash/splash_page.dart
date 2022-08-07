@@ -16,7 +16,6 @@ class SplashPage extends StatelessWidget with NavigationManager  {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
-        backgroundColor: primaryColor,
         elevation: 0,
         title: Text.rich(TextSpan(style: TextStyle(fontSize: 30), children: [
           TextSpan(text: 'Delivery Library ', style: TextStyle(fontSize: 22)),

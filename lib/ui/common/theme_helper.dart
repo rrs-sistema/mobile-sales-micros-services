@@ -6,11 +6,23 @@ class ThemeHelper{
   ThemeData makeAppTheme() {
     Color _primaryColor = HexColor('#DC54FE');
     Color _accentColor = HexColor('#8A02AE');
+    MaterialColor primarySwatch = MaterialColor(_primaryColor.value, {
+      50:  _primaryColor,
+      100: _primaryColor,
+      200: _primaryColor,
+      300: _primaryColor,
+      400: _primaryColor,
+      500: _primaryColor,
+      600: _primaryColor,
+      700: _primaryColor,
+      800: _primaryColor,
+      900: _primaryColor,
+    });
     return ThemeData(
         primaryColor: _primaryColor,
         secondaryHeaderColor: _accentColor,
         scaffoldBackgroundColor: Colors.white.withAlpha(190),
-        primarySwatch: Colors.grey,
+        primarySwatch: primarySwatch,
       );
   }
 

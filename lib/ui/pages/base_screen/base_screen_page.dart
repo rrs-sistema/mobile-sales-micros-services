@@ -1,22 +1,18 @@
-
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import './../../../main/factories/factories.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 import './../../mixins/mixins.dart';
 import './../../pages/pages.dart';
 
-class BasePageScreen extends StatelessWidget with SessionManager, NavigationManager   {
-
+class BasePageScreen extends StatelessWidget with SessionManager, NavigationManager {
   final ProductsPresenter presenter;
 
   BasePageScreen(this.presenter);
 
   @override
   Widget build(BuildContext context) {
-
     int _currentIndex = 0;
     final pageController = PageController();
 
@@ -27,12 +23,16 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
         builder: (context) {
           handleSessionExpired(presenter.isSessionExpiredStream);
           handleNavigation(presenter.navigateToStream);
-          presenter.loadData();              
+          presenter.loadData();
           return StreamBuilder<List<ProductViewModel>?>(
               stream: presenter.productsStream,
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  return Error(primaryColor: primaryColor, error: '${snapshot.error}', presenter: presenter,);
+                  return Error(
+                    primaryColor: primaryColor,
+                    error: '${snapshot.error}',
+                    presenter: presenter,
+                  );
                 }
                 if (snapshot.hasData) {
                   return PageView(
@@ -41,11 +41,9 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
                     children: [
                       Provider(
                         create: (_) => presenter,
-                        child: makeProductsPage(
-                          snapshot.data!
-                        ),
+                        child: ProductTab(products: snapshot.data!),
                       ),
-                      Container(color: Colors.green),
+                      CartTab(),
                       Container(
                         color: Colors.blue,
                       ),
@@ -61,7 +59,11 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
               });
         },
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(primaryColor, _currentIndex, pageController),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        primaryColor,
+        _currentIndex,
+        pageController,
+      ),
     );
   }
 }

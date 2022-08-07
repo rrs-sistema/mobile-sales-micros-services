@@ -11,16 +11,19 @@ class BottomNavigationBarWidget extends StatefulWidget {
 
   @override
   State<BottomNavigationBarWidget> createState() => _BottomNavigationBarWidgetState();
+
 }
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        currentIndex: widget.currentIndex,
-        onTap: (index) async {
+        currentIndex: index,
+        onTap: (_index) async {
           setState(() {
-            widget.pageController.jumpToPage(index);
+            index = _index;
+            widget.pageController.jumpToPage(_index);
           });
         },
         type: BottomNavigationBarType.fixed,

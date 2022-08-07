@@ -6,11 +6,18 @@ import './../../pages/products/products.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 
-class ProductsDetailsScreen extends StatelessWidget {
+class ProductsDetailsScreen extends StatefulWidget {
   final int productId;
   ProductsDetailsScreen(this.productId);
 
+  @override
+  State<ProductsDetailsScreen> createState() => _ProductsDetailsScreenState();
+}
+
+class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
   final UtilsServices utilsServices = UtilsServices();
+
+  int cartItemQuantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,7 @@ class ProductsDetailsScreen extends StatelessWidget {
       backgroundColor: primaryColor,
       body: Builder(
         builder: (context) {
-          presenter.loadById(productId);
+          presenter.loadById(widget.productId);
           return StreamBuilder<ProductViewModel?>(
               stream: presenter.productStream,
               builder: (context, snapshot) {
@@ -72,7 +79,14 @@ class ProductsDetailsScreen extends StatelessWidget {
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      Quantity(),
+                                      Quantity(
+                                        value: cartItemQuantity, 
+                                        suffixText: 'un', 
+                                        result: (quantity) {
+                                          setState(() {
+                                            cartItemQuantity = quantity;
+                                          });
+                                        },),
                                     ],
                                   ),
                                   Text(

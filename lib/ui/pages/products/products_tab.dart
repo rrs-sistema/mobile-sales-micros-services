@@ -7,10 +7,10 @@ import './../../helpers/helpers.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductTab extends StatelessWidget {
   final List<ProductViewModel> products;
 
-  ProductPage({required this.products});
+  ProductTab({required this.products});
 
   @override
   Widget build(BuildContext context) {
