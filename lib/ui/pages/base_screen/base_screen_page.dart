@@ -1,4 +1,3 @@
-
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -58,11 +57,7 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
               });
         },
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(
-        primaryColor,
-        _currentIndex,
-        pageController,
-      ),
+      bottomNavigationBar: BottomNavigationBarWidget(primaryColor, _currentIndex, pageController,),
     );
   }
 }

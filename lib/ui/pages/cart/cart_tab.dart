@@ -8,8 +8,6 @@ import './../../helpers/services/services.dart';
 import './../views_models/mocks/app_data.dart' as appData;
 import './../../common/common.dart';
 
-final UtilsServices utilsServices = UtilsServices();
-
 class CartTab extends StatefulWidget {
   const CartTab({Key? key}) : super(key: key);
 
@@ -18,9 +16,13 @@ class CartTab extends StatefulWidget {
 }
 
 class _CartTabState extends State<CartTab> {
+
+  final UtilsServices utilsServices = UtilsServices();
+
   void removeItemFromCart(CartItemViewModel cartItem) {
     setState(() {
       appData.cartItens.remove(cartItem);
+      utilsServices.showToast(message: 'Produto removido do carrinho!');
     });
   }
 
@@ -98,12 +100,15 @@ class _CartTabState extends State<CartTab> {
                     ),
                     onPressed: () async{
                       bool? result = await showOrderConfirmation();
-                      if(result ?? false)
-                      showDialog(
-                        context: context, 
-                        builder: (_) {
-                          return PaymentDialog(order: appData.orders.first);
-                      });
+                      if(result ?? false) {
+                        showDialog(
+                          context: context, 
+                          builder: (_) {
+                            return PaymentDialog(order: appData.orders.first);
+                        });
+                      } else {
+                        utilsServices.showToast(message: 'Pedido não confirmado!', isError: true);
+                      }
                     },
                   ),
                 ),

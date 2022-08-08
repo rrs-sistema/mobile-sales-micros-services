@@ -3,6 +3,7 @@ import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
+import './../../helpers/services/services.dart';
 import './../views_models/views_models.dart';
 import './../categories/categories.dart';
 import './../../helpers/helpers.dart';
@@ -24,10 +25,11 @@ class _ProductTabState extends State<ProductTab> {
 
   late Function(GlobalKey) runAddToCartAnimation;
 
+  final UtilsServices utilsServices = UtilsServices();
+
   void itemSelectedCartAnimations(GlobalKey gkImage) {
     runAddToCartAnimation(gkImage);
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
 import './../../../helpers/helpers.dart';
@@ -7,15 +8,17 @@ class BottomNavigationBarWidget extends StatefulWidget {
   final int currentIndex;
   final PageController pageController;
 
-  const BottomNavigationBarWidget(this.primaryColor, this.currentIndex, this.pageController);
+  const BottomNavigationBarWidget(
+      this.primaryColor, this.currentIndex, this.pageController);
 
   @override
-  State<BottomNavigationBarWidget> createState() => _BottomNavigationBarWidgetState();
-
+  State<BottomNavigationBarWidget> createState() =>
+      _BottomNavigationBarWidgetState();
 }
 
 class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -23,7 +26,10 @@ class _BottomNavigationBarWidgetState extends State<BottomNavigationBarWidget> {
         onTap: (_index) async {
           setState(() {
             index = _index;
-            widget.pageController.jumpToPage(_index);
+            widget.pageController.jumpToPage(index);
+            widget.pageController.animateToPage(index,
+                duration: const Duration(milliseconds: 1700),
+                curve: Curves.easeIn);
           });
         },
         type: BottomNavigationBarType.fixed,
