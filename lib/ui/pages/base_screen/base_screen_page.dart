@@ -1,6 +1,9 @@
+
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import './../../../main/factories/pages/signup/signup.dart';
+import './../../pages/orders/orders.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 import './../../mixins/mixins.dart';
@@ -44,12 +47,8 @@ class BasePageScreen extends StatelessWidget with SessionManager, NavigationMana
                         child: ProductTab(products: snapshot.data!),
                       ),
                       CartTab(),
-                      Container(
-                        color: Colors.blue,
-                      ),
-                      Container(
-                        color: Colors.purple,
-                      ),
+                      OrdersTab(),
+                      makeSignUpTab(),
                     ],
                   );
                 }

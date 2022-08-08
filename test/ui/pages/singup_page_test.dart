@@ -12,7 +12,7 @@ void main() {
   late  SignUpPresenterSpy presenter;
   Future<void> loadPage(WidgetTester tester) async {
     presenter = SignUpPresenterSpy();
-    await tester.pumpWidget(makePage(path: '/signup', page: () => SignUpPage(presenter)));
+    await tester.pumpWidget(makePage(path: '/signup', page: () => SignUpTab(presenter)));
   }
 
   tearDown(() {

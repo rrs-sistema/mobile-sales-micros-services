@@ -1,3 +1,4 @@
+import 'package:delivery_micros_services/main/factories/factories.dart';
 import 'package:get/get.dart';
 
 import './../../domain/helpers/domain_error.dart';
@@ -7,7 +8,7 @@ import './../protocols/protocols.dart';
 import './../../ui/pages/pages.dart';
 import '../mixins/mixins.dart';
 
-class GetxSignUpPresenter extends GetxController with LoadingManager, NavigationManager, FormManager, UIErrorManager implements SignUpPresenter  {
+class GetxSignUpPresenter extends GetxController with LoadingManager, SessionManager, NavigationManager, FormManager, UIErrorManager implements SignUpPresenter  {
 
   final Validation validation;
   final AddAccount addAccount;
@@ -119,6 +120,13 @@ class GetxSignUpPresenter extends GetxController with LoadingManager, Navigation
 
   void goToLogin() {
     navigateTo = '/login';
+  }
+
+  Future<void> logout() async {
+    final makeSecure = makeSecureStorageAdapter();
+    await makeSecure.delete('accessToken');
+    isSessionExpired = true;
+    navigateTo = '/base_screen';
   }
 
 }

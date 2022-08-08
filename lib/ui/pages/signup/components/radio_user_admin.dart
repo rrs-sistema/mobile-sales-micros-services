@@ -44,9 +44,9 @@ class _RadioUserAdmintate extends State<RadioUserAdmin> {
               value: 2,
               groupValue: val,
               onChanged: (admin) {
-                presenter.validateAdmin(admin == 1 ? true : false);
+                presenter.validateAdmin(admin == 2 ? true : false);
                 setState(() {
-                  val = admin == 1 ? 1 : 0;
+                  val = admin == 2 ? 2 : 0;
                 });
               },
               activeColor: primaryColor,

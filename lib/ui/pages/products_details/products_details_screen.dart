@@ -43,11 +43,12 @@ class _ProductsDetailsScreenState extends State<ProductsDetailsScreen> {
                     children: [
                       Column(
                         children: [
+                          SizedBox(height: 35,),
                           Expanded(child: Padding(
-                            padding: const EdgeInsets.only(top: 55),
+                            padding: const EdgeInsets.symmetric(horizontal: 45),
                             child: Hero(
                               tag: snapshot.data!.imgUrl,
-                              child: Image.network(snapshot.data!.imgUrl)),
+                              child: Image.network(snapshot.data!.imgUrl),),
                           )),
                           Expanded(
                             child: Container(

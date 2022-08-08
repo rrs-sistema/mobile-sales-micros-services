@@ -6,10 +6,16 @@ import './../../../helpers/services/utils_services.dart';
 import './../../../pages/views_models/views_models.dart';
 import './../../../common/common.dart';
 
-class CartTile extends StatelessWidget {
+class CartTile extends StatefulWidget {
   final CartItemViewModel cartItem;
-  CartTile({Key? key, required this.cartItem}) : super(key: key);
+  final Function(CartItemViewModel) remove;
+  const CartTile({Key? key, required this.cartItem, required this.remove}) : super(key: key);
 
+  @override
+  State<CartTile> createState() => _CartTileState();
+}
+
+class _CartTileState extends State<CartTile> {
 final UtilsServices utilsServices = UtilsServices();
 
   @override
@@ -22,23 +28,32 @@ final UtilsServices utilsServices = UtilsServices();
       ),
       child: ListTile(
         leading: Image.network(
-          cartItem.item.imgUrl,
+          widget.cartItem.item.imgUrl,
           height: 60,
           width: 60,
         ),
         title: Text(
-          cartItem.item.name,
+          widget.cartItem.item.name,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Text(utilsServices.priceToCurrency(cartItem.totalPrice()),
+        subtitle: Text(utilsServices.priceToCurrency(widget.cartItem.totalPrice()),
         style: TextStyle(
           color: primaryColor,
             fontWeight: FontWeight.bold,
           )),
         trailing: Quantity(
-            value: cartItem.quantity, suffixText: 'un', result: (quantity) {}),
+            value: widget.cartItem.quantity, suffixText: 'un', isRemovable: true, result: (quantity) {
+              setState(() {
+                widget.cartItem.quantity = quantity;
+                if(quantity == 0){
+                  widget.remove(widget.cartItem);
+                }
+              });
+            }),
       ),
     );
   }

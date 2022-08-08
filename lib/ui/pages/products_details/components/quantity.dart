@@ -5,9 +5,10 @@ import './../../../common/common.dart';
 class Quantity extends StatelessWidget {
   final int value;
   final String suffixText;
+  final bool isRemovable;
   final Function(int quantity) result;
 
-  const Quantity({ required this.value, required this.suffixText, required this.result});
+  const Quantity({ required this.value, required this.suffixText, this.isRemovable = false, required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +29,7 @@ class Quantity extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _QuantityButton(color: Colors.grey, icon: Icons.remove, onPressed: () {
-              if(value == 1)return;
-              
+          _QuantityButton(color: (!isRemovable || value > 1) ? Colors.grey : Colors.red, icon: (!isRemovable || value > 1) ? Icons.remove : Icons.delete_forever, onPressed: () {
               int resultCount = value - 1;
               result(resultCount);
             },),
@@ -41,7 +40,7 @@ class Quantity extends StatelessWidget {
                 fontWeight: FontWeight.bold,
             ),),
           ),
-          _QuantityButton(color: primaryColor, icon: Icons.remove, onPressed: () {
+          _QuantityButton(color: primaryColor, icon: Icons.add, onPressed: () {
               int resultCount = value + 1;
               result(resultCount);
           },),

@@ -26,7 +26,7 @@ class App extends StatelessWidget {
       getPages: [
         GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
         GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
-        GetPage(name: '/signup', page: makeSignUpPage),
+        GetPage(name: '/signup', page: makeSignUpTab),
         GetPage(name: '/base_screen', page: makeBaseScreenPage, transition: Transition.fadeIn),
         //GetPage(name: '/products', page: makeProductsPage, transition: Transition.fadeIn),
         GetPage(name: '/categories', page: makeCategoriesPage, transition: Transition.fadeIn),
