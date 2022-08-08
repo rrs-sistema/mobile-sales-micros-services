@@ -1,3 +1,3 @@
 export './circular_progress.dart';
-export './quantity.dart';
+export '../../common_widgets/quantity.dart';
 export './error.dart';

@@ -1,7 +1,7 @@
-import 'package:delivery_micros_services/ui/pages/orders/components/components.dart';
 import 'package:flutter/material.dart';
 
 import './../views_models/mocks/app_data.dart' as appData;
+import './../../pages/orders/components/components.dart';
 
 class OrdersTab extends StatelessWidget {
   const OrdersTab({ Key? key }) : super(key: key);

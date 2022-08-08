@@ -53,24 +53,35 @@ UserViewModel user =
 
 List<OrderModel> orders = [
   OrderModel(
+    id: '62f0710646578500208ca1ee',
+    createdDateTime: DateTime.parse('2022-08-08 10:30:00.452'),
+    overdueDateTime: DateTime.parse('2052-08-08 10:38:23.352'),
+    products: [
+      CartItemViewModel(item: product2, quantity: 3),
+      CartItemViewModel(item: product3, quantity: 1),
+    ],
+    status: 'PENDING',
+    copyAndPaste: 'a1d2df5ase1dsd5dfd',
+    total: 173.71),  
+  OrderModel(
       id: '62f0710646578500208ca1ee',
-      createdDateTime: DateTime.parse('2022-08-07 16:30:00.452'),
-      overdueDateTime: DateTime.parse('2022-08-07 17:15:23.352'),
+      createdDateTime: DateTime.parse('2022-08-08 10:30:00.452'),
+      overdueDateTime: DateTime.parse('2052-08-08 10:38:23.352'),
       products: [
-        CartItemViewModel(item: product1, quantity: 1),
+        CartItemViewModel(item: product1, quantity: 3),
         CartItemViewModel(item: product3, quantity: 1),
       ],
-      status: 'PENDING',
+      status: 'PREPARING_PURCHASE',
       copyAndPaste: 'a1d2df5ase1dsd5dfd',
-      total: 0),
+      total: 144.0),
   OrderModel(
       id: '62f0710646578500208ca1f0',
       createdDateTime: DateTime.parse('2022-08-08 09:20:51.285'),
-      overdueDateTime: DateTime.parse('2022-08-08 09:55:28.374'),
+      overdueDateTime: DateTime.parse('2052-08-08 10:55:28.374'),
       products: [
         CartItemViewModel(item: product2, quantity: 2),
       ],
-      status: 'PENDING',
+      status: 'DELIVERED',
       copyAndPaste: 'b6a1df9bnew9nbf6my',
-      total: 0),      
+      total: 77.47),      
 ];

@@ -1,3 +1,5 @@
+import 'package:add_to_cart_animation/add_to_cart_animation.dart';
+import 'package:add_to_cart_animation/add_to_cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
@@ -7,17 +9,33 @@ import './../../helpers/helpers.dart';
 import './components/components.dart';
 import './../../common/common.dart';
 
-class ProductTab extends StatelessWidget {
+class ProductTab extends StatefulWidget {
   final List<ProductViewModel> products;
 
-  ProductTab({required this.products});
+  ProductTab({Key? key, required this.products}) : super(key: key);
+
+  @override
+  State<ProductTab> createState() => _ProductTabState();
+}
+
+class _ProductTabState extends State<ProductTab> {
+
+  final GlobalKey<CartIconKey> globalKeyCartItems = GlobalKey<CartIconKey>();
+
+  late Function(GlobalKey) runAddToCartAnimation;
+
+  void itemSelectedCartAnimations(GlobalKey gkImage) {
+    runAddToCartAnimation(gkImage);
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    
     final primaryColor = ThemeHelper().makeAppTheme().primaryColor;
     List<CategoryViewModel> allCategories = [];
  
-    final categories = products.map((cat) => cat.category).toList(); 
+    final categories = widget.products.map((cat) => cat.category).toList(); 
     categories.forEach((cat) {
       if (allCategories.where((ex) => ex.id == cat.id).length == 0) {
         allCategories.add(cat);
@@ -42,28 +60,50 @@ class ProductTab extends StatelessWidget {
                   '2',
                   style: TextStyle(color: Colors.white, fontSize: 12),
                 ),
-                child: const Icon(Icons.shopping_cart),
+                child: AddToCartIcon(icon: const Icon(Icons.shopping_cart), key: globalKeyCartItems,),
               ),
             ),
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 10,
+      body: AddToCartAnimation(
+        gkCart: globalKeyCartItems,
+        previewDuration: const Duration(milliseconds: 100),
+        previewCurve: Curves.ease,
+        receiveCreateAddToCardAnimationMethod: (addToCardAnimationMethod) {
+          runAddToCartAnimation = addToCardAnimationMethod;
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
+              ),
+              child: PesquiseAqui(primaryColor: primaryColor),
             ),
-            child: PesquiseAqui(primaryColor: primaryColor),
-          ),
-          CategoriesSeach(allCategories.toList(),),
-          Expanded(
-            child: GridViewProducts(products: products),
-          )
-        ],
+            CategoriesSeach(allCategories.toList(),),
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 9 / 11.5,
+                ),
+                itemCount: widget.products.length,
+                itemBuilder: (_, index) {
+                  return ProductListTile(
+                    cardAnimationMethod: itemSelectedCartAnimations, item: widget.products[index]);
+                }),
+            ),           
+          ],
+        ),
       ),
     );
   }
+
 }
 

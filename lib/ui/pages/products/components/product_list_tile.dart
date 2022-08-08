@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:delivery_micros_services/ui/pages/pages.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,10 @@ import './../../products/products.dart';
 
 class ProductListTile extends StatelessWidget {
   final ProductViewModel item;
-  const ProductListTile({required Key key, required this.item}) : super(key: key);
+  final void Function(GlobalKey) cardAnimationMethod;
+  final GlobalKey imageGk = GlobalKey();
+
+  ProductListTile({required this.item, required this.cardAnimationMethod});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,7 @@ class ProductListTile extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) {
           return Provider(
-            create: (_) => presenter,
-            child: ProductsDetailsScreen(item.id)
-          );          
+              create: (_) => presenter, child: ProductsDetailsScreen(item.id));
         }));
       },
       child: Stack(
@@ -39,23 +39,40 @@ class ProductListTile extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: CachedNetworkImage(
-                      height: 160,
-                      imageUrl: item.imgUrl,
-                      placeholder: (context, url) => Container(
-                          width: 50.0,
-                          child: const CircularProgressIndicator(
-                            key: Key('progressIndicatorItemProduct'),
-                          )),
-                      errorWidget: (context, url, error) => Image.asset(
-                        'lib/ui/assets/sem-foto.jpg',
-                        fit: BoxFit.fill,
+                    child: Hero(
+                      tag: item.imgUrl,
+                      child: Image.network(
+                        item.imgUrl,
+                        key: imageGk,
                         errorBuilder: (context, url, error) => Image.asset(
                           'lib/ui/assets/sem-foto.jpg',
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, url, error) => Image.asset(
+                            'lib/ui/assets/sem-foto.jpg',
+                          ),
                         ),
                       ),
-                      fadeOutDuration: const Duration(seconds: 1),
-                      fadeInDuration: const Duration(seconds: 3),
+                      /*
+                      child: CachedNetworkImage(
+                        key: imageGk,
+                        height: 160,
+                        imageUrl: item.imgUrl,
+                        placeholder: (context, url) => Container(
+                            width: 50.0,
+                            child: const CircularProgressIndicator(
+                              key: Key('progressIndicatorItemProduct'),
+                            )),
+                        errorWidget: (context, url, error) => Image.asset(
+                          'lib/ui/assets/sem-foto.jpg',
+                          fit: BoxFit.fill,
+                          errorBuilder: (context, url, error) => Image.asset(
+                            'lib/ui/assets/sem-foto.jpg',
+                          ),
+                        ),
+                        fadeOutDuration: const Duration(seconds: 1),
+                        fadeInDuration: const Duration(seconds: 3),
+                      ),
+                      */
                     ),
                   ),
                   Text(
@@ -89,7 +106,9 @@ class ProductListTile extends StatelessWidget {
             top: 4,
             right: 4,
             child: GestureDetector(
-              onTap: () => null,
+              onTap: () {
+                cardAnimationMethod(imageGk);
+              },
               child: Container(
                 height: 40,
                 width: 35,

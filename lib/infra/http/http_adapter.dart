@@ -26,7 +26,7 @@ class HttpAdapter<ResponseType> implements HttpClient {
         futureResponse = client.get(uri, headers: defaultHeaders);
       }
       if(futureResponse != null){
-        response = await futureResponse.timeout(Duration(seconds: 10));
+        response = await futureResponse.timeout(Duration(seconds: 40));
       }
     } catch(error) {
       throw HttpError.serverError;

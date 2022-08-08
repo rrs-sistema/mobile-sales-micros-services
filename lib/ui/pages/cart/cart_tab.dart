@@ -1,3 +1,4 @@
+import 'package:delivery_micros_services/ui/pages/common_widgets/common_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +98,12 @@ class _CartTabState extends State<CartTab> {
                     ),
                     onPressed: () async{
                       bool? result = await showOrderConfirmation();
-                      print('Result: $result');
+                      if(result ?? false)
+                      showDialog(
+                        context: context, 
+                        builder: (_) {
+                          return PaymentDialog(order: appData.orders.first);
+                      });
                     },
                   ),
                 ),
