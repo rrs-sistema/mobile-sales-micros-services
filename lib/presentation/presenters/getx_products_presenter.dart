@@ -44,6 +44,7 @@ class GetxProductsPresenter extends GetxController
 
   Future<void> loadData() async {
     try {
+      await Future.delayed(Duration(seconds: 2));
       final products = await loadProducts.load();
       _products.value = products.map((product) => ProductViewModel(
         id: product.id,

@@ -80,7 +80,9 @@ class PaymentDialog extends StatelessWidget {
                       color: primaryColor
                     )
                   ),
-                  onPressed: () {}, 
+                  onPressed: () {
+                    utilsServices.showToast(message: 'Código do PIX copiado.');
+                  }, 
                   icon: const Icon(
                     Icons.copy, 
                     size: 15,

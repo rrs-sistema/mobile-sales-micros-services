@@ -6,12 +6,27 @@ import './../../../../ui/helpers/services/services.dart';
 import './../../../../ui/common/common.dart';
 import './../../products/products.dart';
 
-class ProductListTile extends StatelessWidget {
+class ProductTile extends StatefulWidget {
   final ProductViewModel item;
   final void Function(GlobalKey) cardAnimationMethod;
+
+  const ProductTile({required this.item, required this.cardAnimationMethod});
+
+  @override
+  State<ProductTile> createState() => _ProductTileState();
+}
+
+class _ProductTileState extends State<ProductTile> {
+
   final GlobalKey imageGk = GlobalKey();
 
-  ProductListTile({required this.item, required this.cardAnimationMethod});
+  IconData tileIcon = Icons.add_shopping_cart_outlined;
+
+  Future<void> switchIcon() async {
+    setState(() => tileIcon = Icons.check);
+    await Future.delayed(const Duration(milliseconds: 1500));
+    setState(() => tileIcon = Icons.add_shopping_cart_outlined);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +38,7 @@ class ProductListTile extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(builder: (_) {
           return Provider(
-              create: (_) => presenter, child: ProductsDetailsScreen(item.id));
+              create: (_) => presenter, child: ProductsDetailsScreen(widget.item.id));
         }));
       },
       child: Stack(
@@ -40,9 +55,9 @@ class ProductListTile extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Hero(
-                      tag: item.imgUrl,
+                      tag: widget.item.imgUrl,
                       child: Image.network(
-                        item.imgUrl,
+                        widget.item.imgUrl,
                         key: imageGk,
                         errorBuilder: (context, url, error) => Image.asset(
                           'lib/ui/assets/sem-foto.jpg',
@@ -55,25 +70,25 @@ class ProductListTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    item.name.length > 40
-                        ? '${item.name.substring(0, 39)}...'
-                        : item.name,
+                    widget.item.name.length > 40
+                        ? '${widget.item.name.substring(0, 39)}...'
+                        : widget.item.name,
                     key: Key('itemProductName'),
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        decoration: item.quantityAvailable < 1
+                        decoration: widget.item.quantityAvailable < 1
                             ? TextDecoration.lineThrough
                             : TextDecoration.none),
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    UtilsServices().priceToCurrency(item.price),
+                    UtilsServices().priceToCurrency(widget.item.price),
                     style: TextStyle(
                         fontSize: 20,
                         color: primaryColor,
                         fontWeight: FontWeight.bold,
-                        decoration: item.quantityAvailable < 1
+                        decoration: widget.item.quantityAvailable < 1
                             ? TextDecoration.lineThrough
                             : TextDecoration.none),
                   )
@@ -91,7 +106,8 @@ class ProductListTile extends StatelessWidget {
               child: Material(
                 child: InkWell(
                   onTap: () {
-                    cardAnimationMethod(imageGk);
+                    switchIcon();
+                    widget.cardAnimationMethod(imageGk);
                   },
                   child: Ink(
                     height: 40,
@@ -99,8 +115,8 @@ class ProductListTile extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: primaryColor,
                     ),
-                    child: const Icon(
-                      Icons.add_shopping_cart_outlined,
+                    child: Icon(
+                      tileIcon,
                       color: Colors.white,
                       size: 20,
                     ),

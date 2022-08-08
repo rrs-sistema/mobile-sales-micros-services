@@ -97,7 +97,7 @@ class _ProductTabState extends State<ProductTab> {
                 ),
                 itemCount: widget.products.length,
                 itemBuilder: (_, index) {
-                  return ProductListTile(
+                  return ProductTile(
                     cardAnimationMethod: itemSelectedCartAnimations, item: widget.products[index]);
                 }),
             ),           
