@@ -52,27 +52,6 @@ class ProductListTile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      /*
-                      child: CachedNetworkImage(
-                        key: imageGk,
-                        height: 160,
-                        imageUrl: item.imgUrl,
-                        placeholder: (context, url) => Container(
-                            width: 50.0,
-                            child: const CircularProgressIndicator(
-                              key: Key('progressIndicatorItemProduct'),
-                            )),
-                        errorWidget: (context, url, error) => Image.asset(
-                          'lib/ui/assets/sem-foto.jpg',
-                          fit: BoxFit.fill,
-                          errorBuilder: (context, url, error) => Image.asset(
-                            'lib/ui/assets/sem-foto.jpg',
-                          ),
-                        ),
-                        fadeOutDuration: const Duration(seconds: 1),
-                        fadeInDuration: const Duration(seconds: 3),
-                      ),
-                      */
                     ),
                   ),
                   Text(
@@ -105,22 +84,27 @@ class ProductListTile extends StatelessWidget {
           Positioned(
             top: 4,
             right: 4,
-            child: GestureDetector(
-              onTap: () {
-                cardAnimationMethod(imageGk);
-              },
-              child: Container(
-                height: 40,
-                width: 35,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        topRight: Radius.circular(20))),
-                child: const Icon(
-                  Icons.add_shopping_cart_outlined,
-                  color: Colors.white,
-                  size: 20,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  topRight: Radius.circular(20)),
+              child: Material(
+                child: InkWell(
+                  onTap: () {
+                    cardAnimationMethod(imageGk);
+                  },
+                  child: Ink(
+                    height: 40,
+                    width: 35,
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                    ),
+                    child: const Icon(
+                      Icons.add_shopping_cart_outlined,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
                 ),
               ),
             ),
